@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>equals() and hashcode() and Ebean Java ORM implementation options</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Options for handling equals() and hashcode() implementation">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/equals.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>equals() and hashcode()</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+<h3>equals() and hashcode()</h3>
+
+<h4>Problem Definition</h4>
+<p>
+The issue with the equals() and hashcode() I'm going to discuss here is about the java contract
+for implementing equals (and hashcode) and how it relates to Entity Beans.
+</p>
+<p>
+The issue being that the equals implementation on java.lang.Object matches 'is the same instance'. 
+There maybe occasions when developers want to implement equals() on Entity Beans to reflect that
+a Entity Bean is 'logically' the same rather than simply the same instance.
+</p>
+<p>
+It should also be noted that equals and hashcode are used in the collections api both implicitly
+(hashing for HashMap HashSet etc) and more explicitly (contains method).
+</p>
+<p>
+For me the best overall discussion on this issue is the Hibernate forum
+<a href="http://forum.hibernate.org/viewtopic.php?t=928172&postdays=0&postorder=asc&start=0&sid=e34c88ebf24b90219be45fbc81752084">Topic: equals() / hashCode(): Is there *any* non-broken approach?</a>
+I would recommend reading this entire discussion to get a feel for the various options and
+arguments that go along with them.
+</p>
+<p>
+&nbsp;
+</p>
+<h3>4 main options</h3>
+<p>
+There are 4 main options for handling equals() and hashcode() with Entity Beans in Ebean and each
+have their own pros and cons.
+</p>
+<ul>
+<li><a href="#wa">Work around the problem</a></li>
+<li><a href="#uuid">Use UUID Generation on object instantiation</a></li>
+<li><a href="#gerry">Gerry Power technique on a base class</a></li>
+<li><a href="#gerry2">Gerry Power technique by byte code generation</a></li>
+</ul>
+<p>
+&nbsp;
+</p>
+<h4><a id="wa"></a>Work around the problem</h4>
+<p>
+Firstly it should be noted that you can work around the issue of equals() and hashcode() by
+using other code to perform similar functions.
+</p>
+<p>
+Instead of using equals() you could get explictly use the values of the "Id" property and perform
+equals() on the those. It is expected that Id properties will all implement equals and this is
+explicitly required for EmbeddedId objects.
+</p>
+<p>
+Instead of using a contains() method on a list or set you could use a Map keySet contains().
+So in this case you would need to have a Map when the keys (or values) where the Id properties
+and you perform contains on the keySet checking to see if an Id already exists in a Map.
+</p>
+<p>
+The approaches above do not cover all the uses of equals and hashcode but the general idea is
+that sometimes working around the issue by explicitly using the Id property maybe a viable option.
+</p>
+
+<h4><a id="uuid"></a>Use UUID Generation on object instantiation</h4>
+<p>
+Using a UUID and generating it on object instantiation is a mechanisim that will generally work.
+Rather than provide an explanation I'll link to a full article.
+</p>
+<p>
+<a href="http://www.onjava.com/pub/a/onjava/2006/09/13/dont-let-hibernate-steal-your-identity.html?page=1">
+Don't Let Hibernate Steal Your Identity
+by James Brundege</a>
+</p>
+<p>
+The downside for many is that the use of UUIDs as identity values is generally more cumbersome than
+simple integers and strings (which is generally the case for Database Sequences/AutoIncrement/Identity.
+</p>
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="occ.html">Optimistic Concurrency Checking</a></li>
+<li><a href="transiso.html">Transaction Isolation</a></li>
+<li><a href="lazy.html">Lazy Loading</a></li>
+<li><a href="equals.html" >equals and hashcode</a></li>
+</ul>
+</div>
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+<h4><a id="gerry"></a>The Gerry Power technique on a base class</h4>
+<p>
+This technique was documented in a
+<a href="http://forum.hibernate.org/viewtopic.php?t=928172&postdays=0&postorder=asc&start=105&sid=669abb6a5d57af5747220e08118d78b1">hibernate forum by Gerry Power</a>.  Its on page 8 of a 9 page discussion on
+the issue of equals and hashcode.
+</p>
+<p>
+To me this technique is going to be just about as good as it gets for Developers who do not want to
+use UUID and I have taken the liberty of reproducing the code Gerry posted verbatem.
+</p>
+<pre>
+<code>
+public class BaseModel implements Serializable {
+   
+    private volatile Object object;
+    private Long id;
+   
+    public Long getId() {
+        return id;
+    }
+
+    private void setId(Long id) {
+        this.id = id;
+    }
+               
+    public boolean equals(Object obj) {
+        final boolean returner;
+        if (obj instanceof BaseModel) {
+            return getObject().equals(((BaseModel)obj).getObject());
+        } else {
+            returner = false;
+        }
+        return returner;
+    }
+   
+    public int hashCode() {
+        return getObject().hashCode();
+    }
+   
+    private Object getObject() {
+        if (object != null || object == null && id == null) {
+            if (object == null) { //Avoid the performance impact of synchronized if we can
+                synchronized(this) {
+                    if (object == null)
+                        object = new Object();
+                }
+            }
+            return object;
+        }
+        return id;
+    }
+} 
+</code>
+</pre>
+<p>
+The downside I see for this technique is that perhaps not all your Ids will be of the same
+type (Long in the code above) and for some they may not like specifying a base class for 
+their Entity Beans for whatever reason.
+</p>
+
+<h4><a id="gerry2"></a>Gerry Power technique by byte code generation</h4>
+<p>
+For me this technique was pretty darn good and I felt that some people may want 
+Ebean to automatically implement this technique on Entity Beans via code generation.
+</p>
+<p>
+The upside is that without doing any work you can use equals() to compare 
+Reference/Proxy objects with Entity Beans that are fetched back from queries. 
+</p>
+<p>
+The downside is that you can not use the byte code generated form to compare a 
+'Vanilla' entity bean with a 'byte code generated' entity bean.  That is, Ebean can
+implement override the generated code but of course your vanilla beans are always
+left as is.
+</p>
+<pre>
+<code>
+	Topic topicRef = (Topic)Ebean.getReference(Topic.class, 21);
+
+	Topic topic0 = (Topic)Ebean.find(Topic.class, 21);
+	Topic topic1 = (Topic)Ebean.find(Topic.class, 21);
+
+	// these are all true
+	topicRef.equals(topic0);
+	topicRef.equals(topic1);
+	topic0.equals(topic1);
+
+
+	Topic vanillaTopic = new Topic();
+	vanillaTopic.setId(21);
+
+	// this is a vanilla bean - no byte code generation 
+	// and this will be false (which may confuse people?)
+	vanillaTopic.equals(topic0);
+
+</code>
+</pre>
+<p>
+In Ebean the property <em>ebean.equalsmode</em> controls whether the equals and hashcode
+methods are generated. The valid values are "always","never","ifabsent" and the default is
+"always".
+</p>
+<p>
+Additionally there is the EqualsMode Annotation that can be used to control the behaviour 
+for a specific bean if required.
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

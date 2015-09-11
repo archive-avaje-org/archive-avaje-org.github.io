@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: QUERY LANGUAGE CHANGE:  change predicates on *ToMany to use separate join from fetch</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="From Daryl User user new User user setName user Ebean save user Role role1 new Role role1 setName role1 Ebean save role1 user getValidRoles add role1 Role role2 new Role role2 setName role2 Ebean save role2 user getValidRoles add role2 Ebean save user List lt Integer gt roleIds new ArrayList lt Integer gt roleIds add role1 getId List lt User gt result Ebean find User class join validRoles where in validRoles id roleIds findList assertEquals 1 result size User resultUser result get 0 assertEquals user resultUser assertEquals 2 resultUser getValidRoles size It returns only the valid roles that are in the roleIds list If I remove join validRoles from the query the validRoles collection is lazy loaded both roles and the test passes Surely this difference indicates a bug JPA would always return">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-239.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 239 : QUERY LANGUAGE CHANGE:  change predicates on *ToMany to use separate join from fetch
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 239 : QUERY LANGUAGE CHANGE:  change predicates on *ToMany to use separate join from fetch </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Rob</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.5.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">10/03/2010</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">10/03/2010</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>From Daryl:</p><pre class="java">User user = new User();
+user.setName("user");
+Ebean.save(user);
+
+Role role1 = new Role();
+role1.setName("role1");
+Ebean.save(role1);
+user.getValidRoles().add(role1);
+Role role2 = new Role();
+role2.setName("role2");
+Ebean.save(role2);
+user.getValidRoles().add(role2);
+Ebean.save(user);
+
+List&lt;Integer&gt; roleIds = new ArrayList&lt;Integer&gt;();
+roleIds.add(role1.getId());
+List&lt;User&gt; result =
+Ebean.find(User.class).join("validRoles").where().in("validRoles.id",
+roleIds).findList();
+assertEquals(1, result.size());
+User resultUser = result.get(0);
+assertEquals(user, resultUser);
+assertEquals(2, resultUser.getValidRoles().size());</pre><p>It returns only the valid roles that are in the roleIds list. If I<br/>remove join("validRoles") from the query, the validRoles collection is<br/>lazy loaded (both roles) and the test passes. Surely this difference<br/>indicates a bug? JPA would always return the entire list of<br/>validRoles.</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+10 Mar&nbsp;05:14
+</div>
+Long discussion
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>There is a long discussion on the google group about this topic:</p><p><a href="http://groups.google.com/group/ebean/browse_thread/thread/f5b57df7e52ace7e">http://groups.google.com/group/ebean/browse_thread/thread/f5b57df7e52ace7e</a></p><p>This is a 30 post discussion so I'm not going to repeat it all here.</p><p>The end result is that there are 2 interpretations of a where clause predicate on a 'many' property. 1 is the JPQL interpretation which means that the predicate is used to filter the top level objects. The 2nd interpretation current with Ebean is that it is a filter than can be applied to the fetch of the many itself.</p><p>In short we are changing Ebean to follow the JPQL interpretation, but looking to add "filter Many" type functionality. This is occasionally required when the *ToMany relationship has a high cardinality. For example, customers with 10,000's of orders - you may want to fetch customers with their orders.. but filter on the orders only fetching the new orders made in the last week.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+10 Mar&nbsp;06:04
+</div>
+Example
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<pre class="java">List&lt;MUser&gt; list = Ebean.find(MUser.class)
+    .join("roles")
+    // the where on a 'many' (like orders) requires an 
+    // additional join and distinct which is independent
+    // of a fetch join (if there is a fetch join) 
+    .where().eq("roles.roleName", "role2special")
+    .findList();</pre><p>... produces ...</p><pre class="sql">&lt;sql summary='MUser +many:roles' &gt;
+select distinct m.userid c0, m.user_name c1
+        , mr.roleid c2, mr.role_name c3 
+from muser m
+left outer join mrole_muser mrz_ on mrz_.muser_userid = m.userid 
+left outer join mrole mr on mr.roleid = mrz_.mrole_roleid 
+join mrole_muser xrz_ on xrz_.muser_userid = m.userid 
+join mrole xr on xr.roleid = xrz_.mrole_roleid  
+where xr.role_name = ?  
+order by m.userid
+&lt;/sql&gt;</pre>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+10 Mar&nbsp;06:06
+</div>
+Extra joins to support the where on the many...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Note that the table alias' starting with "X" ... are the extra joins required to support the "roles.roleName" = "role2special" predicate.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+10 Mar&nbsp;07:35
+</div>
+Simple example
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<pre class="java">Ebean.find(Customer.class)
+    .select("id,status")
+    .where().eq("orders.status", Order.Status.NEW)
+    .findList();</pre><p>produces ...</p><pre class="sql">&lt;sql summary='Customer' &gt;
+select distinct c.id c0, c.status c1 
+from o_customer c
+join o_order xo on xo.kcustomer_id = c.id  
+where xo.status = ? 
+&lt;/sql&gt;</pre>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+10 Mar&nbsp;07:39
+</div>
+Another example
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Adding the fetch join .. you now see 2 joins to o_order</p><pre class="java">Ebean.find(Customer.class)
+    .select("id,status")
+    .join("orders")
+    .where().eq("orders.status", Order.Status.NEW)
+    .findList();</pre><p>produces ...</p><pre class="sql">&lt;sql summary='Customer +many:orders' &gt;
+select distinct c.id c0, c.status c1
+        , co.id c2, co.status c3, co.order_date c4, co.ship_date c5, coc.name c6, co.cretime c7, co.updtime c8, co.kcustomer_id c9 
+from o_customer c
+left outer join o_order co on co.kcustomer_id = c.id 
+left outer join o_customer coc on coc.id = co.kcustomer_id 
+join o_order xo on xo.kcustomer_id = c.id  
+where co.order_date is not null and xo.status = ?  
+order by c.id
+&lt;/sql&gt;</pre>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+10 Mar&nbsp;07:40
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="239">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-239.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="239">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

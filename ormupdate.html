@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Stateless ORM Updates/Deletes - Issues with JPA, Ebean Java persistence</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Issues with ORM Updates and Deletes in a Stateless environment">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/ormupdate.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Stateless ORM Updates/Deletes</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+<h3>Stateless ORM Updates/Deletes</h3>
+
+<ul>
+<li><a href="#issues">Can you see the issues with this code?</a></li>
+<li><a href="#query">The extra Select Statement</a></li>
+<li><a href="#lazy">No Optimistic Concurrency Checking</a></li>
+<li><a href="#general">General Rule: Stateless applications and Updates/Deletes</a></li>
+<li><a href="#updatesql">UpdateSql as an Alternative</a></li>
+</ul>
+<p>
+&nbsp;
+</p>
+
+
+<h4><a id="issues"></a>Can you see the issues with this code?</h4>
+<p>
+In my opinion the following code has two significant issues. Do you know what they are?
+</p>
+<pre>
+<code>
+// JPA: Code example with Issues
+
+public void updateEmployee(int empId, String name, long salary, Date hireDate){
+
+  EntityManager em = jpaResourceBean.getEMF().createEntityManager();
+  try{
+    em.getTransaction().begin();
+    Employee employee = em.find(Employee.class, empId);
+
+    employee.setName(name);
+    employee.setSalary(salary);
+    employee.setHiredate(hireDate);
+
+    em.getTransaction().commit();
+  }finally{
+    em.close();
+  }
+}
+</code>
+</pre>
+<p>
+I realise this is just a code example. My concern is that I have seen quite a number of similar
+code examples for updates (or deletes) and I have not seen any comments to acknowledge the
+issues with the code.
+</p>
+<p>
+This is a 'Heads Up' for people in case its not obvious.
+</p>
+
+<p>
+These issues exist with both Ebean and JPA (actually ORM in general).
+</p>
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="occ.html" title="Explanation of Optimistic Concurrency Checking">Optimistic Concurrency Checking</a></li>
+
+</ul>
+</div>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<pre>
+<code>
+// Ebean: Code example with Issues
+
+public void updateEmployee(int empId, String name, long salary, Date hireDate){
+
+  try{
+    Ebean.beginTransaction();
+    Employee employee = Ebean.find(Employee.class, empId);
+
+    employee.setName(name);
+    employee.setSalary(salary);
+    employee.setHiredate(hireDate);
+
+    Ebean.commitTransaction();
+  }finally{
+    Ebean.endTransaction();
+  }
+}
+</code>
+</pre>
+<h4><a id="query"></a>The extra Select Statement</h4>
+<p>
+The above code performs an additional query. For some this extra performance cost is acceptable.
+However for people with big busy databases you probably don't want to have an additional query
+for every update (or delete) performed like this. Your DBA may have words :)
+</p>
+
+<h4><a id="occ"></a>No Optimistic Concurrency Checking</h4>
+<p>
+You may also note that Optimistic Concurrency Checking has been bypassed.
+There is Optimistic Concurrency Checking between the query and
+the update but not for the 'user think time'. The nasty thing about this is that any 'lost updates' 
+will occur 'silently' - and no one may notice for some time.  
+</p>
+<p>
+Refer <a href="occ.html" title="Explanation of Optimistic Concurrency Checking">Optimistic Concurrency Checking</a>
+</p>
+<h4><a id="general"></a>General Rule: Stateless applications and Updates/Deletes</h4>
+<p>
+For me there is a general rule that for Stateless applications (where you don't have the original bean)
+and you perform updates or deletes you need to think about these two issues.
+</p>
+<p>
+ORM is not necessarily the best approach in this situation. 
+</p>
+</td>
+<td class="rhs">
+<p>
+This is a general issue for ORM Updates and Deletes in a
+Stateless environment
+</p>
+</td>
+</tr>
+<tr>
+<td class="main">
+
+<h4><a id="updatesql"></a>UpdateSql as an Alternative</h4>
+<p>
+If you are looking to perform the update in a single statement and also take into account
+Optimistic Concurrency Checking you can use code like this below.
+</p>
+<pre>
+<code>
+// Note: We need our 'Version' Column/Property (Typically stored in Html hidden input) 
+// which is updTime in this example 
+
+public void updateEmployee(int empId, String name, long salary, Date hireDate, Timestamp updTime){
+
+  // Put this SQL in a file (updateEmp.sql)
+  // "update emp set name=:name, salary=:salary, hiredate=:hiredate where id=:id and updTime=:updTime
+
+  String sql = Ebean.getSql("updateEmp");
+  
+  UpdateSql update = new UpdateSql(sql);
+  update.setParameter("name", name);
+  update.setParameter("salary", salary);
+  update.setParameter("hideDate", hideDate);
+
+  update.setParameter("id", empId);
+
+  // this is the version column/property
+  update.setParameter("updTime", updTime);
+
+  int rows = Ebean.execute(update);
+  if (rows == 0) {
+    String msg = "This Employee has been changed by someone else";
+    throw new OptimisticLockingException(msg);
+  }
+}
+
+</code>
+</pre>
+
+</td>
+<td class="rhs">
+<p>
+A simple Update may work better
+</p>
+<p>
+If you are using a Stateless Web Architecture don't 
+forget this simple approach
+</p>
+</td>
+</tr>
+
+
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Optimistic Concurrency Checking</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="An explanation of how Optimistic Concurrency Checking is performed">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/occcode.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Optimistic Concurrency Checking</span>
+</div>
+
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+<h3>Code Example - Optimistic Concurrency Checking</h3>
+<p>
+For "ALL COLUMN" Optimistic Concurrency Checking the "Old Values" are required to build and
+bind to the WHERE clause of the UPDATE or DELETE statement.
+</p>
+<p>
+This is some code that <em>SIMULATES</em> they way this typically occurs with Ebean.
+You would ONLY use similar code if you wanted to simulate an Update or Delete without
+fetching data from the database. Otherwise this is not realistic code but hopefully 
+gives some insight into how this works.
+</p>
+<p>
+Note: EntityBeanIntercept intercepts the 'getters' and 'setters' for detecting Lazy Loading
+and intercepts 'setters' for creating the 'OldValues'. Those are its two main jobs.
+</p>
+<pre>
+<code>
+package unittest.ex;
+
+import app.data.Topic;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.EbeanServer;
+import com.avaje.ebean.bean.EntityBean;
+import com.avaje.ebean.bean.EntityBeanIntercept;
+
+public class OldValues {
+
+	public static void main(String[] args) {
+
+		// SIMULATE A FETCH AND UPDATE
+
+
+
+		// 1. WE CREATE A BEAN
+
+		EbeanServer server = Ebean.getServer(null);
+		
+		// this instance is a 'byte code generated' EntityBean
+		Topic topic = (Topic)server.createEntityBean(Topic.class);
+
+		// it implements EntityBean and has a EntityBeanIntercept
+		EntityBean entityBean = (EntityBean)topic;
+		EntityBeanIntercept ebi = entityBean.getEbeanIntercept();
+
+		// className is app.data.Topic$$EntityBean
+		String className = topic.getClass().getName();
+		System.out.println("className ["+className+"]");
+
+
+
+		// 2. POPULATE BEAN FROM RESULTSET
+
+		// the original values are typically read from 
+		// a jdbc resultset and set into the bean
+		topic.setTitle("Original Title");
+		topic.setBody("Original Body text");
+		topic.setEditorNote("Editors Note");
+		
+		// when all the properties are loaded into the bean
+		// we tell EntityBeanIntercept that it can start
+		// intercepting 'setter' methods to build the 
+		// oldValues if the bean is being changed
+		ebi.setLoaded(true);
+
+
+
+		// 3. GIVE THE BEAN TO THE APPLICATION
+
+		// 4. APPLICATION MODIFIES THE BEAN
+
+		// modifying the bean the EntityBeanIntercept
+		// intercepts the 'setter' methods and detects the
+		// bean is being changed. Before the change it 
+		// creates an 'oldValues' Bean with all the
+		// original values before they are modified 
+		topic.setTitle("New Title");
+		topic.setBody("New Body");
+		
+
+		// 5. APPLICATION SAVES BEAN - UPDATE
+
+		// If Ebean is performing an update and needs to use
+		// "ALL COLUMN" Optimistic Concurrency Checking then
+		// it can get the original values from the 
+		// 'oldValues' Bean it created
+		Topic oldValues = (Topic)ebi.getOldValues();
+		
+		// Get the 'New/Current' values
+		String newTitle = topic.getTitle();
+		String newBody  = topic.getBody();
+		String newNote = topic.getEditorNote();
+		
+		// Get the 'Old/Original' values
+		String oldTitle = oldValues.getTitle();
+		String oldBody  = oldValues.getBody();
+		String oldNote  = oldValues.getEditorNote();
+		
+		
+		// 6. USE NEW AND OLD TO BUILD THE UDPATE STATEMENT
+
+		// Instead well just print out the info
+
+		System.out.println("newTitle ["+newTitle+"]");
+		System.out.println("newBody  ["+newBody+"]");
+		System.out.println("newNote  ["+newNote+"]");
+
+		System.out.println("oldTitle ["+oldTitle+"]");
+		System.out.println("oldBody  ["+oldBody+"]");
+		System.out.println("oldNote  ["+oldNote+"]");
+
+	}
+
+}
+</code>
+</pre>
+
+<p>
+The Output from running this bit of code is:
+</p>
+<pre>
+<code>
+className [app.data.Topic$$EntityBean]
+newTitle [New Title]
+newBody  [New Body]
+newNote  [Editors Note]
+oldTitle [Original Title]
+oldBody  [Original Body text]
+oldNote  [Editors Note]
+</code>
+</pre>
+
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="jpa.html" title="Issue with JPA Architecture">JPA Architecure issue</a></li>
+<li><a href="jpaapi.html" title="API Issues with JPA">JPA API issues</a></li>
+<li><a href="occ.html" title="How Optimistic Concurrency Checking works">Optimistic Concurrency Checking</a></li>
+<li><a href="occ.html#all" title="How Optimistic Concurrency Checking works">ALL Column Optimistic Concurrency Checking</a></li>
+</ul>
+</div>
+</td>
+
+</tr>
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+<table>
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

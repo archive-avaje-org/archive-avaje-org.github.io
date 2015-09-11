@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Ebean Maven configuration</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+a.large {
+   font-size:150%;
+   font-weight:bold;
+}
+div.logs {
+  border: 1px dashed orange;
+  padding: 10px;
+}
+div.demo-source {
+  border: 1px dashed orange;
+  padding: 10px; margin:20px;
+  background: #eee;
+  font-size:120%;
+  font-weight:bold;
+  text-align:center;
+}
+</style> 
+
+
+
+</head>
+
+<body>
+<form action='/ebean/maven.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/">ebean</a>
+&raquo; <a href="/ebean/documentation.html">docs</a>
+&raquo; <span>maven</span>
+</div>
+
+
+
+
+<div class="">
+
+<h3>Minimal Maven kickstart project</h3>
+<p>
+A minimal project using a maven configuration 
+can be found on git hub.
+It is recommended that you get the 
+project from there as a kickstart.
+</p>
+<div class="demo-source">
+<a href="http://github.com/ebean-orm-demo/demo-maven-config">
+http://github.com/ebean-orm-demo/demo-maven-config
+</a>
+</div>
+
+<p>
+&nbsp;
+</p>
+<p>
+... the interesting bits of the pom are:
+</p>
+<p>
+&nbsp;
+</p>
+<h3>The ebean dependency</h3>
+<pre>
+&lt;dependency&gt;
+&lt;groupId&gt;org.avaje&lt;groupId&gt;
+&lt;artifactId&gt;ebean&lt;artifactId&gt;
+&lt;version&gt;2.7.1&lt;version&gt;
+&lt;dependency&gt;
+</pre>
+<h3>useSystemClassloader</h3>
+<p>
+For ebean to find the classes during maven testing
+we need to make sure we use the useSystemClassloader = false.
+</p>
+
+<pre>
+ &lt;plugin&gt;
+&lt;groupId&gt;org.apache.maven.plugins&lt;groupId&gt;
+&lt;artifactId&gt;maven-surefire-plugin&lt;artifactId&gt;
+&lt;configuration&gt;
+&lt;useSystemClassLoader&gt;false&lt;/useSystemClassLoader&gt;
+&lt;configuration&gt;
+&lt;plugin&gt; 
+
+</pre>
+
+<h3>Enhance the entity beans</h3>
+<p>
+You have enhance the entity beans as part of the build.
+To do so use the antrun plugin.
+</p>
+<pre>
+&lt;plugin&gt;
+&lt;groupId&gt;org.apache.maven.plugins&lt;groupId&gt;
+&lt;artifactId&gt;maven-antrun-plugin&lt;artifactId&gt;
+&lt;executions&gt;
+&lt;execution&gt;
+&lt;id&gt;compile&lt;id&gt;
+&lt;phase&gt;process-ebean-enhancement&lt;phase&gt;
+&lt;configuration&gt;
+&lt;tasks&gt;
+&lt;property name="compile_classpath" refid="maven.compile.classpath" /&gt;
+&lt;echo
+message="Ebean enhancing test classes debug level -----------------------------------" /&gt;
+&lt;echo message="Classpath: ${compile_classpath}" /&gt;
+&lt;taskdef name="ebeanEnhance"
+classname="com.avaje.ebean.enhance.ant.AntEnhanceTask"
+classpath="${compile_classpath}" /&gt;
+&lt;ebeanEnhance classSource="${project.build.testOutputDirectory}"
+packages="org.avaje.demo.test.model.**" transformArgs="debug=1" /&gt;
+&lt;tasks&gt;
+&lt;encoding&gt;UTF-8&lt;encoding&gt;
+&lt;configuration&gt;
+&lt;goals&gt;
+&lt;goal&gt;run&lt;goal&gt;
+&lt;goals&gt;
+&lt;execution&gt;
+&lt;executions&gt;
+&lt;plugin&gt;
+
+
+</pre>
+
+
+<h3>Unit tests not finding entities</h3>
+<p>
+If you find that maven is not finding your entity classes when
+running unit tests it is likely as issue with the classpath.
+</p>
+<p>
+Check the logs to see if you see something like:
+</p>
+<div class="logs">
+Running org.avaje.demo.test.TestSimpleConnection <br/>
+2/03/2010 9:03:45 PM com.avaje.ebean.Ebean clinit <br/>
+INFO: Ebean Version[2.4.0-20100227] Java Version[1.6.0_10-beta] <br/>
+2/03/2010 9:03:45 PM com.avaje.ebean.server.util.ClassPathSearch findClasses <br/>
+<strong>
+WARNING: No Entities found in ClassPath using ClassPathReader <br/>
+[com.avaje.ebean.server.util.DefaultClassPathReader@1729854]<br/>
+ Classpath Searched[[file:/C:/Users/rob/AppData/Local/Temp/surefirebooter25880.jar]]<br/>
+</strong>
+2/03/2010 9:03:45 PM com.avaje.ebean.server.core.BootupClassPathSearch search<br/>
+INFO: Classpath search hits in jars[] pkgs[]  searchTime[5]<br/>
+</div>
+<p>
+Maven by default runs with it's own classpath magic and we need to turn that off.
+</p>
+<p>
+<pre>
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;groupId&gt;
+                &lt;artifactId&gt;maven-surefire-plugin&lt;artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;useSystemClassLoader&gt;false&lt;useSystemClassLoader&gt;
+                &lt;configuration&gt;
+            &lt;plugin&gt; 
+</pre>
+</p>
+
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

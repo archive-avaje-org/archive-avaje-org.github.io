@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: Transaction log won't shut up</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Andreas Bochem">
+<meta name="description" content="Hi I have some trouble shutting the mysql transYYYYMMDD log up it keeps getting filled at ridiculous speed When I start my application the log fills up the 700MB log space within 12 hours And this is not even running at the max load to be expected in production I think this is way too much debug output trans 1001 17 03 23 876 select r id c0 r state c1 r start time c2 r request interval c3 r interval type c4 r interval timeout c5 r timeout c6 r rep etitions c7 r repetitions done c8 r operation c9 r rmon data source c10 r rmon buckets requested c11 r rmon interval c12 r rmon rate base c13 r rmon r equested size c14 r rmon which table c15 r user c16 from requests r where r state trans 1001 17 03 23 889 FindMany exeMicros 12545 rows 0 type Request name predicates r state bind ACTIVE trans 1001">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-169.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Andreas Bochem </span>
+21 Feb&nbsp;17:02
+</div>
+Transaction log won't shut up
+<div class="body">
+<p>Hi,</p><p>I have some trouble shutting the mysql_transYYYYMMDD.log up, it keeps getting<br/>filled at ridiculous speed. When I start my application, the log fills up<br/>the ~700MB log space within 12 hours! And this is not even running at the max<br/>load to be expected in production.</p><p>I think this is way too much debug output:</p><pre>trans[1001], 17:03:23.876, select r.id c0, r.state c1, r.start_time c2, r.request_interval c3, r.interval_type c4, r.interval_timeout c5, r.timeout c6, r.rep
+etitions c7, r.repetitions_done c8, r.operation c9, r.rmon_data_source c10, r.rmon_buckets_requested c11, r.rmon_interval c12, r.rmon_rate_base c13, r.rmon_r
+equested_size c14, r.rmon_which_table c15, r.user c16  from requests r  where r.state = ?
+trans[1001], 17:03:23.889, FindMany exeMicros[12545] rows[0] type[Request] name[] predicates[r.state = ? ] bind[ACTIVE]
+trans[1001], 17:03:59.235, select a.id c0, a.hostname c1, a.community c2, a.snmp_version c3  from agents a  where a.hostname = ?
+trans[1001], 17:03:59.250, FindMany exeMicros[15322] rows[1] type[Agent] name[] predicates[a.hostname = ? ] bind[131.220.241.177]
+trans[1002], 17:04:00.989, insert into requests (state, start_time, request_interval, interval_type, interval_timeout, timeout, repetitions, repetitions_done
+, operation, rmon_data_source, rmon_buckets_requested, rmon_interval, rmon_rate_base, rmon_requested_size, rmon_which_table, user) values (?, ?, ?, ?, ?, ?,
+?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+trans[1002], 17:04:00.996, Binding Insert [requests]  set[state=ACTIVE, startTime=Sun Feb 21 17:04:14 CET 2010, requestInterval=10000, intervalType=0, interv
+alTimeout=0, timeout=0, repetitions=2, repetitionsDone=null, operation=NLHOST, rmonDataSource=1, rmonBucketsRequested=5, rmonInterval=10, rmonRateBase=3, rmo
+nRequestedSize=100, rmonWhichTable=0, user=abochem, ]
+trans[1002], 17:04:00.997, Inserted [Request] [6]
+trans[1002], 17:04:00.999, insert into request_agent_associations (request_id, agent_id) values (?, ?)
+trans[1003], 17:04:01.009, InsertSql table[request_agent_associations] rows[1] bind[6, 1, ]
+trans[1002], 17:04:01.018, select r.id c0, r.rmon_requested_size c1, r.state c2, r.request_interval c3, r.repetitions_done c4, r.repetitions c5, r.start_time
+ c6, r.operation c7, r.interval_type c8, r.rmon_data_source c9, r.interval_timeout c10, r.user c11, r.timeout c12         , ra.id c13, ra.community c14, ra.h
+ostname c15, ra.snmp_version c16  from requests r left outer join request_agent_associations raz_ on raz_.request_id = r.id  left outer join agents ra on ra.
+id = raz_.agent_id  where r.id = ?    order by r.id
+trans[1002], 17:04:01.031, FindById exeMicros[10836] rows[0:1] type[Request] bind[6]
+trans[1003], 17:04:01.035, update requests set state=? where id=? and state=?
+trans[1003], 17:04:01.035, Binding Update [requests]  set[state=RUNNING, ] where[requestId=6, state=ACTIVE, ]
+trans[1003], 17:04:01.036, Updated [Request] [6]
+trans[1004], 17:04:14.103, insert into nl_host_entries (repetition, host_address, protocol_local_index, in_packets, out_packets, in_octets, out_octets, out_m
+ac_non_unicast_pkts, create_time, request_id, agent_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+...</pre><p>etc.etc.etc...</p><p>I put in my ebean.properties those log-related options:</p><pre class="java">ebean.log.directory=logs
+
+ebean.log.level=0
+
+ebean.debug.transaction=0
+ebean.debug.sql=false
+ebean.debug.lazyload=false
+
+ebean.log.share=2
+
+ebean.log.iud=0
+ebean.log.findid=0
+ebean.log.findmany=0</pre><p>I thought, all those 0's should do the trick - alas they don't.</p><p>I've been picking those options from various places, been desperately<br/>searching for a complete list of all ebean properties to see if I got something<br/>wrong or missed anything... but didn't find anything better.</p><p><br/>Can you provide any help?</p><p>cheers,<br/>Andreas</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+22 Feb&nbsp;00:49
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Try:</p><p>ebean.logging.iud=NONE<br/>ebean.logging.query=NONE<br/>ebean.logging.sqlquery=NONE</p><p><br/>The relevant bit of code (where all the properties are loaded) is in  ServerConfig.loadFromProperties().</p><p>What has happened here is that these levels changed from an int to a enum ... and obviously the examples still have the old properties (apologies).</p><p>Also note, you can change the log levels at runtime ...</p><p>ebeanServer.getAdminLogging().setIudLevel(StmtLogLevel.NONE);</p><p><br/>Cheers, Rob.</p><p>PS: Also note, we are going to shutdown these forums and move all questions onto the google group at some point soon.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+22 Feb&nbsp;13:32
+</div>
+<span>by Andreas Bochem</span>
+<div class="body">
+<p>Thanks, Rob! That helped.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="169">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

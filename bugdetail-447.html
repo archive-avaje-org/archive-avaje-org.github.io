@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: PersistenceException sometimes when using in()</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="devenv">
+<meta name="description" content="Under play 2 1 1 It fixes itself after a restart and doesn t happen for some time We have two cases when it happens both of them have in blabla List Here are the stack traces I removed all the corporate company secret data stuff The first one javax persistence PersistenceException Query threw SQLException No value specified for parameter 7 Bind values 1655 2982 4052 4065 4109 6484 Query was select t0 id c0 from t0 left outer join t1 on t1 id t0 left outer join t2 on t2 id t0 left outer join t3 on t3 id t2 left outer join t4 on t4 id t3 where t0 reference 1 id in and t0 reference 2 id in at com avaje ebeaninternal server query CQuery createPersistenceException CQuery java 815 avaje ebeanorm server jar na at com avaje ebeaninternal server query CQuery createPersistenceException CQuery java 7">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-447.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 447 : PersistenceException sometimes when using in()
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 447 : PersistenceException sometimes when using in() </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">devenv</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">3.3.1</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">21/11/2013</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">21/11/2013</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>Under play 2.1.1</p><p>It fixes itself after a restart and doesn't happen for some time<br/>We have two cases when it happens, both of them have in("blabla", List<Model>)</p><p>Here are the stack traces, I removed all the corporate-company-secret-data-stuff :)</p><p><br/>The first one:</p><p>javax.persistence.PersistenceException: Query threw SQLException:No value specified for parameter 7 <br/>Bind values:[1655, 2982, 4052, 4065, 4109, 6484] <br/>Query was:<br/>select t0.id c0 .... from ... t0<br/>left outer join ... t1 on t1.id = t0.... <br/>left outer join ... t2 on t2.id = t0.... <br/>left outer join .. t3 on t3.id = t2.... <br/>left outer join ... t4 on t4.id = t3....  <br/>where t0.reference_1_id in (?,?,?,?)  and t0.reference_2_id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)  </p><p>        at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:815) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:795) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:210) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:77) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:272) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.core.DefaultServer.findList(DefaultServer.java:1502) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.querydefn.DefaultOrmQuery.findList(DefaultOrmQuery.java:904) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.util.DefaultExpressionList.findList(DefaultExpressionList.java:177) ~[avaje-ebeanorm-server.jar:na]<br/>........<br/>Caused by: java.sql.SQLException: No value specified for parameter 7<br/>        at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:987) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:982) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:927) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.PreparedStatement.checkAllParametersSet(PreparedStatement.java:2578) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.PreparedStatement.fillSendPacket(PreparedStatement.java:2554) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.PreparedStatement.fillSendPacket(PreparedStatement.java:2480) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2234) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.jolbox.bonecp.PreparedStatementHandle.executeQuery(PreparedStatementHandle.java:172) ~[bonecp.jar:0.7.1.RELEASE]<br/>        at com.avaje.ebeaninternal.server.query.CQuery.prepareBindExecuteQuery(CQuery.java:382) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:174) ~[avaje-ebeanorm-server.jar:na]<br/>        ... 30 common frames omitted</p><p><br/>The second one:<br/>play.api.Application$$anon$1: Execution exception[[PersistenceException: Error with property[10] dt[-5]data[5190][java.lang.Long]]]<br/>        at play.api.Application$class.handleError(Application.scala:289) ~[play_2.10-2.1.2.jar:2.1.2]<br/>        at play.api.DefaultApplication.handleError(Application.scala:383) [play_2.10-2.1.2.jar:2.1.2]<br/>        at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$play$core$server$netty$PlayDefaultUpstreamHandler$$handle$1$1.apply(PlayDefaultUpstreamHandler.scala:143) [play_2.10-2.1.2.jar:2.1.2]<br/>        at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$play$core$server$netty$PlayDefaultUpstreamHandler$$handle$1$1.apply(PlayDefaultUpstreamHandler.scala:139) [play_2.10-2.1.2.jar:2.1.2]<br/>        at play.api.libs.concurrent.PlayPromise$$anonfun$extend1$1.apply(Promise.scala:113) [play_2.10-2.1.2.jar:2.1.2]<br/>        at play.api.libs.concurrent.PlayPromise$$anonfun$extend1$1.apply(Promise.scala:113) [play_2.10-2.1.2.jar:2.1.2]<br/>        at play.api.libs.concurrent.PlayPromise$$anonfun$extend$1$$anonfun$apply$1.apply(Promise.scala:104) [play_2.10-2.1.2.jar:2.1.2]<br/>        at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library.jar:na]<br/>        at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library.jar:na]<br/>        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_21]<br/>        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_21]<br/>        at java.lang.Thread.run(Thread.java:722) [na:1.7.0_21]<br/>javax.persistence.PersistenceException: Error with property[10] dt[-5]data[5190][java.lang.Long]<br/>        at com.avaje.ebeaninternal.server.persist.Binder.bindSimpleData(Binder.java:326) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.persist.Binder.bindObject(Binder.java:215) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.persist.Binder.bindObject(Binder.java:172) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.query.CQueryPredicates.bind(CQueryPredicates.java:152) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.query.CQuery.prepareBindExecuteQuery(CQuery.java:379) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:174) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:77) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:272) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.core.DefaultServer.findList(DefaultServer.java:1502) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.querydefn.DefaultOrmQuery.findList(DefaultOrmQuery.java:904) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.util.DefaultExpressionList.findList(DefaultExpressionList.java:177) ~[avaje-ebeanorm-server.jar:na]<br/>.....<br/>        at Routes$$anonfun$routes$1$$anonfun$applyOrElse$12$$anonfun$apply$12.apply(routes_routing.scala:481) ~[mobit_2.10-1.0-SNAPSHOT.jar:na]<br/>        at Routes$$anonfun$routes$1$$anonfun$applyOrElse$12$$anonfun$apply$12.apply(routes_routing.scala:481) ~[mobit_2.10-1.0-SNAPSHOT.jar:na]<br/>        at play.core.Router$HandlerInvoker$$anon$6$$anon$2.invocation(Router.scala:175) ~[play_2.10-2.1.2.jar:2.1.2]<br/>        at play.core.Router$Routes$$anon$1.invocation(Router.scala:355) ~[play_2.10-2.1.2.jar:2.1.2]<br/>        at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:50) ~[play_2.10-2.1.2.jar:2.1.2]<br/>        at cn.bran.play.GlobalSettingsWithJapid$2.call(GlobalSettingsWithJapid.java:127) ~[japid42_2.10-0.9.6.jar:0.9.6]<br/>.....<br/>        at play.mvc.Security$AuthenticatedAction.call(Security.java:39) ~[play_2.10-2.1.2.jar:2.1.2]<br/>        at play.core.j.JavaAction$$anon$2.apply(JavaAction.scala:80) ~[play_2.10-2.1.2.jar:2.1.2]<br/>        at play.core.j.JavaAction$$anon$2.apply(JavaAction.scala:79) ~[play_2.10-2.1.2.jar:2.1.2]<br/>        at play.libs.F$Promise$PromiseActor.onReceive(F.java:425) ~[play_2.10-2.1.2.jar:2.1.2]<br/>        at akka.actor.UntypedActor$$anonfun$receive$1.applyOrElse(UntypedActor.scala:159) ~[akka-actor_2.10.jar:na]<br/>        at akka.actor.ActorCell.receiveMessage(ActorCell.scala:425) ~[akka-actor_2.10.jar:na]<br/>        at akka.actor.ActorCell.invoke(ActorCell.scala:386) ~[akka-actor_2.10.jar:na]<br/>        at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:230) ~[akka-actor_2.10.jar:na]<br/>        at akka.dispatch.Mailbox.run(Mailbox.scala:212) ~[akka-actor_2.10.jar:na]<br/>        at akka.dispatch.ForkJoinExecutorConfigurator$MailboxExecutionTask.exec(AbstractDispatcher.scala:502) ~[akka-actor_2.10.jar:na]<br/>        at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:262) ~[scala-library.jar:na]<br/>        at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:975) ~[scala-library.jar:na]<br/>        at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1478) ~[scala-library.jar:na]<br/>        at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:104) ~[scala-library.jar:na]<br/>Caused by: java.sql.SQLException: Parameter index out of range (10 > number of parameters, which is 9).<br/>        at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:987) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:982) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:927) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.PreparedStatement.checkBounds(PreparedStatement.java:3729) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.PreparedStatement.setInternal(PreparedStatement.java:3713) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.PreparedStatement.setInternal(PreparedStatement.java:3755) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.mysql.jdbc.PreparedStatement.setLong(PreparedStatement.java:3771) ~[mysql-connector-java-5.1.18.jar:na]<br/>        at com.jolbox.bonecp.PreparedStatementHandle.setLong(PreparedStatementHandle.java:864) ~[bonecp.jar:0.7.1.RELEASE]<br/>        at com.avaje.ebeaninternal.server.type.DataBind.setLong(DataBind.java:71) ~[avaje-ebeanorm-server.jar:na]<br/>        at com.avaje.ebeaninternal.server.persist.Binder.bindSimpleData(Binder.java:258) ~[avaje-ebeanorm-server.jar:na]<br/>        ... 33 common frames omitted</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+
+<input type="hidden" name="f_bugid" value="447">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-447.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="447">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

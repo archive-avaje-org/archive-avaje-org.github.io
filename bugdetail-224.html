@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: Delete cascade on unloaded OneToMany ... gives Referential integrity constraint violation</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="Caused by org h2 jdbc JdbcSQLException Referential integrity constraint violation FK TD CHILD PARENT 5 PUBLIC TD CHILD FOREIGN KEY PARENT ID REFERENCES PUBLIC TD PARENT PARENT ID SQL statement delete from td parent where parent id and parent name and extended name 23003 115 at org h2 message Message getSQLException Message java 105 at org h2 message Message getSQLException Message java 116 at org h2 message Message getSQLException Message java 75 at org h2 constraint ConstraintReferential checkRow ConstraintReferential java 377 at org h2 constraint ConstraintReferential checkRowRefTable ConstraintReferential java 394 at org h2 constraint ConstraintReferential checkRow ConstraintReferential java 273 at org h2 table Table fireConstraints Table java 761 at org h2 table Table fireAfterRow Tabl">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-224.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 224 : Delete cascade on unloaded OneToMany ... gives Referential integrity constraint violation
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 224 : Delete cascade on unloaded OneToMany ... gives Referential integrity constraint violation </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Rob</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.4.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">24/02/2010</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">24/02/2010</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>Caused by: org.h2.jdbc.JdbcSQLException: Referential integrity constraint violation: FK_TD_CHILD_PARENT_5: PUBLIC.TD_CHILD FOREIGN KEY(PARENT_ID) REFERENCES PUBLIC.TD_PARENT(PARENT_ID); SQL statement:<br/>delete from td_parent where parent_id=? and parent_name=? and extended_name=? [23003-115]<br/>	at org.h2.message.Message.getSQLException(Message.java:105)<br/>	at org.h2.message.Message.getSQLException(Message.java:116)<br/>	at org.h2.message.Message.getSQLException(Message.java:75)<br/>	at org.h2.constraint.ConstraintReferential.checkRow(ConstraintReferential.java:377)<br/>	at org.h2.constraint.ConstraintReferential.checkRowRefTable(ConstraintReferential.java:394)<br/>	at org.h2.constraint.ConstraintReferential.checkRow(ConstraintReferential.java:273)<br/>	at org.h2.table.Table.fireConstraints(Table.java:761)<br/>	at org.h2.table.Table.fireAfterRow(Table.java:776)<br/>	at org.h2.command.dml.Delete.update(Delete.java:75)<br/>	at org.h2.command.CommandContainer.update(CommandContainer.java:72)<br/>	at org.h2.command.Command.executeUpdate(Command.java:208)<br/>	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:139)<br/>	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:128)<br/>	at com.avaje.ebean.server.lib.sql.ExtendedPreparedStatement.executeUpdate(ExtendedPreparedStatement.java:164)<br/>	at com.avaje.ebean.server.persist.dml.DeleteHandler.execute(DeleteHandler.java:78)<br/>	at com.avaje.ebean.server.persist.dml.DmlBeanPersister.execute(DmlBeanPersister.java:104)<br/>	... 29 more</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+24 Feb&nbsp;09:36
+</div>
+The issue
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>The issue occurs when the delete must cascade (children exist and need to be deleted) and the child rows have not been loaded.</p><p>The fix is to use generate a SQL statement to delete all child rows instead.</p><p>This will work for 1 level of unloaded beans.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+24 Feb&nbsp;09:44
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in HEAD.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+25 Feb&nbsp;09:52
+</div>
+Nope ... another scenario
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>There is another scenario that results in a ClassCastException</p><p>java.lang.RuntimeException: get id on [com.avaje.tests.model.basic.xtra.EdParent] type[com.avaje.tests.model.basic.xtra.EdExtendedParent$$EntityBean$h2] threw error.<br/>	at com.avaje.ebean.server.deploy.BeanProperty.getValue(BeanProperty.java:798)<br/>	at com.avaje.ebean.server.deploy.BeanProperty.getValueWithInheritance(BeanProperty.java:782)<br/>	at com.avaje.ebean.server.deploy.id.ImportedIdSimple.getIdValue(ImportedIdSimple.java:56)<br/>	at com.avaje.ebean.server.deploy.id.ImportedIdSimple.dmlWhere(ImportedIdSimple.java:83)<br/>	at com.avaje.ebean.server.persist.dmlbind.BindableAssocOne.dmlWhere(BindableAssocOne.java:73)<br/>	at com.avaje.ebean.server.persist.dmlbind.BindableList.dmlWhere(BindableList.java:61)<br/>	at com.avaje.ebean.server.persist.dml.DeleteMeta.genDynamicWhere(DeleteMeta.java:157)<br/>	at com.avaje.ebean.server.persist.dml.DeleteMeta.getSql(DeleteMeta.java:111)<br/>	at com.avaje.ebean.server.persist.dml.DeleteHandler.bind(DeleteHandler.java:47)<br/>	at com.avaje.ebean.server.persist.dml.DmlBeanPersister.execute(DmlBeanPersister.java:97)<br/>	at com.avaje.ebean.server.persist.dml.DmlBeanPersister.delete(DmlBeanPersister.java:66)<br/>	at com.avaje.ebean.server.persist.DefaultPersistExecute.executeDeleteBean(DefaultPersistExecute.java:141)<br/>	at com.avaje.ebean.server.core.PersistRequestBean.executeNow(PersistRequestBean.java:394)<br/>	at com.avaje.ebean.server.core.PersistRequestBean.executeOrQueue(PersistRequestBean.java:416)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.delete(DefaultPersister.java:475)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.delete(DefaultPersister.java:416)<br/>	at com.avaje.ebean.server.core.DefaultServer.delete(DefaultServer.java:1649)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.deleteRecurse(DefaultPersister.java:176)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.deleteAssocMany(DefaultPersister.java:865)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.delete(DefaultPersister.java:471)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.delete(DefaultPersister.java:416)<br/>	at com.avaje.ebean.server.core.DefaultServer.delete(DefaultServer.java:1649)<br/>	at com.avaje.ebean.server.core.DefaultServer.delete(DefaultServer.java:1639)<br/>	at com.avaje.ebean.Ebean.delete(Ebean.java:647)<br/>	at com.avaje.tests.model.basic.xtra.TestDeleteUnloadedChildren.testCascadeDelete3(TestDeleteUnloadedChildren.java:88)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:585)<br/>	at junit.framework.TestCase.runTest(TestCase.java:168)<br/>	at junit.framework.TestCase.runBare(TestCase.java:134)<br/>	at junit.framework.TestResult$1.protect(TestResult.java:110)<br/>	at junit.framework.TestResult.runProtected(TestResult.java:128)<br/>	at junit.framework.TestResult.run(TestResult.java:113)<br/>	at junit.framework.TestCase.run(TestCase.java:124)<br/>	at junit.framework.TestSuite.runTest(TestSuite.java:232)<br/>	at junit.framework.TestSuite.run(TestSuite.java:227)<br/>	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:81)<br/>	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:46)<br/>	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)<br/>	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)<br/>	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)<br/>	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)<br/>	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)<br/>Caused by: java.lang.ClassCastException: com.avaje.tests.model.basic.xtra.EdExtendedParent$$EntityBean$h2<br/>	at com.avaje.tests.model.basic.xtra.EdParent$$EntityBean$h2._ebean_getField(EdParent.java:1)<br/>	at com.avaje.ebean.server.reflect.EnhanceBeanReflect$Getter.get(EnhanceBeanReflect.java:144)<br/>	at com.avaje.ebean.server.deploy.BeanProperty.getValue(BeanProperty.java:791)<br/>	... 43 more</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+25 Feb&nbsp;09:54
+</div>
+The issue
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>This will only happen with dynamic subclasses (not with enhancement).</p><p>... and obviously on an inheritance hierarchy.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+25 Feb&nbsp;10:04
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in HEAD (take 2).</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="224">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-224.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="224">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

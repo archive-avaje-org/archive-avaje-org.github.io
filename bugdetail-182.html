@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: NPE When reading a null from a OneToMany </title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="Caused by java lang RuntimeException set oid on com imilia server domain common PhoneContact arg null type com imilia server domain common PhoneContact threw error at com avaje ebean server deploy BeanProperty setValue BeanProperty java 601 at com avaje ebean server deploy BeanProperty readSet BeanProperty java 459 59 more Caused by java lang NullPointerException at com imilia server domain common PhoneContact ebean setField PhoneContact java 1 at com avaje ebean server reflect EnhanceBeanReflect Setter set EnhanceBeanReflect java 118 at com avaje ebean server deploy BeanProperty setValue BeanProperty java 592 60 more ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-182.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 182 : NPE When reading a null from a OneToMany 
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 182 : NPE When reading a null from a OneToMany  </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Rob</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.3.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">30/11/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">30/11/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>Caused by: java.lang.RuntimeException: set oid on [com.imilia.server.domain.common.PhoneContact] arg[null] type[com.imilia.server.domain.common.PhoneContact] threw error<br/>	at com.avaje.ebean.server.deploy.BeanProperty.setValue(BeanProperty.java:601)<br/>	at com.avaje.ebean.server.deploy.BeanProperty.readSet(BeanProperty.java:459)<br/>	... 59 more<br/>Caused by: java.lang.NullPointerException<br/>	at com.imilia.server.domain.common.PhoneContact._ebean_setField(PhoneContact.java:1)<br/>	at com.avaje.ebean.server.reflect.EnhanceBeanReflect$Setter.set(EnhanceBeanReflect.java:118)<br/>	at com.avaje.ebean.server.deploy.BeanProperty.setValue(BeanProperty.java:592)<br/>	... 60 more</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+30 Nov&nbsp;07:53
+</div>
+Test case to reproduce
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Firstly I changed the contact id to be a primitive int rather than an Integer <br/>(This only reproduces with primitive id properties).</p><pre class="java">public void test() {
+        
+        Customer c = new Customer();
+        c.setName("testll");
+        
+        Ebean.save(c);
+        
+        Customer c1 = Ebean.find(Customer.class)
+            .setAutofetch(false)
+            .select("id")
+            .join("contacts","id")
+            .where().idEq(c.getId())
+            .findUnique();
+        
+        List&lt;Contact&gt; contacts = c1.getContacts();
+        int sz = contacts.size();
+        
+        Assert.assertTrue(sz == 0);
+    }</pre>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+30 Nov&nbsp;07:55
+</div>
+The issue
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>More stack trace is:</p><p>javax.persistence.PersistenceException: Error readSet on com.imilia.server.domain.common.PhoneContact.oid<br/>	at com.avaje.ebean.server.deploy.BeanProperty.readSet(BeanProperty.java:464)<br/>	at com.avaje.ebean.server.deploy.id.IdBinderSimple.readSet(IdBinderSimple.java:109)<br/>	at com.avaje.ebean.server.query.SqlTreeNodeBean.load(SqlTreeNodeBean.java:224)<br/>	at com.avaje.ebean.server.query.SqlTreeNodeManyRoot.load(SqlTreeNodeManyRoot.java:30)<br/>	at com.avaje.ebean.server.query.SqlTreeNodeBean.load(SqlTreeNodeBean.java:290)<br/>	at com.avaje.ebean.server.query.CQuery.readRow(CQuery.java:557)<br/>	at com.avaje.ebean.server.query.CQuery.readBeanInternal(CQuery.java:594)<br/>	at com.avaje.ebean.server.query.CQuery.readTheRows(CQuery.java:675)<br/>	at com.avaje.ebean.server.query.CQuery.readCollection(CQuery.java:660)<br/>	at com.avaje.ebean.server.query.CQueryEngine.findMany(CQueryEngine.java:166)<br/>	at com.avaje.ebean.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:88)<br/>	at com.avaje.ebean.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:277)<br/>	at com.avaje.ebean.server.core.DefaultServer.findList(DefaultServer.java:1280)<br/>	at com.avaje.ebean.server.core.DefaultBeanLoader.loadMany(DefaultBeanLoader.java:143)<br/>	at com.avaje.ebean.server.core.DefaultServer.loadMany(DefaultServer.java:370)<br/>	at com.avaje.ebean.server.loadcontext.DLoadManyContext.loadMany(DLoadManyContext.java:143)<br/>	at com.avaje.ebean.common.AbstractBeanCollection.lazyLoadCollection(AbstractBeanCollection.java:140)<br/>	at com.avaje.ebean.common.BeanSet.init(BeanSet.java:110)<br/>	at com.avaje.ebean.common.BeanSet.iterator(BeanSet.java:234)<br/>	at com.imilia.server.service.impl.AddressServiceImpl.save(AddressServiceImpl.java:34)<br/>	at com.imilia.server.service.impl.AddressServiceImpl.save(AddressServiceImpl.java:21)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:592)<br/>	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)<br/>	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:106)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)<br/>	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)<br/>	at $Proxy43.save(Unknown Source)<br/>	at com.imilia.server.service.impl.PersonServiceImpl.save(PersonServiceImpl.java:29)<br/>	at com.imilia.server.service.impl.PersonServiceImpl.save(PersonServiceImpl.java:19)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:592)<br/>	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)<br/>	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:198)<br/>	at $Proxy44.save(Unknown Source)<br/>	at com.imilia.bkf.service.impl.SubscriptionServiceImpl.saveSubscriptionPersonAddress(SubscriptionServiceImpl.java:51)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:592)<br/>	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)<br/>	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:106)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)<br/>	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)<br/>	at $Proxy45.saveSubscriptionPersonAddress(Unknown Source)<br/>	at com.imilia.bkf.service.SubscriptionServiceTest.testSaveSubscriptons(SubscriptionServiceTest.java:81)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:592)<br/>	at org.springframework.test.context.junit4.SpringTestMethod.invoke(SpringTestMethod.java:160)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie.runTestMethod(SpringMethodRoadie.java:233)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie$RunBeforesThenTestThenAfters.run(SpringMethodRoadie.java:333)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie.runWithRepetitions(SpringMethodRoadie.java:217)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie.runTest(SpringMethodRoadie.java:197)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie.run(SpringMethodRoadie.java:143)<br/>	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.invokeTestMethod(SpringJUnit4ClassRunner.java:160)<br/>	at org.junit.internal.runners.JUnit4ClassRunner.runMethods(JUnit4ClassRunner.java:51)<br/>	at org.junit.internal.runners.JUnit4ClassRunner$1.run(JUnit4ClassRunner.java:44)<br/>	at org.junit.internal.runners.ClassRoadie.runUnprotected(ClassRoadie.java:27)<br/>	at org.junit.internal.runners.ClassRoadie.runProtected(ClassRoadie.java:37)<br/>	at org.junit.internal.runners.JUnit4ClassRunner.run(JUnit4ClassRunner.java:42)<br/>	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:97)<br/>	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:62)<br/>	at org.apache.maven.surefire.suite.AbstractDirectoryTestSuite.executeTestSet(AbstractDirectoryTestSuite.java:140)<br/>	at org.apache.maven.surefire.suite.AbstractDirectoryTestSuite.execute(AbstractDirectoryTestSuite.java:127)<br/>	at org.apache.maven.surefire.Surefire.run(Surefire.java:177)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:592)<br/>	at org.apache.maven.surefire.booter.SurefireBooter.runSuitesInProcess(SurefireBooter.java:345)<br/>	at org.apache.maven.surefire.booter.SurefireBooter.main(SurefireBooter.java:1009)<br/>Caused by: java.lang.RuntimeException: set oid on [com.imilia.server.domain.common.PhoneContact] arg[null] type[com.imilia.server.domain.common.PhoneContact] threw error<br/>	at com.avaje.ebean.server.deploy.BeanProperty.setValue(BeanProperty.java:601)<br/>	at com.avaje.ebean.server.deploy.BeanProperty.readSet(BeanProperty.java:459)<br/>	... 80 more<br/>Caused by: java.lang.NullPointerException<br/>	at com.imilia.server.domain.common.PhoneContact._ebean_setField(PhoneContact.java:1)<br/>	at com.avaje.ebean.server.reflect.EnhanceBeanReflect$Setter.set(EnhanceBeanReflect.java:118)<br/>	at com.avaje.ebean.server.deploy.BeanProperty.setValue(BeanProperty.java:592)<br/>	... 81 more</p><p>testSaveAddress(com.imilia.bkf.service.SubscriptionServiceTest)  Time elapsed: 0.008 sec  <<< ERROR!<br/>javax.persistence.PersistenceException: Error readSet on com.imilia.server.domain.common.PhoneContact.oid<br/>	at com.avaje.ebean.server.deploy.BeanProperty.readSet(BeanProperty.java:464)<br/>	at com.avaje.ebean.server.deploy.id.IdBinderSimple.readSet(IdBinderSimple.java:109)<br/>	at com.avaje.ebean.server.query.SqlTreeNodeBean.load(SqlTreeNodeBean.java:224)<br/>	at com.avaje.ebean.server.query.SqlTreeNodeManyRoot.load(SqlTreeNodeManyRoot.java:30)<br/>	at com.avaje.ebean.server.query.SqlTreeNodeBean.load(SqlTreeNodeBean.java:290)<br/>	at com.avaje.ebean.server.query.CQuery.readRow(CQuery.java:557)<br/>	at com.avaje.ebean.server.query.CQuery.readBeanInternal(CQuery.java:594)<br/>	at com.avaje.ebean.server.query.CQuery.readTheRows(CQuery.java:675)<br/>	at com.avaje.ebean.server.query.CQuery.readCollection(CQuery.java:660)<br/>	at com.avaje.ebean.server.query.CQueryEngine.findMany(CQueryEngine.java:166)<br/>	at com.avaje.ebean.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:88)<br/>	at com.avaje.ebean.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:277)<br/>	at com.avaje.ebean.server.core.DefaultServer.findList(DefaultServer.java:1280)<br/>	at com.avaje.ebean.server.core.DefaultBeanLoader.loadMany(DefaultBeanLoader.java:143)<br/>	at com.avaje.ebean.server.core.DefaultServer.loadMany(DefaultServer.java:370)<br/>	at com.avaje.ebean.server.loadcontext.DLoadManyContext.loadMany(DLoadManyContext.java:143)<br/>	at com.avaje.ebean.common.AbstractBeanCollection.lazyLoadCollection(AbstractBeanCollection.java:140)<br/>	at com.avaje.ebean.common.BeanSet.init(BeanSet.java:110)<br/>	at com.avaje.ebean.common.BeanSet.iterator(BeanSet.java:234)<br/>	at com.imilia.server.service.impl.AddressServiceImpl.save(AddressServiceImpl.java:34)<br/>	at com.imilia.server.service.impl.AddressServiceImpl.save(AddressServiceImpl.java:21)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:592)<br/>	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:307)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:182)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:149)<br/>	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:106)<br/>	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:171)<br/>	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)<br/>	at $Proxy43.save(Unknown Source)<br/>	at com.imilia.bkf.service.SubscriptionServiceTest.testSaveAddress(SubscriptionServiceTest.java:100)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:592)<br/>	at org.springframework.test.context.junit4.SpringTestMethod.invoke(SpringTestMethod.java:160)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie.runTestMethod(SpringMethodRoadie.java:233)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie$RunBeforesThenTestThenAfters.run(SpringMethodRoadie.java:333)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie.runWithRepetitions(SpringMethodRoadie.java:217)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie.runTest(SpringMethodRoadie.java:197)<br/>	at org.springframework.test.context.junit4.SpringMethodRoadie.run(SpringMethodRoadie.java:143)<br/>	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.invokeTestMethod(SpringJUnit4ClassRunner.java:160)<br/>	at org.junit.internal.runners.JUnit4ClassRunner.runMethods(JUnit4ClassRunner.java:51)<br/>	at org.junit.internal.runners.JUnit4ClassRunner$1.run(JUnit4ClassRunner.java:44)<br/>	at org.junit.internal.runners.ClassRoadie.runUnprotected(ClassRoadie.java:27)<br/>	at org.junit.internal.runners.ClassRoadie.runProtected(ClassRoadie.java:37)<br/>	at org.junit.internal.runners.JUnit4ClassRunner.run(JUnit4ClassRunner.java:42)<br/>	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:97)<br/>	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:62)<br/>	at org.apache.maven.surefire.suite.AbstractDirectoryTestSuite.executeTestSet(AbstractDirectoryTestSuite.java:140)<br/>	at org.apache.maven.surefire.suite.AbstractDirectoryTestSuite.execute(AbstractDirectoryTestSuite.java:127)<br/>	at org.apache.maven.surefire.Surefire.run(Surefire.java:177)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:592)<br/>	at org.apache.maven.surefire.booter.SurefireBooter.runSuitesInProcess(SurefireBooter.java:345)<br/>	at org.apache.maven.surefire.booter.SurefireBooter.main(SurefireBooter.java:1009)<br/>Caused by: java.lang.RuntimeException: set oid on [com.imilia.server.domain.common.PhoneContact] arg[null] type[com.imilia.server.domain.common.PhoneContact] threw error<br/>	at com.avaje.ebean.server.deploy.BeanProperty.setValue(BeanProperty.java:601)<br/>	at com.avaje.ebean.server.deploy.BeanProperty.readSet(BeanProperty.java:459)<br/>	... 59 more<br/>Caused by: java.lang.NullPointerException<br/>	at com.imilia.server.domain.common.PhoneContact._ebean_setField(PhoneContact.java:1)<br/>	at com.avaje.ebean.server.reflect.EnhanceBeanReflect$Setter.set(EnhanceBeanReflect.java:118)<br/>	at com.avaje.ebean.server.deploy.BeanProperty.setValue(BeanProperty.java:592)<br/>	... 60 more</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+30 Nov&nbsp;07:57
+</div>
+Issue
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>The issue ... is specific to primitive id properties.</p><p>Specifically when we read from the resultSet we can always get a null (even for int and long etc). The fix is for IdBinders to specifically check for the case of trying to set null ids.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+30 Nov&nbsp;08:07
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="182">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-182.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="182">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

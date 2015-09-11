@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: wrong sql generated from criteria when entity with many-to-one assoc</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="imario">
+<meta name="description" content="I have an entity with two ManyToOne proerties and try to make a query to this property using the criteria api This leads to a wrongly created sql as the join is added twice See the generated sql select t ID c0 t VERSION c1 t SRCDATA c2 t DSTDATA c3 t EVENT SOURCE IDENTIFIER c4 ts type c5 t SRC c6 td type c7 t DST c8 from ops topology t left outer join ops zones ts on ts SID t SRC left outer join ops zones td on td SID t DST left outer join ops zones td on td SID t DST left outer join ops zones ts on ts SID t SRC where t EVENT SOURCE IDENTIFIER and ts ZID and td ZID The reason is due to SqlTreeNodeBean where the join is added at line 428 and 432 where the appendFrom is called on the properties AND the children I am going to create a test case now ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-164.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 164 : wrong sql generated from criteria when entity with many-to-one assoc
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 164 : wrong sql generated from criteria when entity with many-to-one assoc </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">imario</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.2.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">06/10/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">06/10/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>I have an entity with two ManyToOne proerties and try to make a query to this property using the criteria api.</p><p>This leads to a wrongly created sql as the join is added twice.</p><p>See the generated sql:<br/>select t.ID c0, t.VERSION c1, t.SRCDATA c2, t.DSTDATA c3, t.EVENT_SOURCE_IDENTIFIER c4, ts.type c5, t.SRC c6, td.type c7, t.DST c8 <br/>from ops_topology t<br/>left outer join ops_zones ts on ts.SID = t.SRC <br/>left outer join ops_zones td on td.SID = t.DST <br/>left outer join ops_zones td on td.SID = t.DST <br/>left outer join ops_zones ts on ts.SID = t.SRC  <br/>where t.EVENT_SOURCE_IDENTIFIER = ?  and ts.ZID = ?  and td.ZID = ? </p><p><br/>The reason is due to SqlTreeNodeBean where the join is added at line 428 and 432 where the appendFrom is called on the properties AND the children.</p><p>I am going to create a test case now.</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+06 Oct&nbsp;11:43
+</div>
+inheritance
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Ok, the problem only shows up if the target property in the entity uses inheritance. In the above example the OPS_ZONES is twice in OPS_TOPOLOGY (namely SRC and DST) and OPS_ZONES itself has some subclasses.</p><p>In BeanPropertyAssocOne this forces the ebean to add the join, later then in SqlTreeNodeBean the join gets added again for each element in the "children" array.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+06 Oct&nbsp;12:00
+</div>
+test committed
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I've extended the TestInheritInsert by a testQuery() method.</p><p>This will show two bugs:</p><p>1) The VehicleDriver will not insert due to an NullPointerException regarding gettig the id.<br/>2) If 1 is fixed, it will show the duplicate added join stuff due to the inheritance of "vehicle"</p><p><br/>The NPE for 1:<br/>java.lang.RuntimeException: get id on [com.avaje.tests.model.basic.Vehicle] type[com.avaje.tests.model.basic.Car] threw error.<br/>	at com.avaje.ebean.server.deploy.BeanProperty.getValue(BeanProperty.java:648)<br/>	at com.avaje.ebean.server.deploy.id.ImportedIdSimple.bind(ImportedIdSimple.java:103)<br/>	at com.avaje.ebean.server.persist.dmlbind.BindableAssocOne.dmlBind(BindableAssocOne.java:75)<br/>	at com.avaje.ebean.server.persist.dmlbind.BindableList.dmlBind(BindableList.java:62)<br/>	at com.avaje.ebean.server.persist.dml.InsertMeta.bind(InsertMeta.java:152)<br/>	at com.avaje.ebean.server.persist.dml.InsertHandler.bind(InsertHandler.java:124)<br/>	at com.avaje.ebean.server.persist.dml.DmlBeanPersister.execute(DmlBeanPersister.java:96)<br/>	at com.avaje.ebean.server.persist.dml.DmlBeanPersister.insert(DmlBeanPersister.java:74)<br/>	at com.avaje.ebean.server.persist.DefaultPersistExecute.executeInsertBean(DefaultPersistExecute.java:94)<br/>	at com.avaje.ebean.server.core.PersistRequestBean.executeNow(PersistRequestBean.java:341)<br/>	at com.avaje.ebean.server.core.PersistRequestBean.executeOrQueue(PersistRequestBean.java:371)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.insert(DefaultPersister.java:256)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.save(DefaultPersister.java:202)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.saveRecurse(DefaultPersister.java:172)<br/>	at com.avaje.ebean.server.persist.DefaultPersister.save(DefaultPersister.java:161)<br/>	at com.avaje.ebean.server.core.DefaultServer.save(DefaultServer.java:1442)<br/>	at com.avaje.ebean.server.core.DefaultServer.save(DefaultServer.java:1432)<br/>	at com.avaje.ebean.Ebean.save(Ebean.java:522)<br/>	at com.avaje.tests.inheritance.TestInheritInsert.testQuery(TestInheritInsert.java:36)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:40)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:90)<br/>Caused by: java.lang.NullPointerException<br/>	at com.avaje.ebean.server.deploy.BeanProperty.getValue(BeanProperty.java:640)<br/>	... 39 more</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+06 Oct&nbsp;12:02
+</div>
+the sql
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>As a workaround to get faster to 2 one can comment the line<br/>driver.setVehicle(car)</p><p>Then the sql looks like this:</p><p>select v.id c0, v.name c1, v.cretime c2, v.updtime c3, vv.DTYPE c4, v.vehicle_id c5 <br/>from vehicle_driver v<br/>left outer join vehicle vv on vv.id = v.vehicle_id <br/>left outer join vehicle vv on vv.id = v.vehicle_id  <br/>where vv.license_number = ?</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+06 Oct&nbsp;12:17
+</div>
+forget NPE (1)
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>my project was not cleanly compiled. sorry.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+06 Oct&nbsp;12:46
+</div>
+have a patch
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>by moving the addJoin from deploy.TableJoin into the DbSqlContext which than can keep track of which joins have been added I fixed it here.</p><p>I'll send the patch for review to Rob using email.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+06 Oct&nbsp;12:47
+</div>
+NPE is back again
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>when using the maven build. Seems than subclassing is used instead of weaving and a bug is uncovered here? Building ebean using weaving with my IDE the NPE does not happen.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+10 Oct&nbsp;22:44
+</div>
+The NPE
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Yes, the NPE is a bug. The ManyToOne is an inheritance hierarchy with the @Id property on an abstract class (the root of the inheritance tree is abstract). So this is the cause for the NPE - I'll log that as a separate bug.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+10 Oct&nbsp;23:10
+</div>
+Logged the NPE as Bug 166.
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Logged the NPE as <a href="http://www.avaje.org/bugdetail-166.html">http://www.avaje.org/bugdetail-166.html</a></p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+28 Oct&nbsp;07:33
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="164">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-164.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="164">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

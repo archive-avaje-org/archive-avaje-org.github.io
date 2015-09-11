@@ -1,0 +1,303 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Whitepapers</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Whitepapers">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+table#whitepapers td {padding:1em; border:1px solid #ccc; }
+</style>
+
+
+</head>
+
+<body>
+<form action='/whitepaper.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <span>Whitepapers</span>
+</div>
+
+
+
+
+
+
+
+
+<h3>Whitepapers</h3>
+
+<table id="whitepapers">
+<tr>
+<td><a href="autofetch.html">AutoFetch</a></td>
+<td>
+Description of "AutoFetch" - automatic ORM query tuning.
+</td>
+</tr>
+
+<tr>
+<td><a href="occ.html">Optimistic Concurrency Checking</a></td>
+<td>
+One of the fundamental requirements of a Persistence layer. This gives the background
+to Optimistic Concurrency Checking (Also known as Optimistic Locking) and how it 
+generally works against a Database. This is background information required to 
+understand the fundamental Architectural difference between JPA and Ebean.
+</td>
+</tr>
+
+<tr>
+<td><a href="jpa.html">JPA Architecture Issue</a></td>
+<td>
+The JPA architecture will give Developers unwanted complications when running outside of a container.
+Take a closer look at the Session Management burden and implications for Optimistic Concurrency
+checking in JPA.
+</td>
+</tr>
+
+<tr>
+<td><a href="jpaapi.html">JPA API Issues</a></td>
+<td>
+There are several interesting ommissions from the JPA API that need to be explored.
+These include Batching, Caching, Entity Listeners, Raw JDBC, Transaction Isolation and 
+Large Query Support.
+</td>
+</tr>
+
+<tr>
+<td><a href="design.html">Design Philosophy</a></td>
+<td>
+The Design Philosophy behind Ebean leading to both ORM and Relational features.
+ORM is great, but sometimes Relational is better.
+</td>
+</tr>
+
+<tr>
+<td><a href="limitation.html">Limitations</a></td>
+<td>
+The known limitations and restrictions in Ebean. Looking at some of the potential objections
+to using Ebean.
+</td>
+</tr>
+
+<tr>
+<td><a href="configure.html">Configuration</a></td>
+<td>
+Getting Ebean Installed and Configured. This is followed by <a href="getstarted.html">Getting Started</a>.
+Configuring <a href="plugin.html">BasePlugin</a> for a specific Database.
+Configuring to run in a <a href="servletcontainer.html">Servlet Container<a>.
+</td>
+</tr>
+
+<tr>
+<td><a href="codegen.html">Entity Bean Generator</a></td>
+<td>
+Generating Annotated Entity Beans from your Database schema by
+Installing, configuring and running the Code Generator.
+</td>
+</tr>
+
+
+<tr>
+<td><a href="lazy.html">Lazy Loading</a></td>
+<td>
+Lazy loading "just works" - no fuss, no bother. You should understand
+the issues of how Transaction Isolation and Transaction Demarcation will
+effect the lazy loading. This includes the "Most Recent" versus "Read Consistent"
+nature of READ_COMMITTED Transaction Isolation.
+</td>
+</tr>
+
+<tr>
+<td><a href="equals.html">equals and hashcode</a></td>
+<td>
+Four options for handling the issue of equals and hashcode with Ebean. 
+This includes UUID and the "Gerry Power" technique.
+</td>
+</tr>
+
+<tr>
+<td><a href="cascade.html">Save and Delete Cascade</a></td>
+<td>
+How cascading of Save and Delete works. The issue of Batching Order for
+save and deletes that are batched.
+</td>
+</tr>
+
+<tr>
+<td><a href="batching.html">Batching</a></td>
+<td>
+Transparent Batching. Batching of UpdateSql, CallableSql compared with
+batching of Beans.
+</td>
+</tr>
+
+<tr>
+<td><a href="bytecode.html">Byte Code Generation</a></td>
+<td>
+The use of Byte Code generation in Ebean. ASM - asm.objectweb.org, 
+"Vanilla" Beans, "Dynamically generated subclasses" and method interception.
+</td>
+</tr>
+
+<tr>
+<td><a href="typeinheritance.html">Type Inheritance</a></td>
+<td>
+Is Inheritance ORM's Ugly Duckling? SQL3 Type Inheritance and Table Inheritance
+with Postgres and Virtuoso.
+</td>
+</tr>
+
+<tr>
+<td><a href="rowid.html">ROWID</a></td>
+<td>
+Why a Physical ROWID is interesting for ORM, Oracle ROWID and JDBC4 RowId datatype.
+</td>
+</tr>
+
+<tr>
+<td><a href="ormupdate.html">ORM Updates and Deletes in a Stateless environment</a></td>
+<td>
+In a Stateless environment ORM updates and Deletes can bypass Optimistic Concurrency Checking.
+</td>
+</tr>
+
+<tr>
+<td><a href="manydatatypes.html">List Set Map or Collection?</a></td>
+<td>
+For OneToMany and ManyToMany properties should you use List Set Map or Collection?
+What are the issues involved.
+</td>
+</tr>
+
+<tr>
+<td><a href="persistencecontext.html">Persistence Context</a></td>
+<td>
+An explanation of the Persistence Context in Ebean. Specifically its role
+in the process of building a consistent Object graph from relational
+result sets.
+</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

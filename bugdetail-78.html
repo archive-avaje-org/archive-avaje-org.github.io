@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: allow to configure autofetch directory</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="imario">
+<meta name="description" content="This patch allows to configure the autofetch statistic to be in a different directory than the dictionary example ebean autofetch directory user home avaje autofetch Index ebean src com avaje ebean server resource DefaultResourceManagerFactory java ebean src com avaje ebean server resource DefaultResourceManagerFactory java revision 141 ebean src com avaje ebean server resource DefaultResourceManagerFactory java Tue Feb 24 11 52 10 CET 2009 19 12 19 6 package com avaje ebean server resource import java io File import java util logging Logger import javax persistence PersistenceException import javax servlet ServletContext import com avaje ebean server lib GlobalProperties import com avaje ebean server lib resource DirectoryFinder import com avaje ebean server lib resource FileResourceSourc">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-78.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 78 : allow to configure autofetch directory
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 78 : allow to configure autofetch directory </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">imario</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">1.1.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">24/02/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">24/02/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>This patch allows to configure the autofetch statistic to be in a different directory than the dictionary.</p><p>example<br/>ebean.autofetch.directory=${user.home}/avaje/autofetch</p><p><br/>Index: ../ebean/src/com/avaje/ebean/server/resource/DefaultResourceManagerFactory.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/resource/DefaultResourceManagerFactory.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/server/resource/DefaultResourceManagerFactory.java	Tue Feb 24 11:52:10 CET 2009<br/>@@ -19,12 +19,6 @@<br/>  */<br/> package com.avaje.ebean.server.resource;<br/> <br/>-import java.io.File;<br/>-import java.util.logging.Logger;<br/>-<br/>-import javax.persistence.PersistenceException;<br/>-import javax.servlet.ServletContext;<br/>-<br/> import com.avaje.ebean.server.lib.GlobalProperties;<br/> import com.avaje.ebean.server.lib.resource.DirectoryFinder;<br/> import com.avaje.ebean.server.lib.resource.FileResourceSource;<br/>@@ -34,6 +28,11 @@<br/> import com.avaje.ebean.server.plugin.PluginProperties;<br/> import com.avaje.lib.log.LogFactory;<br/> <br/>+import javax.persistence.PersistenceException;<br/>+import javax.servlet.ServletContext;<br/>+import java.io.File;<br/>+import java.util.logging.Logger;<br/>+<br/> /**<br/>  * Creates a ResourceManager for a server depending on the avaje.properties.<br/>  * <p><br/>@@ -61,9 +60,10 @@<br/> <br/> 		ResourceSource resourceSource = createResourceSource();<br/> 		File dictDir = getDictionaryDir(resourceSource);<br/>+        File autofetchDir = getAutofetchDir(resourceSource);<br/> 		File idxDir = getIndexDir(dictDir);<br/> <br/>-		return new DefaultResourceManager(resourceSource, dictDir, idxDir);<br/>+		return new DefaultResourceManager(resourceSource, dictDir, idxDir, autofetchDir);<br/> 	}<br/> <br/> 	/**<br/>@@ -102,7 +102,28 @@<br/> 		}<br/> 	}<br/> <br/>-	/**<br/>+    /**<br/>+     * Return the directory that autofetch serialized file goes into.<br/>+     */<br/>+    protected File getAutofetchDir(ResourceSource resourceSource) {<br/>+<br/>+        String dir = properties.getProperty("autofetch.directory", null);<br/>+        if (dir != null) {<br/>+            return new File(dir);<br/>+        }<br/>+<br/>+        String realPath = resourceSource.getRealPath();<br/>+        if (realPath != null) {<br/>+            // same location as the sql files<br/>+            return new File(realPath);<br/>+<br/>+        } else {<br/>+            // be compatible to previous behaviour<br/>+            return getDictionaryDir(resourceSource);<br/>+        }<br/>+    }<br/>+<br/>+	/**<br/> 	 * Return the resource loader for external sql files.<br/> 	 * <p><br/> 	 * This can be url based (for webapps) or otherwise file based.<br/>Index: ../ebean/src/com/avaje/ebean/server/resource/DefaultResourceManager.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/resource/DefaultResourceManager.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/server/resource/DefaultResourceManager.java	Tue Feb 24 11:53:49 CET 2009<br/>@@ -19,14 +19,13 @@<br/>  */<br/> package com.avaje.ebean.server.resource;<br/> <br/>-import java.io.File;<br/>-import java.io.IOException;<br/>-<br/>-import javax.persistence.PersistenceException;<br/>-<br/> import com.avaje.ebean.server.lib.resource.ResourceContent;<br/> import com.avaje.ebean.server.lib.resource.ResourceSource;<br/> <br/>+import javax.persistence.PersistenceException;<br/>+import java.io.File;<br/>+import java.io.IOException;<br/>+<br/> /**<br/>  * The default ResourceManager implementation.<br/>  */<br/>@@ -37,11 +36,14 @@<br/> 	final File dictionaryFile;<br/> 	<br/> 	final File indexDirectory;<br/>-	<br/>+<br/>-	public DefaultResourceManager(ResourceSource resourceSource, File dictionaryFile, File indexDirectory) {<br/>+    final File autofetchDir;<br/>+<br/>+	public DefaultResourceManager(ResourceSource resourceSource, File dictionaryFile, File indexDirectory, File autofetchDir) {<br/> 		this.resourceSource = resourceSource;<br/> 		this.dictionaryFile = dictionaryFile;<br/> 		this.indexDirectory = indexDirectory;<br/>+        this.autofetchDir = autofetchDir;<br/> 	}<br/> 	<br/> 	public ResourceSource getResourceSource() {<br/>@@ -52,6 +54,10 @@<br/> 		return dictionaryFile;<br/> 	}<br/> <br/>+    public File getAutofetchDirectory() {<br/>+        return autofetchDir;<br/>+    }<br/>+<br/> 	public File getIndexDirectory() {<br/> 		return indexDirectory;<br/> 	}<br/>Index: ../ebean/src/com/avaje/ebean/server/resource/ResourceManager.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/resource/ResourceManager.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/server/resource/ResourceManager.java	Tue Feb 24 11:53:49 CET 2009<br/>@@ -19,10 +19,10 @@<br/>  */<br/> package com.avaje.ebean.server.resource;<br/> <br/>-import java.io.File;<br/>-<br/> import com.avaje.ebean.server.lib.resource.ResourceSource;<br/> <br/>+import java.io.File;<br/>+<br/> /**<br/>  * Controls access to the required resources.<br/>  */<br/>@@ -36,7 +36,15 @@<br/> 	 */<br/> 	public File getDictionaryDirectory();<br/> <br/>-	/**<br/>+    /**<br/>+     * Return the directory the autofetch statistic is serialized to.<br/>+     * <p><br/>+     * This needs to be a directory with read/write permissions.<br/>+     * </p><br/>+     */<br/>+    public File getAutofetchDirectory();<br/>+<br/>+	/**<br/> 	 * Return the directory to put lucene indexes in.<br/> 	 * <p><br/> 	 * This needs to be a directory with read/write permissions.<br/>Index: ../ebean/src/com/avaje/ebean/server/plugin/PluginDbConfig.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/plugin/PluginDbConfig.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/server/plugin/PluginDbConfig.java	Tue Feb 24 12:02:16 CET 2009<br/>@@ -19,15 +19,6 @@<br/>  */<br/> package com.avaje.ebean.server.plugin;<br/> <br/>-import java.io.File;<br/>-import java.io.FileInputStream;<br/>-import java.io.ObjectInputStream;<br/>-import java.util.logging.Level;<br/>-import java.util.logging.Logger;<br/>-<br/>-import javax.persistence.PersistenceException;<br/>-import javax.sql.DataSource;<br/>-<br/> import com.avaje.ebean.server.autofetch.AutoFetchManager;<br/> import com.avaje.ebean.server.autofetch.DefaultAutoFetchManager;<br/> import com.avaje.ebean.server.core.InternalEbeanServer;<br/>@@ -44,6 +35,14 @@<br/> import com.avaje.ebean.util.Message;<br/> import com.avaje.lib.log.LogFactory;<br/> <br/>+import javax.persistence.PersistenceException;<br/>+import javax.sql.DataSource;<br/>+import java.io.File;<br/>+import java.io.FileInputStream;<br/>+import java.io.ObjectInputStream;<br/>+import java.util.logging.Level;<br/>+import java.util.logging.Logger;<br/>+<br/> /**<br/>  * Plugin level that defines database specific settings.<br/>  */<br/>@@ -307,7 +306,7 @@<br/> 		fileName = ".ebean."+fileName+".autofetch";<br/> <br/> 		// autoFetch file in same directory as dictionary<br/>-		File dictDir = resourceManager.getDictionaryDirectory();<br/>+		File dictDir = resourceManager.getAutofetchDirectory();<br/> <br/> 		if (!dictDir.exists()) {<br/> 			// automatically create the directory if it does not exist.</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+25 Feb&nbsp;10:42
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Yup - happy with those changes. Committed them into HEAD.</p><p>Will also convert over from ENH to BUG.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="78">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-78.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="78">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

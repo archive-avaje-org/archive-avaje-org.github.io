@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Ebean Introduction</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Introduction to Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+h3 {font-size:200%;}
+div.col65 {border:0px solid red;margin-bottom:20px;}
+div.col30 {width:20%; padding:5px 20px; border:0px solid red;text-align:right;}
+</style>
+
+
+</head>
+
+<body>
+<form action='/ebean/introduction.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <span>Ebean</span>
+</div>
+
+
+
+
+
+
+<h3>Ebean Introduction</h3>
+<div class="col30">
+<p>
+<a class="h3" href="https://sourceforge.net/projects/ebeanorm/files/">Download example Application</a>
+</p>
+</div>
+<div class="col65">
+<p>
+There is an example application that is bundled with a H2 database.
+You can download and unzip the example. It is an eclipse project but
+if you are using another IDE it should be pretty simple to get running.
+</p>
+<p>
+<a href="https://sourceforge.net/projects/ebeanorm/files/">... download here</a>
+</p>
+</div>
+<div class="colend"></div>
+
+<div class="col30">
+<p>
+<a class="h3" href="/ebean/introquery.html">Queries</a>
+</p>
+</div>
+<div class="col65">
+<p>
+Introduction to executing queries with Ebean.
+<ul>
+<li><a href="/ebean/introquery.html">Basics</a></li>
+<li><a href="/ebean/introquery_join.html">Fetch paths</a></li>
+<li><a href="introquery_joinquery.html">Query Joins - FetchConfig</a></li>
+<li><a href="/ebean/introquery_partialobject.html">Partial Objects</a></li>
+<li><a href="/ebean/introquery_autofetch.html">"Autofetch" - Automatic Query tuning</a></li>
+<li><a href="/ebean/introquery_future.html">Asynchronous Query Execution</a></li>
+<li><a href="/ebean/introquery_paginglist.html">PagingList</a></li>
+<li><a href="/ebean/introquery_rawsql.html">RawSql</a></li>
+</ul>
+</p>
+</div>
+<div class="colend"></div>
+
+
+
+<div class="col30">
+<p>
+<a class="h3" href="/ebean/intropartialobjects.html">Partial Objects</a>
+</p>
+</div>
+<div class="col65">
+<p>
+Ebean supports fetching and saving partial objects.
+This is an important feature for both performance and design.
+</p>
+<p>
+<a href="/ebean/intropartialobjects.html">... more info</a>
+</p>
+</div>
+<div class="colend"></div>
+
+<div class="col30">
+<p>
+<a class="h3" href="/ebean/introsavedelete.html">Save and Delete</a>
+</p>
+</div>
+<div class="col65">
+<p>
+Save and Delete is pretty simple with Ebean.
+</p>
+<p>
+<a href="/ebean/introsavedelete.html">... more info</a>
+</p>
+</div>
+<div class="colend"></div>
+
+<div class="col30">
+<p>
+<a class="h3" href="/ebean/introtrans.html">Transactions</a>
+</p>
+</div>
+<div class="col65">
+<p>
+There are a number of ways to demarcate your transactions in Ebean.
+These including declaratively via @Transactional or several programatic
+approaches.
+<ul>
+<li><a href="introtrans.html">Implicit Transactions</a></li>
+<li><a href="introtrans_transactional.html">@Transactional</a></li>
+<li><a href="introtrans_txrunnable.html">TxRunnable & TxCallable</a></li>
+<li><a href="introtrans_begin.html">begin, commit, rollback, end</a></li>
+</ul>
+</p>
+<p>
+<a href="/ebean/introtrans.html">... more info</a>
+</p>
+</div>
+<div class="colend"></div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

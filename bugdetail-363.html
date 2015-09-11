@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: Unique index or primary key violation: ... when saving collection</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="Hi I believe I m hitting the following issue I have X1 and X2 that are new objects They both rely on Y The entities are set to cascade persist When i do this it fails with a primary key violation presumably because Y is already persisted pseudo code X1 setY Y X2 setY Y List a new List add X1 add X2 ebeanServer save a primary key violation on Y When i explicitly insert a transaction in there and set the mode to batch the primary key violation disappears Could ebean be changed so that an implicit transaction is opened on save collection The problem really is that ebean is trying to do a insert on the second Y when really Y now does exist in the DB store Or am i missing something Chris Works final User u new User u setEmailAddress test test com u setName Mr Test u setPassword password final L">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-363.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 363 : Unique index or primary key violation: ... when saving collection
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 363 : Unique index or primary key violation: ... when saving collection </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Rob</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.7.3</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">22/03/2011</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">22/03/2011</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>Hi</p><p>I believe I'm hitting the following issue.</p><p>I have X1 and X2 that are new objects. They both rely on Y. The<br/>entities are set to "cascade persist".</p><p>When i do this, it fails with a primary key violation, presumably<br/>because Y is already persisted. (pseudo code)</p><p>X1.setY(Y);<br/>X2.setY(Y);<br/>List a = new List().add(X1).add(X2);<br/>ebeanServer.save(a); //primary key violation on Y.</p><p>When i explicitly insert a transaction in there, and set the mode to<br/>batch, the primary key violation disappears.<br/>Could ebean be changed so that an implicit transaction is opened on<br/>save(collection) ?</p><p>The problem really is that ebean is trying to do a insert on the<br/>second Y, when really Y now does exist in the DB store.</p><p><br/>Or am i missing something?<br/>Chris</p><p></p><p>Works:<br/>==========<br/>       final User u = new User();<br/>       u.setEmailAddress("test@test.com");<br/>       u.setName("Mr Test");<br/>       u.setPassword("password");</p><p>       final List<Bookmark> bookmarks = new ArrayList<Bookmark>();<br/>       final Bookmark b1 = new Bookmark();<br/>       b1.setBookmarkReference("Acts 2:7-20");<br/>       b1.setUser(u);</p><p>       final Bookmark b2 = new Bookmark();<br/>       b2.setBookmarkReference("Acts 7:1-20");<br/>       b2.setUser(u);</p><p>       bookmarks.add(b1);<br/>       bookmarks.add(b2);</p><p>       final Transaction tx = this.ebean.beginTransaction();<br/>       tx.setBatchMode(true);<br/>       this.ebean.save(bookmarks);<br/>       tx.commit();<br/>       this.ebean.endTransaction();</p><p>Doesn't work:</p><p>       final User u = new User();<br/>       u.setEmailAddress("test@test.com");<br/>       u.setName("Mr Test");<br/>       u.setPassword("password");</p><p>       final List<Bookmark> bookmarks = new ArrayList<Bookmark>();<br/>       final Bookmark b1 = new Bookmark();<br/>       b1.setBookmarkReference("Acts 2:7-20");<br/>       b1.setUser(u);</p><p>       final Bookmark b2 = new Bookmark();<br/>       b2.setBookmarkReference("Acts 7:1-20");<br/>       b2.setUser(u);</p><p>       bookmarks.add(b1);<br/>       bookmarks.add(b2);</p><p>       this.ebean.save(bookmarks);</p><p><br/>======<br/>user</p><p>package com.tyndalehouse.step.core.data.entities;</p><p>import javax.persistence.Column;<br/>import javax.persistence.Entity;<br/>import javax.persistence.GeneratedValue;<br/>import javax.persistence.Id;</p><p>/**<br/> * represents a user entity. A user contains a username and password.<br/> *<br/> * @author Chris<br/> *<br/> */<br/>@Entity<br/>public class User {<br/>   @Id<br/>   @GeneratedValue<br/>   private Integer id;</p><p>   @Column<br/>   private String name;</p><p>   @Column<br/>   private String password;</p><p>   @Column<br/>   private String emailAddress;</p><p>   @Column<br/>   private String country;</p><p>   /**<br/>    * @return the id<br/>    */<br/>   public Integer getId() {<br/>       return this.id;<br/>   }</p><p>   /**<br/>    * @param id the id to set<br/>    */<br/>   public void setId(final Integer id) {<br/>       this.id = id;<br/>   }</p><p>   /**<br/>    * @return the password<br/>    */<br/>   public String getPassword() {<br/>       return this.password;<br/>   }</p><p>   /**<br/>    * @param password the password to set<br/>    */<br/>   public void setPassword(final String password) {<br/>       this.password = password;<br/>   }</p><p>   /**<br/>    * @return the name<br/>    */<br/>   public String getName() {<br/>       return this.name;<br/>   }</p><p>   /**<br/>    * @param name the name to set<br/>    */<br/>   public void setName(final String name) {<br/>       this.name = name;<br/>   }</p><p>   /**<br/>    * @return the emailAddress<br/>    */<br/>   public String getEmailAddress() {<br/>       return this.emailAddress;<br/>   }</p><p>   /**<br/>    * @param emailAddress the emailAddress to set<br/>    */<br/>   public void setEmailAddress(final String emailAddress) {<br/>       this.emailAddress = emailAddress;<br/>   }</p><p>   /**<br/>    * @return the country<br/>    */<br/>   public String getCountry() {<br/>       return this.country;<br/>   }</p><p>   /**<br/>    * @param country the country to set<br/>    */<br/>   public void setCountry(final String country) {<br/>       this.country = country;<br/>   }<br/>}</p><p><br/>=====</p><p>package com.tyndalehouse.step.core.data.entities;</p><p>import javax.persistence.CascadeType;<br/>import javax.persistence.Column;<br/>import javax.persistence.Entity;<br/>import javax.persistence.GeneratedValue;<br/>import javax.persistence.Id;<br/>import javax.persistence.ManyToOne;</p><p>/**<br/> * A user may have multiple bookmarks<br/> *<br/> * @author Chris<br/> *<br/> */<br/>@Entity<br/>public class Bookmark {<br/>   @Id<br/>   @GeneratedValue<br/>   private Integer id;</p><p>   @Column<br/>   private String bookmarkReference;</p><p>   @ManyToOne(cascade = CascadeType.PERSIST)<br/>   @Column<br/>   private User user;</p><p>   /**<br/>    * @return the id<br/>    */<br/>   public Integer getId() {<br/>       return this.id;<br/>   }</p><p>   /**<br/>    * @param id the id to set<br/>    */<br/>   public void setId(final Integer id) {<br/>       this.id = id;<br/>   }</p><p>   /**<br/>    * @return the bookmarkReference<br/>    */<br/>   public String getBookmarkReference() {<br/>       return this.bookmarkReference;<br/>   }</p><p>   /**<br/>    * @param bookmarkReference the bookmarkReference to set<br/>    */<br/>   public void setBookmarkReference(final String bookmarkReference) {<br/>       this.bookmarkReference = bookmarkReference;<br/>   }</p><p>   /**<br/>    * @return the user<br/>    */<br/>   public User getUser() {<br/>       return this.user;<br/>   }</p><p>   /**<br/>    * @param user the user to set<br/>    */<br/>   public void setUser(final User user) {<br/>       this.user = user;<br/>   }<br/>}</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+22 Mar&nbsp;12:33
+</div>
+Reproduced:
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I was able to reproduce this. To reproduce you must use subclassing (not enhanced beans) and the issue is that the User has no version property (so Ebean tries to insert the User twice).</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+22 Mar&nbsp;12:37
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>fixed in HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="363">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-363.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="363">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

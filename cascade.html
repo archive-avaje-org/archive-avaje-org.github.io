@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Cascading Save and Delete</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="How cascading of save and delete works in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/cascade.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Cascading Save and Delete</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+<h3>Cascading Save and Delete</h3>
+<ul>
+<li><a href="#save">Save Cascading</a></li>
+<li><a href="#delete">Delete Cascading</a></li>
+<li><a href="#batch">Batching Order</a></li>
+</ul>
+<p>
+To explan how cascading of save (inserts updates) and deletes work I am going to
+use the example of Address, Customer, Order and OrderDetail objects.
+</p>
+<p>
+They related in a standard way and each of the relationships has the cascade ALL
+annotation so that save and delete cascade.
+</p>
+<pre>
+<code>
+...
+@Entity
+class Address {
+
+}
+
+...
+@Entity
+class Customer {
+  
+  @ManyToOne(cascade=CascadeType.ALL)
+  Address billingAddress;
+  
+  @ManyToOne(cascade=CascadeType.ALL)
+  Address shippingAddress;
+}
+
+...
+@Entity
+class Order
+
+  @ManyToOne(cascade=CascadeType.ALL)
+  Customer customer;
+
+  @OneToMany(cascade=CascadeType.ALL)
+  List&lt;OrderDetail&gt; details;
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
+  }
+
+  public List&lt;OrderDetail&gt; getDetails() {
+    return details;
+  }
+
+  public void setDetails(List&lt;OrderDetail&gt; details) {
+    this.details = details;
+  }
+...
+}
+
+...
+@Entity
+class OrderDetail {
+...
+  @ManyToOne
+  Order order;
+
+  public Order getOrder() {
+    return order;
+  }
+
+  public void setOrder(Order order) {
+    this.order = order;
+  }
+}
+
+
+</code>
+</pre>
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="occ.html" title="Explanation of Optimistic Concurrency Checking">Optimistic Concurrency Checking</a></li>
+<li><a href="transiso.html">Transaction Isolation</a></li>
+<li><a href="design.html" title="How Lazy Loading works">Lazy Loading</a></li>
+<li><a href="equals.html" >equals and hashcode</a></li>
+<li><a href="managedrelationship.html" >Managed Relationships</a></li>
+</ul>
+</div>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="save"></a>Save Cascading</h4>
+
+<p>
+Cascading Save is a recursive process that could be described as "walking the object graph".
+The general algorithm for save goes:
+</p>
+<ul>
+<li>Prior to saving a bean we save its ManyToOne associations (And appropriate OneToOnes)</li>
+<li>Then we save the bean itself</li>
+<li>Then we save any OneToMany, ManyToMany (And appropriate OneToOnes)</li>
+</ul>
+<p>
+Note: OneToOnes will occur prior and post saving the bean depending on whether the OneToOne owns
+the foreign key or not. If that doesn't make sense don't worry too much.
+</p>
+<pre>
+<code>
+  Order order = ....
+
+  // assume:
+  // the order has a customer
+  // the customer has a billing and shipping address
+  // the order has details
+
+  Ebean.save(order);
+</code>
+</pre>
+<p>
+In this example the order is:
+</p>
+
+<ul>
+<li>Ebean.save(order)...</li>
+<li>Prior to saving the 'order' we save the 'customer'</li>
+<li>... this takes us to the customer</li>
+<li>Prior to saving the 'customer' we save the billingAddress</li>
+<li><b>SAVE billingAddress</b></li>
+<li>... billingAddress has no OneToMany's etc</li>
+<li>Prior to saving the 'customer' we save the shippingAddress</li>
+<li><b>SAVE shippingAddress</b></li>
+<li>... shippingAddress has no OneToMany's etc</li>
+<li><b>SAVE customer</b></li>
+<li>... customer has no OneToMany's etc</li>
+<li><b>SAVE order</b></li>
+<li><b>SAVE order details</b></li>
+
+</ul>
+<p>
+A "Relational" way of describing this is that we go "up the imported foreign keys", then save the
+bean, then go "down the exported foreign keys".
+</p>
+<p>
+Perhaps another way of thinking about this is to take the example where every object is new and 
+will need to be inserted.
+</p>
+<p>Before we save the order we need the customer_id so we need to save customer first.
+BUT before we save customer we need the billing_address_id so we need to save billingAddress first.
+... etc.
+At the other end, we need to save the order to get the order_id BEFORE we save the order details.
+</p>
+<h4><a id="delete"></a>Delete Cascading</h4>
+<p>
+Delete cascading is very similar except the order is reversed.
+</p>
+<ul>
+<li>Prior to deleting a bean we delete its OneToMany, ManyToMany (And appropriate OneToOnes) associations </li>
+<li>Then we delete the bean itself</li>
+<li>Then we delte any ManyToOne (And appropriate OneToOnes)</li>
+</ul>
+
+<h4><a id="batch"></a>Batching Order</h4>
+<p>
+When we use batching there is another complication added to this.
+Specifically when saving Beans we queue them up according to 'depth' and then
+batch process them in depth order.
+</p>
+<p>
+In this example we would end up with 4 depth levels. 
+</p>
+<ul>
+<li>Depth -2: All the billing addresses and shipping addresses<li>
+<li>Depth -1: All the customers<li>
+<li>Depth 0: All the orders<li>
+<li>Depth 1: All the order details<li>
+</ul>
+<p>
+These would then be batch processed using PreparedStatement batching in lowest depth
+first order.
+</p>
+<p>
+All the billing and shipping addresses would be saved, then customers, then orders and lastly
+order details.
+</p>
+<p>
+In general you could the reason why this additional queuing is required is because we
+need to delay the binding of the preparedStatement. Specifically when beans are inserted
+we are expected to not get back the id values until after executing the statements and
+we are expecting to use getGeneratedKeys to do this. What this means is that we can not
+bind dependant objects (as we don't have the foreign key values) until after the
+higher 'depth' statements have been executed and getGeneratedKeys has got the id values
+back for us.
+</p>
+<p>
+In general if your Databases does not support getGeneratedKeys and you are not using an
+external IdGenerator then ORM batching of inserts is going to be much less valuable.
+From my perspective ORM batching is greatly enhanced by getGeneratedKeys as we really
+need those Id values back.
+</p>
+<p>
+You can of course using UpdateSql and for many this will be a better approach for 
+very large batch inserting as you then use simple scalar foreign key 
+values instead of reference objects.
+</p>
+</td>
+<td class="rhs">
+</td>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

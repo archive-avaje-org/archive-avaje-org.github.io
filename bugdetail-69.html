@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: npe if inherited class has no properties and @Inheritance on parent level only</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="imario">
+<meta name="description" content="With Hibernate and according to http www oracle com technology products ias toplink jpa howto use inheritance html the Inheritance annotation is not required on the inherited class A class is considered inherited if the superclass defines a JPA inheritance I ve added a check to the direct parent not sure about multiple levels of inheritance though Also a NPE has been fixed if a inherited class do not has a single property Index ebean src com avaje ebean server deploy InheritInfo java ebean src com avaje ebean server deploy InheritInfo java revision 127 ebean src com avaje ebean server deploy InheritInfo java Sun Feb 15 10 39 31 CET 2009 120 7 120 9 for int i 0 x children size i InheritInfo childInfo children get i if childInfo descriptor null selectProps add childInfo descriptor properties">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-69.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 69 : npe if inherited class has no properties and @Inheritance on parent level only
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 69 : npe if inherited class has no properties and @Inheritance on parent level only </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">imario</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">1.0.3</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">15/02/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">15/02/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>With Hibernate and according to <a href="http://www.oracle.com/technology/products/ias/toplink/jpa/howto/use-inheritance.html">http://www.oracle.com/technology/products/ias/toplink/jpa/howto/use-inheritance.html</a> the @Inheritance annotation is not required on the inherited class.<br/>A class is considered inherited if the superclass defines a JPA inheritance.</p><p>I've added a check to the direct parent, not sure about multiple levels of inheritance though.</p><p>Also a NPE has been fixed if a inherited class do not has a single property.</p><p><br/>Index: ../ebean/src/com/avaje/ebean/server/deploy/InheritInfo.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/deploy/InheritInfo.java	(revision 127)<br/>+++ ../ebean/src/com/avaje/ebean/server/deploy/InheritInfo.java	Sun Feb 15 10:39:31 CET 2009<br/>@@ -120,7 +120,9 @@<br/> 		<br/> 		for (int i = 0, x=children.size(); i < x; i++) {<br/> 			InheritInfo childInfo = children.get(i);<br/>+            if (childInfo.descriptor != null) {<br/>-			selectProps.add(childInfo.descriptor.propertiesLocal());<br/>+			    selectProps.add(childInfo.descriptor.propertiesLocal());<br/>+            }<br/> 			<br/> 			childInfo.addChildrenProperties(selectProps);<br/> 		}<br/>Index: ../ebean/src/com/avaje/ebean/server/deploy/parse/DeployInheritInfoBuilder.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/deploy/parse/DeployInheritInfoBuilder.java	(revision 127)<br/>+++ ../ebean/src/com/avaje/ebean/server/deploy/parse/DeployInheritInfoBuilder.java	Sun Feb 15 10:43:57 CET 2009<br/>@@ -190,6 +190,11 @@<br/> 		if (a != null) {<br/> 			return true;<br/> 		}<br/>+        // the @Inheritance annotation at the parent should be enough<br/>+        a = cls.getSuperclass().getAnnotation(Inheritance.class);<br/>+        if (a != null) {<br/>+            return true;<br/>+        }<br/> 		return false;<br/> 	}</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+15 Feb&nbsp;10:15
+</div>
+npe not correctly fixed
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>It seems the NPE fix in InheritInfo.java is not quite correct, I need to investigate that further.</p><p>The patch for DeployInheritInfoBuilder.java is still valid!</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+15 Feb&nbsp;10:51
+</div>
+properly fixed NPE
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>The problem was that avaje did not find the table in the database and thus did not create the descriptor.</p><p>I fixed this by reading the table name from the parent table if it is missing in the inherited table.</p><p><br/>Index: ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationClass.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationClass.java	(revision 127)<br/>+++ ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationClass.java	Sun Feb 15 11:40:37 CET 2009<br/>@@ -51,7 +51,15 @@<br/> 	public void parse() {<br/> <br/> 		read(descriptor.getBeanType());<br/>+<br/>+        // if this is an inherited class and has no table annotation (which is common), try reading<br/>+        // it from the parent<br/>+        if (info.getDescriptor().getBaseTable() == null && descriptor.getBeanType().getSuperclass().isAnnotationPresent(Table.class))<br/>+        {<br/>+            Table table = descriptor.getBeanType().getSuperclass().getAnnotation(Table.class);<br/>+            info.setTable(table.catalog(), table.schema(), table.name(), null);<br/>-	}<br/>+        }<br/>+	}<br/> <br/> 	public void readSqlAnnotations() {<br/> 		Class<?> cls = descriptor.getBeanType();</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+19 Feb&nbsp;07:28
+</div>
+Fixed in v1.0.3
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in v1.0.3. ... recursively find @Table and @Inheritance (rather than direct parent).</p><p>Thanks again Mario.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="69">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-69.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="69">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

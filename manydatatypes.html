@@ -1,0 +1,393 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>@OneToMany List Set Map or Collection</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="In mapping your OneToMany or ManyToMany types should you use List Set Map or Collection">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/manydatatypes.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>List Set Map or Collection?</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+<h3>List Set Map or Collection?</h3>
+
+<ul>
+<li><a href="#ugly">OneToMany and ManyToMany types</a></li>
+<li><a href="#collection">Collection</a></li>
+<li><a href="#map">Map</a></li>
+<li><a href="#setorder">Set - ordered or not? The JPA Spec doesn't say?</a></li>
+<li><a href="#listduplicates">List versus Set - Duplicates allowed</a></li>
+<li><a href="#performance">List versus Set - Performance</a></li>
+<li><a href="#api">List versus Set - Extra API, paging through a List</a></li>
+<li><a href="#summary">Summary</a></li>
+
+</ul>
+
+
+
+<h4><a id="ugly"></a>OneToMany and ManyToMany types</h4>
+<p>
+When creating @Entity Beans you will have to choose how to map your @OneToMany and @ManyToMany
+types. 
+</p>
+<p>
+Refering to JPA specification (Section 2.1.1 pg19).
+Specifically you need to choose between using List Set Map or Collection.
+</p>
+
+<h4><a id="collection"></a>Collection</h4>
+<p>
+I do not know of a reason why Collection should be used over the more specific Set or List.
+There is nothing I have read or seen in the JPA Spec about what behaviour you would get
+if you specify a Collection.  
+Specifically you can not be sure if the implementation will give you Set or List 
+semantics which I think is fairly important to know.
+</p>
+<p>
+If anyone knows of a reason for specifying Collection I'd love to <a href="feedback.html">know</a> - thanks.
+</p>
+
+<h4><a id="map"></a>Map</h4>
+<p>
+Map is sufficiently different from List or Set that it should be fairly easy to choose
+whether or not to use it.
+</p>
+<p>
+The implication is that you get benefit from the Map API (get put methods etc).
+</p>
+<p>
+The potential issue with this theory is that the ORM mapping should represent 
+a 'logical model' that is independant of <strong>how that model is used</strong>. Specifying a
+Map (instead of Set or List) implies knowledge of 'how' the data is used. 
+<a href="#robmap">Using Maps at Runtime with Ebean</a>
+</p>
+
+<h4><a id="setorder"></a>Set - ordered or not? The JPA Spec doesn't say?</h4>
+<p>
+At this moment the JPA spec (as far as I can tell) 
+does not make it clear if predictable iteration order on a Set (or Map) is the expected
+behaviour. That is, HashSet does not provide a predicable iteration order (and LinkedHashSet does).
+</p>
+<p>
+For example, if you use a @OrderBy annotation on a Set you may find that the iteration order
+does not match the order specified in the order by. The likely reason for this is that the JPA
+provider has choosen to use HashSet rather than LinkedHashSet as the basis for the actual implementation. 
+</p>
+<p>
+Ehrsson has noted this behaviour in his blog at <a href="http://javaehrsson.blogspot.com/2005/10/ejb3-onetomany-and-orderby-set-versus.html">
+ Ehrsson.java Blog</a>
+</p>
+<pre class="java">
+...
+@OneToMany
+@OrderBy(createdDate)
+Set&lt;OrderLine&gt; lines;
+...
+
+Set&lt;OrderLine&gt; lines = order.getLines();
+Iterator it = lines.iterator();
+...
+// this iteration order may not match your @OrderBy annotation :(
+</pre>
+<p>
+If your JPA vendor does not provide predicatable ordering for Sets then
+this may be the most important factor in your decision. 
+</p>
+<p>
+That is, if you ever want the Collection to be ordered you may HAVE to use 
+List rather than Set.
+</p>
+<p>
+Ebean uses LinkedHashSet by default for the underlying implementation of Sets.
+This provides predicatable iteration order for Sets.
+</p>
+
+<h4><a id="listduplicates"></a>List versus Set - Duplicates allowed</h4>
+<p>
+Lists allow duplicates and Sets do not allow duplicates. For some this will
+be the main reason for them choosing List or Set. 
+</p>
+
+
+<h4><a id="performance"></a>List versus Set - Performance</h4>
+<p>
+Performance may come into the decision for some. Its a detailed issue
+so I am just going to skim the surface with the highlights:
+</p>
+<h6>contains:</h6>
+<p>
+In general you could say the performance of contains() will be better in 
+Set (using hashing) over List (linear search).
+</p>
+
+<h6><a id="iteration"></a>iteration:</h6>
+<p>
+In general I would say iteration performance of List will be faster than Set.
+Its hard to say exactly when and why but there seem to be JVM optimizations
+that can be made on List (& especially ArrayList).
+</p>
+<p>
+In addition its noted that you can iterate over List without using an Iterator 
+and avoiding that object creation.
+</p>
+
+<h6><a id="iteration"></a>growth:</h6>
+<p>
+Lists and Sets grow in quite a different fashion.
+ArrayList grows using System.arrayCopy and Sets and Maps grow with rehashing.
+Avoiding lots of rehashing of Sets and Maps should probably be something to keep in mind.
+</p>
+
+<h4><a id="api"></a>List versus Set - Extra API, paging through a List</h4>
+<p>
+List provides a bit more API over Set. Specifically it provides the ability to get set and remove
+using an index (and provides subList() and  listIterator()).
+</p>
+<p>
+This extra API most notably provides an efficient way of paging through the list. 
+For example, you can process/view rows 30 to 40 of 100 more efficiently than a Set 
+by using the index based get() method (or subList() etc).
+</p>
+
+
+<h4><a id="summary"></a>Summary</h4>
+<p>
+I see no benefit in using Collection.
+</p>
+<p>
+You need to check if your JPA Vendor provides Set with a predictable iteration order or
+not. If you are using Ebean, note that it provides a predictable iteration order for Sets.
+</p>
+<p>
+For deciding between Set or List you need to weigh the issues around: 
+<ul>
+<li>Duplicates</li>
+<li>Does Set give predictable iteration order (Vendor specific)</li>
+<li>Performance - iteration, contains, growth</li>
+<li>Lists extra API - paging through a List</li>
+</ul>
+</p>
+<p>
+Personally I feel the issue of duplicates is more a coding issue (I have never had a problem
+with duplicates and List). I don't give this much weight.
+</p>
+<p>
+If I use Sets I'd want them to be ABLE to have predictable iteration order. I'd avoid Set
+if this was not available (for a given JPA vendor).
+</p>
+<p>
+Personally I feel that performance is not a deciding factor. If I chose List I just need to 
+be aware of the cost of using contains(). For Set I need to be more wary of rehashing.
+</p>
+<p>
+Personally I feel the benefits of the List API and the ability to easily page though a big
+List is very compelling (a common problem worth having a good solution for).
+</p>
+<p>
+My Personal choice would be to use List over Set always (if its up to me).
+</p>
+</td>
+<td class="rhslinks">
+
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+<h5>Note: HashSet and HashMap - unpredicatable ordering</h5>
+<p>
+HashSet and HashMap do not provide a predicatable iteration order. Ebean will by
+default use a LinkedHashSet or LinkedHashMap as the default underlying implementation
+so that iterator order can match an query OrderBy clause.
+</p>
+<p>
+Some vendors may not use LinkedHashSet by default and the JPA spec does not seem 
+to mention iteration order (that I can see). 
+</p>
+
+<h5><a id="robmap"></a>Using Maps at Runtime with Ebean</h5>
+<p>
+@OneToMany Map&lt;Something&gt; details; <br>
+Yup its very cool and maybe useful one day but personally I think a Map
+implies too much knowledge of the 'USE' of the data as opposed to the pure 'LOGICAL RELATIONSHIP'.
+</p>
+<p>
+Time will tell but currently I don't think I'll be using Map for many (if any) 
+@OneToMany or @ManyToMany properties. 
+</p>
+<p>
+You can easily fetch maps using Ebean. Here are some examples:
+</p>
+
+<p>Example: Simple example</p>
+<pre class="java">
+
+Map map = Ebean.find(Order.class).findMap();
+
+</pre>
+
+<p>Example: Specify a map key</p>
+<pre class="java">
+
+Map withKeyMap = Ebean.find(Order.class)
+    .setMapKey("status")
+    .findMap();
+
+</pre>
+
+<p>Example: Fetch a Map and 'merge' it into another map</p>
+<pre class="java">
+// put the keys in the Map
+// use LinkedHashMap to control the order
+LinkedHashMap load = new LinkedHashMap();
+load.put(1, null);
+load.put(2, null);
+
+// get a Map of Orders using IN keySet
+
+Map fetchMap = Ebean.find(Order.class)
+      .where().in("id", load.keySet())
+      .findMap();
+
+// merge the fetchMap into load
+load.putAll(fetchMap);
+
+</pre>
+
+
+</td>
+<td class="rhs">
+</td>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

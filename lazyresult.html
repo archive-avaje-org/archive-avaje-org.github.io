@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Lazy loading in Ebean</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="How Lazy loading works with Transaction Isolation and Demarcation">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/lazyresult.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="doc.html" title="Documentation">Documentation</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <a href="lazy.html" title="Lazy Loading">Lazy Loading</a>
+&raquo; <span>Results</span>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+
+
+<h3>Results of Lazy Loading with different scenarios</h3>
+
+<p>
+We can say that for every scenario the bug data was fetched just after time1.
+It may be useful to consider whether the userLogged or status objects could
+be considered to be "Read Consistent" with respect to the bug(at time1).
+</p>
+<p>
+In understanding this you should be able to decide when to use lazy loading and 
+the potential for "Read Inconsistent" results.
+</p>
+<table>
+<tr>
+<td> </td>
+<td>loggedBy</td>
+<td>statusTitle</td>
+</tr>
+<tr>
+<td>Scenario 1</td>
+<td>Name at time 2</td>
+<td>Title @time 4</td>
+</tr>
+<tr>
+<td>Scenario 2</td>
+<td>Name at time 1</td>
+<td>Title @time 4</td>
+</tr>
+<tr>
+<td>Scenario 3</td>
+<td>Name at time 1</td>
+<td>Title @time 1</td>
+</tr>
+<tr>
+<td>Scenario 4</td>
+<td>Name at time 1</td>
+<td>Title @time 1</td>
+</tr>
+</table>
+
+
+
+<h4>Log for Scenario 1</h4>
+<p>
+The loggedUser is lazy loaded and because we are in a READ_COMMITED Isolation level
+it does see the Update at time2. The status title is lazy loaded in its own 
+transaction just after time4.
+</p>
+<p>
+Neither loggedBy nor statusTitle could be considered "Read Consistent" wrt Bug.
+It didn't matter that loggedBy was fetched in the same transaction, it can still
+potentially be not "Read Consistent" wrt Bug.
+</p>
+<pre>
+<code>
+Update set UserName[Name at time 5]  statusTitle[Title @time 5] at time [5]
+ INFO: DataSourcePool [ora10] grow pool;  busy[1] size[1] max[25]
+Update set UserName[Name at time 1]  statusTitle[Title @time 1] at time [1]
+&lt;sql summary='[app.data.Bug]'&gt;
+SELECT b.id, b.body, b.cretime, b.duplicate_of, b.fixed_version,... 
+FROM b_bug b 
+WHERE b.id = ? 
+&lt;/sql&gt;
+Update set UserName[Name at time 2]  statusTitle[Title @time 2] at time [2]
+&lt;sql summary='[app.data.User]'>
+SELECT u.id, u.cookie_login, u.cretime, u.email, u.error_count,...
+FROM s_user u 
+WHERE u.id = ? 
+&lt;/sql&gt;
+Update set UserName[Name at time 3]  statusTitle[Title @time 3] at time [3]
+Update set UserName[Name at time 4]  statusTitle[Title @time 4] at time [4]
+&lt;sql summary='[app.data.BugStatus]'>
+SELECT s.code, s.title 
+FROM b_bug_status s 
+WHERE s.code = ? 
+&lt;/sql&gt;
+-------------------------
+loggedBy:    [Name at time 2] 
+statusTitle: [Title @time 4] 
+
+</code>
+</pre>
+
+<h4>Log for Scenario 2</h4>
+<p>
+Its the same as Scenario 1 except that the loggedBy value is [Name at time 1] due
+to the transaction isolation level and the fact that the transaction started with
+the first query which occured just after time1.
+</p>
+<p>
+loggedBy could be considered "Read Consistent" wrt Bug but statusTitle could not be.
+</p>
+
+<h4>Log for Scenario 3 & 4</h4>
+<p>
+The user logged and bug status are included in the fetch. The fetch occurs
+just after time1 and No lazy loading occurs. The transaction isolation level
+doesn't matter. Results the same.
+</p>
+<pre>
+<code>
+Update set UserName[Name at time 5]  statusTitle[Title @time 5] at time [5]
+ INFO: DataSourcePool [ora10] grow pool;  busy[1] size[1] max[25]
+Update set UserName[Name at time 1]  statusTitle[Title @time 1] at time [1]
+&lt;sql summary='[app.data.Bug, status, userLogged]'&gt;
+SELECT b.id, b.body, b.cretime, b.duplicate_of, b.fixed_version,...
+        , ss.code, ss.title, b.type_code, b.user_assigned_id
+        , au.id, au.cookie_login, au.cretime, au.email, au.error_count,...
+FROM b_bug b
+JOIN b_bug_status ss ON b.status_code = ss.code 
+LEFT OUTER JOIN s_user au ON b.user_logged_id = au.id  
+WHERE b.id = ? 
+&lt;/sql&gt;
+Update set UserName[Name at time 2]  statusTitle[Title @time 2] at time [2]
+Update set UserName[Name at time 3]  statusTitle[Title @time 3] at time [3]
+Update set UserName[Name at time 4]  statusTitle[Title @time 4] at time [4]
+-------------------------
+loggedBy:    [Name at time 1] 
+statusTitle: [Title @time 1] 
+</code>
+</pre>
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+<tr>
+<td class="main">
+<h4>Summary</h4>
+<p>
+If you are running at READ_COMMITTED Isolation level you can not guarantee that queries
+are "Read Consistent" with respect to each other. That is, it does not matter if you Lazy Load inside
+of a transaction or not you have the potential to see newly committed changes and this 
+includes the scenario that the database row you are lazy loading has been deleted.
+</p>
+<p>
+You could say that at READ_COMMITTED Isolation level you will lazy load the <em>"Most Recent"</em> data
+rather than <em>"Read Consistent"</em> data wrt the original query.
+</p>
+<p>
+Given that many people will frequently use some sort of 'Inactive Status' rather than
+actually deleting data, I believe the issue of lazy loading a row that has been deleted 
+is pretty managable for most people.
+</p>
+<p>
+To guarantee "Read Consistency" of the data you need to 
+use a higher Transaction Isolation level such as SERIALIZABLE or include all the data
+into a single query (And use a Database that supports Statement level read consistency). 
+</p>
+<p>
+The cost of using SERIALIZABLE Isolation level is potentially significant, and often
+you will be unable to predicate the exact data required to include in the original query.
+</p>
+<p>
+As long as you understand that you are often getting the "Most Recent" data rather than
+"Read Consistent" data you should enjoy the benefits that lazy loading brings.
+</p>
+</td>
+<td class="rhs">
+<p>
+You could say that at READ_COMMITTED Isolation level you will lazy load the <b><em>"Most Recent"</em></b> data
+rather than <b><em>"Read Consistent"</em></b> data wrt the original query.
+</p>
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

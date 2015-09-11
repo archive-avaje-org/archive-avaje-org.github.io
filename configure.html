@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Design Philosophy</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Configure Install Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/configure.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <span>Configure</span>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+<h3>Install/Configure Ebean</h3>
+
+<h4><a id="jdk5"></a>1. Classpath</h4>
+<p>
+
+Put in your classpath<br>
+<pre>
+avajeEbean.jar
+avajeLib.jar
+javax.persistence.jar 
+</pre>
+</p>
+<p>
+Also put in the classpath... <br>
+<pre>
+// if you use JTA Transactions
+jta.jar						
+
+// if you use jug for UUID Generation
+jug-lgpl-2.0.0.jar			
+
+// if you use Lucene Text Indexing
+lucene-core-1.9.1.jar		
+</pre>
+</p>
+
+<p>
+If you are going to use the Entity Bean Code Generator to generate Annotated Entity Beans also put in the classpath...<br>
+<br>
+<pre>
+avajeCodeGen.jar
+jxl.jar
+velocity-1.4.jar
+velocity-dep-1.4.jar
+</pre>
+</p>
+
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li>Configure</li>
+<li><a href="getstarted.html">Getting Started</a></li>
+<li><a href="plugin.html">Database Plugin Configuration</a></li>
+<li><a href="servletcontainer.html">Configure to run in a Servlet Container</a></li>
+<li><a href="codegen.html">Code Generator</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<td class="main">
+
+<h4>3. Locate avaje.properties</h4>
+<p>
+Determine the appropriate <a href="configure_locateproperties.html">location</a> to put the avaje.properties file.
+</p>
+
+
+
+<h4>4. Edit avaje.properties</h4>
+<p>
+<a href="configure_editproperties.html">Edit avaje.properties<a> file taking special
+note of configuring the DataSource and location of logs.
+</p>
+
+
+<h4>5. Create a Class with a main method that contains Ebean.getServer(null);</h4>
+<p>
+You can use code below. Run the Class.
+</p>
+<pre>
+<code>
+package test;
+
+import com.avaje.ebean.Ebean;
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		Ebean.getServer(null);
+		System.out.println("DONE");
+	}
+}
+</code>
+</pre>
+
+
+
+<h4>6. Running the class you should see something along the lines of...<h4>
+<pre>
+<code>
+ INFO: Ebean Version[0.9.0-061028] Java Version[1.5.0_03]
+ INFO: DataSourcePool [ora10] autoCommit[false] transIsolation[READ_COMMITTED] min[1] max[25]
+ INFO: DataSourcePool [ora10] grow pool;  busy[0] size[0] max[25]
+ INFO: IoRepository initialised dirs[C:/devjava/project/appzsite/webapp/WEB-INF/data] zips[]
+ INFO: Plugin[][com.avaje.ebean.server.plugin.Oracle10Plugin]
+DONE
+ INFO: Stopping []
+ INFO: ThreadPool [TransactionManager] Shutting down; threadCount[1] busyCount[0]
+ INFO: DataSourcePool [ora10] shutdown
+ INFO: Closing Connection[ora10.1] psReuse[0] psCreate[0] psSize[0]
+</code>
+</pre>
+
+<h4>7. Take special note of the Plugin being used.</h4>
+<p>
+For databases not yet tested against
+the Plugin will be com.avaje.ebean.server.plugin.BasePlugin.
+</p>
+<p>
+If you use BasePlugin then you need to additionally set some database specific
+configuration such as quoted identifiers, supportsGetGenerated keys etc.
+</p>
+<p>
+Refer to baseplugin_readme.txt
+</p>
+
+<h4><a href="getstarted.html">9. Goto Getting Started (or README.2.txt)</a></h4>
+
+
+<h3>TROUBLESHOOTING</h3>
+
+<h4>Nothing in Console</h4>
+<p>
+If you only get DONE appearing in the Console (System.out) then check the
+system.properties file to make sure "log.toconsole=true"
+</p>
+
+<h4>If Ebean can not find the system.properties file you will get something like</h4>
+<pre>
+<code>
+Exception in thread "main" java.lang.ExceptionInInitializerError
+	at com.avaje.ebean.Ebean.<clinit>(Ebean.java:114)
+	at unitext.ex.Test.main(Test.java:9)
+Caused by: java.lang.RuntimeException: Can not find file 
+-[C:\devjava\project\appZsite\system.properties] to load properties
+	at com.avaje.lib.SystemProperties.loadProperties(SystemProperties.java:134)
+	at com.avaje.lib.SystemProperties.defaultInit(SystemProperties.java:239)
+	at com.avaje.lib.SystemProperties.getProperty(SystemProperties.java:230)
+	at com.avaje.lib.SystemProperties.getProperty(SystemProperties.java:195)
+	at com.avaje.lib.Log.create(Log.java:66)
+	at com.avaje.lib.Log.<clinit>(Log.java:47)
+	... 2 more
+</code>
+</pre>
+
+<h4>If Ebean can not find the 'logs' directory</h4>
+<pre>
+<code>
+FATAL ERROR: init of FileLogger: 
+Can't get log directory [logs] from [C:\devjava\project\appZsite]
+FATAL ERROR: init of FileLogger: 
+Can't get log directory [logs] from [C:\devjava\project\appZsite]
+java.lang.RuntimeException: 
+Can't get log directory [logs] from [C:\devjava\project\appZsite]
+	at com.avaje.lib.SimpleLogger.getFilePath(SimpleLogger.java:322)
+	at com.avaje.lib.SimpleLogger.init(SimpleLogger.java:336)
+	...
+</code>
+</pre>
+
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

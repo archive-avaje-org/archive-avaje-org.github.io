@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: Problems with Postgresql and autofetch?</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Claudio">
+<meta name="description" content="Hi rob I m trying to fetch a list of objects of type Editore from Postgresql Entity Table name editore public class Editore implements Cloneable Serializable private static final long serialVersionUID 1L Id private Integer id private String descrizione Override public String toString return Editore con descrizione descrizione public Integer getId return id public void setId Integer id this id id public String getDescrizione return descrizione public void setDescrizione String descrizione this descrizione descrizione The class is enhanced using the Eclipse plugin The code to load the list is Ebean getServer null List list Ebean find Editore class findList for Editore editore list System out println editore toString The first time i run the test i have the Editore objects correctly populated">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-94.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-2.html">Database specific</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-2.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Claudio </span>
+27 Dec&nbsp;11:16
+</div>
+Problems with Postgresql and autofetch?
+<div class="body">
+<p>Hi rob,</p><p>I'm trying to fetch a list of objects of type Editore from Postgresql:</p><p>@Entity<br/>@Table(name="editore")<br/>public class Editore implements Cloneable, Serializable {</p><p>    private static final long serialVersionUID = 1L;</p><p>    @Id<br/>    private Integer id;<br/>    private String descrizione;</p><p>    @Override<br/>    public String toString() { return "Editore con descrizione \"" + descrizione + "\""; }<br/>    <br/>    public Integer getId() { return id; }<br/>    public void setId(Integer id) { this.id = id; }<br/>    public String getDescrizione() { return descrizione; }<br/>    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }<br/>}</p><p>The class is enhanced using the Eclipse plugin.<br/>The code to load the list is:</p><p>Ebean.getServer(null);<br/>List<Editore> list = Ebean.find(Editore.class).findList();<br/>for (Editore editore : list) System.out.println(editore.toString());<br/>	<br/>The first time i run the test i have the Editore objects correctly populated (in log I find ... <sql summary='[it.fc.cesena.comune.catalogo.model.db.Editore] autoFetchTuned[true]'>select e.id, e.descrizione  from editore e </sql>  ...). <br/>If i run the test again only the id field has a value, the descrizione field is null (in log I find ... <sql summary='[it.fc.cesena.comune.catalogo.model.db.Editore] autoFetchTuned[true]'>select e.id from editore e </sql>  ...). </p><p>Adding a @Column annotation to descrizione does not affect the result.<br/>Deleting the ebean.postgres.dictionary file does not affect the result.<br/>If I add a @Id annotation to descrizione the values is loaded.<br/>If I delete the ebean.postgres.autofetch file the test works, but then the file is recreated and I have problems the next time.<br/>Commenting out in the property file ebean.autofetch.querytuning=true	solve the problem.<br/>So it's like the columns values are not loaded when ebean.autofetch.querytuning = true </p><p>I'm doing something wrong or is a bug?</p><p>The log is:</p><p>27-dic-2008 12.06.43 com.avaje.ebean.Ebean$ServerManager createServerFactory<br/>INFO: Ebean Version[1.0.1-081216] Java Version[1.6.0_03]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.core.BootupClassPathSearch search<br/>INFO: Classpath search hits in jars[ebean-1.0.1.jar] pkgs[it.fc.cesena.comune.catalogo.model.db, com.avaje.ebean.meta, com.avaje.ebean.server.bean]  searchTime[32]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.lib.sql.DataSourcePool initialise<br/>INFO: DataSourcePool [postgres] autoCommit[false] transIsolation[READ_COMMITTED] min[1] max[25]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.lib.sql.DataSourcePool createConnection<br/>INFO: DataSourcePool [postgres] grow pool;  busy[0] size[0] max[25]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.plugin.PluginDbConfig deserializeDictionary<br/>INFO: DictionaryInfo deserialized from file [C:\Documents and Settings\claudio\Documenti\lavoro\workspace\catalogo\.\.ebean.postgres.dictionary]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.deploy.BeanDescriptorFactory <init><br/>INFO: Validation: [on] autocreate.notnull=[true]  autocreate.length=[true max 4000]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.deploy.DeploymentManager findAllOrmXml<br/>INFO: No deployment xml (orm.xml etc) was loaded.<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.deploy.BeanDescriptorFactory logStatus<br/>INFO: Entities enhanced[1] subclassed[0]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.transaction.TransactionLogManager <init><br/>INFO: Transaction logs in: logs<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.plugin.PluginDbConfig deserializeAutoFetch<br/>INFO: AutoFetch deserialized from file [C:\Documents and Settings\claudio\Documenti\lavoro\workspace\catalogo\.\.ebean.postgres.autofetch]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.autofetch.DefaultAutoFetchManagerLogging logToJavaLogger<br/>INFO: AutoFetch queryTuning[false] profiling[false] implicitMode[DEFAULT_ON_IF_EMPTY]  profiling rate[0.05] min[1] base[10]<br/>27-dic-2008 12.06.43 com.avaje.ebean.server.core.DefaultServerFactory createServer<br/>INFO: Plugin[postgres][com.avaje.ebean.server.plugin.PluginDbConfig]<br/><sql summary='[it.fc.cesena.comune.catalogo.model.db.Editore]'><br/>select e.id, e.descrizione <br/>from editore e<br/></sql><br/>27-dic-2008 12.06.43 com.avaje.ebean.server.transaction.TransactionManager notifyOfQueryOnly<br/>INFO: Transaction [1001] Rollback queryOnly</p><p><br/>My properties file is: </p><p>## -------------------------------------------------------------<br/>## Reload java.util.logging properties file<br/>## -------------------------------------------------------------<br/>x-logging.properties.file=logging.properties</p><p><br/>## -------------------------------------------------------------<br/>## Load (Dev/Test/Prod) server specific properties<br/>## -------------------------------------------------------------<br/>## This is a possible alternative to using JNDI to set environment<br/>## properties externally (to the WAR file).  This is another way <br/>## your Dev, Test and Prod servers can have different properties.</p><p>#load.properties.override=${CATALINA_HOME}/conf/myapp.ebean.properties</p><p><br/>#ebean.autofetch.querytuning=true<br/>#ebean.autofetch.profiling=true<br/>#ebean.autofetch.implicitmode=default_on<br/>#ebean.autofetch.profiling.min=1<br/>#ebean.autofetch.profiling.base=10<br/>#ebean.autofetch.profiling.rate=0.05</p><p><br/>## -------------------------------------------------------------<br/>## Transaction Logging<br/>## -------------------------------------------------------------<br/>ebean.debug.sql=true<br/>ebean.debug.lazyload=true</p><p>## Log transaction begins and ends etc<br/>## (0=NoLogging 1=minimal ... 9=logAll)<br/>ebean.debug.transaction=3</p><p><br/>## location of transaction logs<br/>ebean.log.directory=logs<br/>#ebean.log.directory=${catalina.base}/logs/trans</p><p>## General logging level: (0=None, 1=Explicit, 2=All)<br/>ebean.log.level=2</p><p>## Sharing log files: (0=None Share, 1=Implicit Share, 2=All Share)<br/>ebean.log.share=1</p><p>## Specific Log levels<br/>## 0=none  1=summary  2=bindings  3=sql<br/>ebean.log.iud=3<br/>ebean.log.findid=3<br/>ebean.log.findmany=3</p><p>##ebean.transaction.rollbackOnChecked=false</p><p>ebean.type.boolean.false=F<br/>ebean.type.boolean.true=T<br/>## use varchar or integer (defaults to varchar)<br/>#ebean.type.boolean.dbtype=varchar</p><p>## Default (Ebean DataSourceFactory)<br/>ebean.datasource.factory=default</p><p>datasource.default=postgres</p><p>datasource.postgres.username=xxx<br/>datasource.postgres.password=xxx<br/>datasource.postgres.databaseUrl=jdbc:postgresql://127.0.0.1:5432/public<br/>datasource.postgres.databaseDriver=org.postgresql.Driver<br/>datasource.postgres.minConnections=1<br/>datasource.postgres.maxConnections=25<br/>datasource.postgres.isolationlevel=read_committed<br/>datasource.postgres.heartbeatsql=select count(*) from editore</p><p></p><p><br/>## -------------------------------------------------------------<br/>## Naming Conventions<br/>## -------------------------------------------------------------</p><p><br/>ebean.updatetimestamp.property=updtime<br/>ebean.updatetimestamp.dbcolumn=updtime</p><p>ebean.inserttimestamp.property=cretime<br/>ebean.inserttimestamp.dbcolumn=cretime<br/>    <br/>ebean.counter.property=vercount<br/>ebean.counter.dbcolumn=vercount</p><p></p><p><br/>Regards</p><p>Claudio</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+03 Jan&nbsp;10:10
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>This looks like the correct behaviour of autofetch.</p><p>The thing to note is that with Ebean the toString() method is *NOT* intercepted. So if you change your program to use the getDescrizione() rather than toString() then you will see a difference.</p><p>Using....      System.out.println(editore.getDescrizione());<br/>rather than... System.out.println(editore.toString());</p><p>With getDescrizione() autofetch will tune the query based the application using the "descrizione property" ... but with the application code as it is using toString() autofetch is tuning as if you didn't use descrizione which is why the query does not include descrizione in the query.</p><p>The reason toString() is treated as a special case (in terms of interception) is because toString() is used by IDE's when running in debug mode. This means that when you inspect entities in an IDE using a debugger you should not get lazy loading to fire.</p><p>So, as I see it is the special treatment of toString() which is confusing here. Hopefully that makes sense.</p><p>Cheers, Rob.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="2">
+<input type="hidden" name="f_topicid" value="94">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Queries in Ebean</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Queries in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/ebean/jaxrs.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/ebean/introduction.html">Ebean</a>
+&raquo; <a href="/ebean/documentation.html">Docs</a>
+&raquo; <span>JAX-RS Integration</span>
+</div>
+
+
+
+
+
+<div class="columnlayout">
+
+<h3>JAX-RS Integration</h3>
+<div class="col70">
+
+<p>
+Provides integration with using Ebean with JAX-RS.
+</p>
+<p>
+Specifically it integrates Ebean's JSON (not XML yet) marshalling and unmarshalling support and provides some integration to make it easier to use Entity Beans with JAX-RS. 
+</p>
+<p>
+The com.avaje.ebean.jaxrs package needs to be registered with JAX-RS so that it finds Ebean's JaxrsJsonProvider. This provides the JSON Marshalling and Unmarshalling of entity beans. 
+</p>
+<p>
+If you use custom Media types then you might need to subclass the JaxrsJsonProvider and register it with those media types.
+</p>
+<p>
+Typically developers will extend the AbstractEntityResource object which has built in support for many typical functions such as find by id, find all, insert, update, delete and delete many by ids. 
+</p>
+</div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+...
+// Extend AbstractEntityResource to get:
+//   Insert, Update, Delete, Delete Many, Find by Id and Find all
+//
+// Use uriOptions to allow client to customise exactly
+// the properties to fetch and render (rather than get
+// the server to provide more API).
+//
+@Path("/customer{uriOptions:(:[^/]+?)?}/")
+@Produces({MediaType.APPLICATION_JSON, "text/json"})
+public class CustomerJsonResource extends AbstractEntityResource {
+
+    public CustomerJsonResource() {
+        super(Customer.class);
+    }
+}
+
+</pre>
+</div>
+
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<h4>AbstractEntityResource provides:</h4>
+<p>
+AbstractEntityResource provides an implementation for
+ Insert, Update, Delete, Delete Many, Find by Id and Find all.
+It makes use of UriOptions if defined.
+</p>
+
+<pre class="java:nogutter:nocontrols">
+
+    /**
+     * Insert a bean.
+     * 
+     * @param bean
+     *            the bean to insert
+     */
+    @POST
+    public Response insert(@Context UriInfo uriInfo, T bean) {
+
+    /**
+     * Update a bean.
+     * 
+     * @param id
+     *            the unique id of the bean
+     * @param bean
+     *            the bean to update
+     */
+    @PUT
+    @Path("/{id}")
+    public void update(@PathParam("id") String id, T bean) {
+
+
+
+    /**
+     * Delete multiple beans using Id's from the "UriOptions".
+     * 
+     * @param options
+     *            The UriOptions in the form "::(id1,id2,...)"
+     */
+    @DELETE
+    public void deleteMultiple(@PathParam("uriOptions") String options) {
+
+    /**
+     * Delete a bean using its id.
+     * 
+     * @param id
+     *            the unique id of the bean.
+     */
+    @DELETE
+    @Path("/{id}")
+    public void delete(@PathParam("id") String id) {
+
+    /**
+     * Find a bean given its Id.
+     * 
+     * @param id
+     *            the id of the bean.
+     */
+    @GET
+    @Path("/{id}")
+    public T find(@PathParam("id") String id, @PathParam("uriOptions") String uriOptions) {
+
+
+
+    /**
+     * Find all the beans for this beanType.
+     * &lt;p&gt;
+     * This can use URL query parameters such as order and maxrows to configure
+     * the query.
+     * &lt;p&gt;
+     */
+    @GET
+    public List&lt;T&gt; findAll(@Context UriInfo ui, @PathParam("uriOptions") String uriOptions) {
+
+
+</pre>
+</div>
+
+<div class="col70">
+<h4>UriOptions</h4>
+<p>
+Used to parse a String (typically from part of a URL) into PathProperties, List of Id's and sort clause which can then be applied to the JSON/XML marshaling and ORM query to optimise the building and rendering of part of an object graph. 
+</p>
+<p>
+UriOptions was inspired by the JavaOne presentation from LinkedIn on
+building High performance restful APIS's. That presentation is available
+<a href="http://www.slideshare.net/linkedin/building-consistent-restful-apis-in-a-highperformance-environment">on slideshare.net</a>.
+</p>
+<p>
+Essentially UriOptions gives the caller the ability to specify only 
+the properties they need. This gives the server implementation the
+ability to optimise the marshalling and ORM query without extra
+server API's (which would otherwise need to be built and documented).
+</p>
+<p>
+The UriOptions can contain 3 segments to specify:<br/>
+- A list of Id's to fetch or delete<br/>
+- The properties to fetch (can be nested) <br/>
+- A sort clause <br/>
+</p>
+<pre class="java:nogutter">
+ Example URL:
+ .../v1/customer::(34,35):(name,id,contacts(firstName,lastName)):sort(id desc)
+ 
+ The 3 segments above is broken into:
+ 
+ 
+ ::(34,35) 
+ // fetch customer 34 and 35
+ 
+ :(name,id,contacts(firstName,lastName))
+ // fetch customer name, id the customer contacts firstName and lastName
+    
+ :sort(id desc)
+ // sort the customers by descending order of their Id values
+
+
+</pre>
+
+</div>
+
+<div class="colend"></div>
+
+<div class="col70 colnext">
+<a class="h3" href="/ebean/introduction.html">Back: Introduction</a>
+</div>
+<div class="colend"></div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

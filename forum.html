@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Ebean Forums</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+div.forum {
+	border:2px solid #ccc;
+	margin-bottom:20px;
+}
+div.headerNewTopic {
+	float:right;
+}
+div.header {
+	padding:3px 7px;
+	font-size:105%; font-weight:bold;	
+	background: #ddd;color:#25345f; color:#eee;
+}
+td.indent {width:2em;}
+td.lastposted {width:10em;}
+td.postcount {text-align: center;	width:10em;}
+</style>
+
+
+</head>
+
+<body>
+<form action='/forum.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; Forums
+</div>
+
+<p style="font-size:105%;">
+<h1>
+Please ask questions on the <b><i><a href="http://groups.google.com/group/ebean">Ebean Google Group</a></i></b>.
+<br/>These forums are no longer active. - Thanks!!
+</h1>
+</p>
+<p>
+&nbsp;
+</p>
+<div class="forum">
+<div class="header">
+<div class="headerNewTopic">&nbsp;</div>
+<a href="forumdetail-1.html" title="View all Topics in this forum"><img src="/image/forum.gif"> General Issues</a></div>
+<div id="hot1" class="hottopics">
+<table>
+
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-225.html" title="View this Topic"><img src="/image/forumtopic.gif"> Cannot query data in uppercase column names?</a></td>
+<td class="lastposted">21:59&nbsp;&nbsp;&nbsp;23 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-223.html" title="View this Topic"><img src="/image/forumtopic.gif"> How to convert  List  to an object of type com.avaje.ebean.PagingList</a></td>
+<td class="lastposted">13:16&nbsp;&nbsp;&nbsp;07 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-222.html" title="View this Topic"><img src="/image/forumtopic.gif"> Copy an Entity</a></td>
+<td class="lastposted">07:30&nbsp;&nbsp;&nbsp;03 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-220.html" title="View this Topic"><img src="/image/forumtopic.gif"> Is this product still being developed and supported?</a></td>
+<td class="lastposted">05:17&nbsp;&nbsp;&nbsp;09 Nov</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-217.html" title="View this Topic"><img src="/image/forumtopic.gif"> TimeToLive cache configuration</a></td>
+<td class="lastposted">02:36&nbsp;&nbsp;&nbsp;05 Aug</td>
+<td class="postcount">2 posts</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="forum">
+<div class="header">
+<div class="headerNewTopic">&nbsp;</div>
+<a href="forumdetail-2.html" title="View all Topics in this forum"><img src="/image/forum.gif"> Database specific</a></div>
+<div id="hot2" class="hottopics">
+<table>
+
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-227.html" title="View this Topic"><img src="/image/forumtopic.gif"> How do i close database connections when using Future list ..?</a></td>
+<td class="lastposted">08:20&nbsp;&nbsp;&nbsp;25 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-226.html" title="View this Topic"><img src="/image/forumtopic.gif"> Getting </a></td>
+<td class="lastposted">06:02&nbsp;&nbsp;&nbsp;25 Apr</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-224.html" title="View this Topic"><img src="/image/forumtopic.gif"> How to convert  List  to an object of type com.avaje.ebean.PagingList</a></td>
+<td class="lastposted">04:47&nbsp;&nbsp;&nbsp;08 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-212.html" title="View this Topic"><img src="/image/forumtopic.gif"> Play framework + Postgres HStore</a></td>
+<td class="lastposted">07:21&nbsp;&nbsp;&nbsp;02 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-210.html" title="View this Topic"><img src="/image/forumtopic.gif"> Error on join in Oracle 8</a></td>
+<td class="lastposted">14:12&nbsp;&nbsp;&nbsp;14 Feb</td>
+<td class="postcount">0 posts</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="forum">
+<div class="header">
+<div class="headerNewTopic">&nbsp;</div>
+<a href="forumdetail-3.html" title="View all Topics in this forum"><img src="/image/forum.gif"> Byte code enhancement</a></div>
+<div id="hot3" class="hottopics">
+<table>
+
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-219.html" title="View this Topic"><img src="/image/forumtopic.gif"> Lua Bytecode to Lua human "readable"��?? </a></td>
+<td class="lastposted">21:55&nbsp;&nbsp;&nbsp;08 Nov</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-201.html" title="View this Topic"><img src="/image/forumtopic.gif"> Session data duplicated</a></td>
+<td class="lastposted">19:49&nbsp;&nbsp;&nbsp;25 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-180.html" title="View this Topic"><img src="/image/forumtopic.gif"> Override ClassWriter.getCommonSuperClass()</a></td>
+<td class="lastposted">12:32&nbsp;&nbsp;&nbsp;10 May</td>
+<td class="postcount">11 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-181.html" title="View this Topic"><img src="/image/forumtopic.gif"> transform> cls: <classname>  msg: Has no fields? on abstract class</a></td>
+<td class="lastposted">16:42&nbsp;&nbsp;&nbsp;19 Apr</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-174.html" title="View this Topic"><img src="/image/forumtopic.gif"> make _ebean properties transient</a></td>
+<td class="lastposted">15:08&nbsp;&nbsp;&nbsp;15 Apr</td>
+<td class="postcount">6 posts</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="forum">
+<div class="header">
+<div class="headerNewTopic">&nbsp;</div>
+<a href="forumdetail-4.html" title="View all Topics in this forum"><img src="/image/forum.gif"> Annotations and Xml mapping </a></div>
+<div id="hot4" class="hottopics">
+<table>
+
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-218.html" title="View this Topic"><img src="/image/forumtopic.gif"> Multiple levels of MappedSuperClass</a></td>
+<td class="lastposted">21:31&nbsp;&nbsp;&nbsp;31 Oct</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-197.html" title="View this Topic"><img src="/image/forumtopic.gif"> Ebean's Subclass Generation Class$$EntityBean not clean of tomcat memory when undeploy</a></td>
+<td class="lastposted">17:22&nbsp;&nbsp;&nbsp;11 Apr</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-194.html" title="View this Topic"><img src="/image/forumtopic.gif"> Inheritance issue</a></td>
+<td class="lastposted">11:22&nbsp;&nbsp;&nbsp;14 Jun</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-173.html" title="View this Topic"><img src="/image/forumtopic.gif"> @PrePersist, @PostPersist, @PostLoad,...</a></td>
+<td class="lastposted">22:27&nbsp;&nbsp;&nbsp;05 Mar</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-156.html" title="View this Topic"><img src="/image/forumtopic.gif"> how use @GeneratedValue</a></td>
+<td class="lastposted">09:22&nbsp;&nbsp;&nbsp;30 Sep</td>
+<td class="postcount">1 posts</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="forum">
+<div class="header">
+<div class="headerNewTopic">&nbsp;</div>
+<a href="forumdetail-5.html" title="View all Topics in this forum"><img src="/image/forum.gif"> Features missing or wanted</a></div>
+<div id="hot5" class="hottopics">
+<table>
+
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-221.html" title="View this Topic"><img src="/image/forumtopic.gif"> Support for fiels updated by thd datasouce</a></td>
+<td class="lastposted">15:48&nbsp;&nbsp;&nbsp;26 Jan</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-198.html" title="View this Topic"><img src="/image/forumtopic.gif"> Support for spatial Fields</a></td>
+<td class="lastposted">16:42&nbsp;&nbsp;&nbsp;19 Sep</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-195.html" title="View this Topic"><img src="/image/forumtopic.gif"> JPA 2.0 Annotations</a></td>
+<td class="lastposted">07:44&nbsp;&nbsp;&nbsp;04 Aug</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-11.html" title="View this Topic"><img src="/image/forumtopic.gif"> Only Single Table Inheritance is currently implemented</a></td>
+<td class="lastposted">13:24&nbsp;&nbsp;&nbsp;12 May</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-157.html" title="View this Topic"><img src="/image/forumtopic.gif"> all-delete-orphan</a></td>
+<td class="lastposted">09:29&nbsp;&nbsp;&nbsp;04 Nov</td>
+<td class="postcount">7 posts</td>
+</tr>
+</table>
+</div>
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

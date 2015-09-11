@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: Exceptions thrown during rollback hides initial error</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Jonas">
+<meta name="description" content="If a query fails errors thrown by the transaction rollback code will hide the initial query error making it harder to analyse the cause of the query failure In our specific case the connection to the PostgreSQL server times out causing the query to fail The following rollback fails with This connection has been closed effectively overriding the original error Extracts from the two error are below Example from com avaje ebeaninternal server core DefaultServer showing the code in question Other methods findMap findId etc use the same pattern and would also result in the original query error being overridden SuppressWarnings unchecked public List findList Query query Transaction t SpiOrmQueryRequest request createQueryRequest Type LIST query t Object result request getFromQueryCache if result">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-444.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 444 : Exceptions thrown during rollback hides initial error
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 444 : Exceptions thrown during rollback hides initial error </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">Medium</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Jonas</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">3.3.2</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">28/05/2013</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">28/05/2013</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>If a query fails, errors thrown by the transaction rollback code<br/>will "hide" the initial query error, making it harder to analyse<br/>the cause of the query failure. In our specific case, the connection<br/>to the PostgreSQL server times out causing the query to fail. The<br/>following rollback fails with "This connection has been closed"<br/>effectively overriding the original error. Extracts from the two<br/>error are below.</p><p>Example from com.avaje.ebeaninternal.server.core.DefaultServer,<br/>showing the code in question. Other methods (findMap, findId, etc.)<br/>use the same pattern and would also result in the original query<br/>error being overridden.</p><p>  @SuppressWarnings("unchecked")<br/>  public <T> List<T> findList(Query<T> query, Transaction t) {</p><p>    SpiOrmQueryRequest<T> request = createQueryRequest(Type.LIST, query, t);</p><p>    Object result = request.getFromQueryCache();<br/>    if (result != null) {<br/>      return (List<T>) result;<br/>    }</p><p>    try {<br/>      request.initTransIfRequired();<br/>      List<T> list = request.findList();<br/>      request.endTransIfRequired();</p><p>      return list;</p><p>    } catch (RuntimeException ex) {<br/>      request.rollbackTransIfRequired();<br/>====> ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Errors thrown by this method<br/>                                        means `ex` is never propagated.<br/>      throw ex;<br/>    }<br/>  }</p><p>Extract from the rollback exception stack trace:<br/>------------------------------------------------</p><p>Caused by: javax.persistence.PersistenceException: org.postgresql.util.PSQLException: This connection has been closed.<br/>        at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:646)<br/>        at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:627)<br/>        at com.avaje.ebeaninternal.server.core.BeanRequest.rollbackTransIfRequired(BeanRequest.java:107)<br/>        at com.avaje.ebeaninternal.server.core.DefaultServer.findId(DefaultServer.java:1257)<br/>        at com.avaje.ebeaninternal.server.core.DefaultServer.find(DefaultServer.java:1095)<br/>        at com.avaje.ebeaninternal.server.core.DefaultServer.find(DefaultServer.java:1082)<br/>        at ca.mckesson.liferay.portlets.questionnaire.schema.Model$Finder.byId(Model.java:170)<br/>        at ca.mckesson.liferay.portlets.questionnaire.bean.QuestionnairePage.init(QuestionnairePage.java:55)<br/>        ... 181 more<br/>Caused by: org.postgresql.util.PSQLException: This connection has been closed.<br/>        at org.postgresql.jdbc2.AbstractJdbc2Connection.checkClosed(AbstractJdbc2Connection.java:714)<br/>        at org.postgresql.jdbc2.AbstractJdbc2Connection.rollback(AbstractJdbc2Connection.java:731)<br/>        at org.apache.tomcat.dbcp.dbcp.DelegatingConnection.rollback(DelegatingConnection.java:368)<br/>        at org.apache.tomcat.dbcp.dbcp.PoolingDataSource$PoolGuardConnectionWrapper.rollback(PoolingDataSource.java:323)<br/>        at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:639)<br/>        ... 188 more</p><p>Extract from the real exception:<br/>--------------------------------</p><p>Caused by: javax.persistence.PersistenceException: Query threw SQLException:An I/O error occured while sending to the backend. <br/>Bind values:[READY] <br/>Query was:<br/>select t0.QID as c0, pgp_sym_decrypt(t0.PROPS,?) as c1, t0.STATUS as c2, t0.CDATE as c3, t0.MDATE as c4<br/>        , t1.PID as c5, pgp_sym_decrypt(t1.UID,?) as c6<br/>from QS t0<br/>left outer join PS t1 on t1.PID = t0.PID  <br/>where t0.STATUS = ?  </p><p>	at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:834)<br/>	at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:814)<br/>	at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:229)<br/>	at com.avaje.ebeaninternal.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:96)<br/>	at com.avaje.ebeaninternal.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:291)<br/>	at com.avaje.ebeaninternal.server.core.DefaultServer.findList(DefaultServer.java:1521)<br/>	at com.avaje.ebeaninternal.server.querydefn.DefaultOrmQuery.findList(DefaultOrmQuery.java:904)<br/>	at com.savoirfairelinux.liferay.portlet.bean.SearchPage.search(SearchPage.java:147)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)<br/>	at java.lang.reflect.Method.invoke(Unknown Source)<br/>	at org.apache.el.parser.AstValue.invoke(AstValue.java:264)<br/>	at org.apache.el.MethodExpressionImpl.invoke(MethodExpressionImpl.java:278)<br/>	at com.sun.faces.facelets.el.TagMethodExpression.invoke(TagMethodExpression.java:105)<br/>	at javax.faces.component.MethodBindingMethodExpressionAdapter.invoke(MethodBindingMethodExpressionAdapter.java:88)<br/>	... 145 more<br/>Caused by: org.postgresql.util.PSQLException: An I/O error occured while sending to the backend.<br/>	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:283)<br/>	at org.postgresql.jdbc2.AbstractJdbc2Statement.execute(AbstractJdbc2Statement.java:512)<br/>	at org.postgresql.jdbc2.AbstractJdbc2Statement.executeWithFlags(AbstractJdbc2Statement.java:388)<br/>	at org.postgresql.jdbc2.AbstractJdbc2Statement.executeQuery(AbstractJdbc2Statement.java:273)<br/>	at org.apache.tomcat.dbcp.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)<br/>	at org.apache.tomcat.dbcp.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)<br/>	at com.avaje.ebeaninternal.server.query.CQuery.prepareBindExecuteQuery(CQuery.java:401)<br/>	at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:193)<br/>	... 158 more<br/>Caused by: java.net.SocketException: Connection timed out<br/>	at java.net.SocketInputStream.socketRead0(Native Method)<br/>	at java.net.SocketInputStream.read(Unknown Source)<br/>	at com.sun.net.ssl.internal.ssl.InputRecord.readFully(Unknown Source)<br/>	at com.sun.net.ssl.internal.ssl.InputRecord.read(Unknown Source)<br/>	at com.sun.net.ssl.internal.ssl.SSLSocketImpl.readRecord(Unknown Source)<br/>	at com.sun.net.ssl.internal.ssl.SSLSocketImpl.readDataRecord(Unknown Source)<br/>	at com.sun.net.ssl.internal.ssl.AppInputStream.read(Unknown Source)<br/>	at org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:145)<br/>	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:114)<br/>	at org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:73)<br/>	at org.postgresql.core.PGStream.ReceiveChar(PGStream.java:274)<br/>	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:1661)<br/>	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:257)<br/>	... 165 more</p><p>Using ebean-2.8.1 via Maven.</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+
+<input type="hidden" name="f_bugid" value="444">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-444.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="444">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

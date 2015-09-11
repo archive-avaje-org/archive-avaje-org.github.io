@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Using AutoFetch with Ebean</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="How to use AutoFetch in Ebean ORM">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/autofetch_ebean.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="autofetch.html">What is AutoFetch</a>
+&raquo; <span>Using AutoFetch with Ebean</span>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main" >
+<h3>Using AutoFetch with Ebean</h3>
+<ul>
+<li><a href="#explicit">Explicit Control</a></li>
+<li><a href="#implicit">Implicit Control</a></li>
+<li><a href="#props">Settings in avaje.properties</a></li>
+<li><a href="#file">The AutoFetch file</a></li>
+<li><a href="#gc">Garbage Collection and Profile collection</a></li>
+<li><a href="#profiling">Profiling and Tuned Query</a></li>
+<li><a href="#jmx">JMX and AutoFetchControl</a></li>
+</ul>
+</td>
+<td class="rhslinks">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="#explicit"></a>You need Ebean 0.9.7</h4>
+<p>
+0.9.7 is the first version of Ebean with the AutoFetch feature.
+</p>
+<p>
+
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="#explicit"></a>Explicit Control</h4>
+For a given query you can explicitly control whether or not to use AutoFetch. 
+<p>
+<pre class="java:nocontrols:nogutter">
+  ...  
+  // explicitly turn on AutoFetch for this query
+  query.setAutoFetch(true);
+  ...
+</pre>
+<p>
+
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="implicit"></a>Implicit Control</h4>
+<p>
+For queries where autoFetch has not been explicitly set there are three options which can be configured.
+</p>
+<pre class="property:nocontrols:nogutter">
+# implicit autofetch mode
+#     DEFAULT_OFF         - Don't use AutoFetch
+#     DEFAULT_ON          - Use AutoFetch
+#     DEFAULT_ON_IF_EMPTY - Use if neither select() or join() have been set
+
+ebean.autofetch.implicitmode=default_on
+
+</pre>
+<p>
+
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+<h4><a id="props"></a>Settings in avaje.properties</h4>
+<p>
+These are the settings you put in avaje.properties to control autofetch.
+</p>
+<pre class="property:nocontrols:nogutter">
+# enable autofetch
+ebean.autofetch.querytuning=true
+
+# enable collection of profiling information
+ebean.autofetch.profiling=true
+
+# implicit autofetch mode
+#     DEFAULT_OFF         - Don't use AutoFetch
+#     DEFAULT_ON          - Use AutoFetch
+#     DEFAULT_ON_IF_EMPTY - Use if neither select() or join() have been set
+ebean.autofetch.implicitmode=default_on
+
+# minimum amount of profiling to collect before
+# autofetch will start tuning the query
+ebean.autofetch.profiling.min=1
+
+# profile every query up to base 
+ebean.autofetch.profiling.base=10
+
+# after base collect profiling on 5% of queries
+ebean.autofetch.profiling.rate=0.05
+</pre>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="file"></a>The AutoFetch file</h4>
+<p>
+Ebean collects profiling information. On startup it is read from a file and on
+shutdown it is written to a file. This file is located in the same directory as
+the dictionary file.
+</p>
+
+</td>
+<td class="rhs">
+
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="gc"></a>Garbage Collection and Profile collection</h4>
+<p>
+When Ebean is collecting profiling information it puts a NodeUsageCollector object on each entity bean.
+The NodeUsageCollector collects profiling information which essentially is the set of properties for
+that bean that where used (read or written).
+</p>
+<p>
+Q: When does the NodeUsageCollector know when to stop collecting information?
+</p>
+<p>
+A: For Ebean this occurs via Garbage collection. The finalize is called on the NodeUsageCollector and 
+at that point it publishes its profiling information back to a AutoFetchListener.
+</p>
+<p>
+The approach has worked very well for me on the Sun JVM. For applications that run for a short time it should be noted that
+garbage collection is not likely to occur. As part of Ebean's shutdown it triggers a GC and collects 
+any leftover profiling information before writing that to a file.
+</p>
+<p>
+This works well on the Sun JVM but we should note that triggering a GC is a HINT to the JVM and not a guarantee
+that a GC will actually occur. We really <em>DON'T</em> want to be triggering GC (let the JVM do its thing) so Ebean 
+only does this on shutdown.
+</p>
+</td>
+<td class="rhs">
+
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="profiling"></a>Profiling and Tuned Query</h4>
+<p>
+Ebean actually holds two sets of information for AutoFetch. The first is the profiling information
+and the second is the Tuned query.
+</p>
+<h5>Tuned Query</h5>
+<p>
+Periodically the profiling information is converted into a tuned query. The Tuned query is actually
+just the select() and join() parts of a query.  When autoFetch tunes a query it is simply a matter
+of replacing the select() & join() parts of the query.
+</p>
+<p>
+A log is generated which shows new and changed "tuned query information". In this log you will be able to see the
+tuned query change if the usage changes.
+</p>
+<h5>Profiling Information</h5>
+<p>
+In addition to knowing which properties on which nodes where used the query execution of associated lazy loading queries are also collected.
+This is a pretty interesting point in that you can see how much and how expensive and the lazy loading queries are for a given original
+query - very interesting stuff.
+</p>
+
+</td>
+<td class="rhs">
+
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="jmx"></a>JMX and AutoFetchControl</h4>
+<p>
+Ebean provides an API for controlling the AutoFetch at runtime. This means you can turn it on/off change the
+profiling rate as well as trigger profile collection and "tuned query info" generation. 
+</p>
+<p>
+This is useful when you are playing around with AutoFetch. Along with this you can use LogControl to turn on/off
+the generated sql logging and generally get a feel for whats going on.
+</p>
+
+</td>
+<td class="rhs">
+
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

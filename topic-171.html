@@ -1,0 +1,546 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: Released v2.4.0</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="We have just released v2 4 0 which includes 11 enhancements 20 bug fixes The main enhancements are Transparent Encryption of properties Vanilla mode Delete by id update method for stateless updates using entity beans Offline DDL Generation EnumValue annotation ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-171.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Rob </span>
+28 Feb&nbsp;03:03
+</div>
+Released v2.4.0
+<div class="body">
+<p>We have just released v2.4.0 which includes:</p><p>11 enhancements<br/>20 bug fixes</p><p>The main enhancements are:<br/>- Transparent Encryption of properties<br/>- 'Vanilla' mode<br/>- Delete by id <br/>- update() method (for stateless updates using entity beans)<br/>- Offline DDL Generation<br/>- EnumValue annotation</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+01 Mar&nbsp;23:08
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>thanks rob!</p><p>just tried to upgrade from 1.1.0 to 2.4.0, but it seems there is an issue with @Transient maps:</p><p>java.lang.NullPointerException<br/>	at com.avaje.ebean.server.deploy.BeanMapHelp.<init>(BeanMapHelp.java:46)<br/>	at com.avaje.ebean.server.deploy.BeanMapHelp.<init>(BeanMapHelp.java:36)<br/>	at com.avaje.ebean.server.deploy.BeanCollectionHelpFactory.create(BeanCollectionHelpFactory.java:24)<br/>	at com.avaje.ebean.server.deploy.BeanPropertyAssocMany.initialise(BeanPropertyAssocMany.java:121)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptor.initialiseOther(BeanDescriptor.java:613)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorManager.initialiseAll(BeanDescriptorManager.java:354)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorManager.deploy(BeanDescriptorManager.java:257)<br/>	at com.avaje.ebean.server.core.InternalConfiguration.<init>(InternalConfiguration.java:135)<br/>	at com.avaje.ebean.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:189)<br/>	at com.avaje.ebean.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:121)<br/>	at com.avaje.ebean.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:67)<br/>	at com.avaje.ebean.EbeanServerFactory.create(EbeanServerFactory.java:63)<br/>	at com.avaje.ebean.Ebean$ServerManager.getWithCreate(Ebean.java:228)<br/>	at com.avaje.ebean.Ebean$ServerManager.<init>(Ebean.java:184)<br/>	at com.avaje.ebean.Ebean$ServerManager.<init>(Ebean.java:150)<br/>	at com.avaje.ebean.Ebean.<clinit>(Ebean.java:144)<br/>	... 2 more</p><p>the map is declared as follows:<br/>    @Transient<br/>    private Map<Long, Subscription> subscriptionMap;</p><p>and has a getter:<br/>    @Transient()<br/>    public Map<Long, Subscription> getSubscriptionMap() {...}</p><p>kind regards,<br/>-erwin</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+01 Mar&nbsp;23:58
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>if i would have to guess (cannot compile head atm...so many dependencies) i would say this is the culprit:<br/>BeanPropertyAssocMany.java:121:</p><p>	public void initialise() {<br/>		super.initialise();</p><p>	    this.help = BeanCollectionHelpFactory.create(this);</p><p>		if (!isTransient){</p><p>			if (manyToMany){</p><p><br/>////////////<br/>i guess the creation of the this.help object should be moved inside the if-condition</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;00:27
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>ok, thanks ... I'll take a look tonight.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;07:03
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Logged as <a href="http://www.avaje.org/bugdetail-228.html">http://www.avaje.org/bugdetail-228.html</a></p><p>Fixed in HEAD.</p><p>If you can use the transient modifier (rather than @Transient) that is a workaround. Otherwise I can create a snapshot build.</p><p>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;10:07
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>thanks, you are as fast as ever!<br/>i can use the modifier as a workaround, already tested it and it works.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;11:46
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>got another one for you. this used to work fine in 1.1.0:</p><p>    @OneToMany()<br/>    @OrderBy("creationDate")<br/>    @Where(clause="deleted=0")<br/>    private List<Comment> comments;</p><p>now i get:<br/>javax.persistence.PersistenceException: Query threw SQLException:Ambiguous column name DELETED; SQL statement:<br/>select e.id c0<br/>        , ec.id c1, ec.cdate c2, ec.comment c3, ec.deleted c4, ec.user_id c5, ec.event_id c6 <br/>from event e<br/>left outer join eventcomment ec on ec.event_id = e.id  <br/>where deleted=0 and e.id = ?   <br/>order by e.id , ec.cdate [90059-79] Query was:<br/>select e.id c0<br/>        , ec.id c1, ec.cdate c2, ec.comment c3, ec.deleted c4, ec.user_id c5, ec.event_id c6 <br/>from event e<br/>left outer join eventcomment ec on ec.event_id = e.id  <br/>where deleted=0 and e.id = ?   <br/>order by e.id , ec.cdate</p><p><br/>	com.avaje.ebean.server.query.CQueryEngine.findMany(CQueryEngine.java:202)<br/>	com.avaje.ebean.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:88)<br/>	com.avaje.ebean.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:284)</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;12:31
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>You need to add a "${ta}." prefix ... so it becomes:</p><p>@Where(clause="${ta}.deleted=0")</p><p><br/>... where ta is short for Table Alias.<br/> <br/>The issue with the sql is that without the table alias the 'deleted' column is ambiguous. I believe in 1.x the table alias' where worked out differently and automatically added.</p><p>Now we need to explicitly specify the "${ta}." part.</p><p>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;23:36
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>thanks, i'm slowly starting to see the bottom of this. but there is still one more. any idea where this might come from?</p><p>Caused by: java.lang.RuntimeException<br/>	at com.avaje.ebean.server.core.DefaultBeanLoader.loadMany(DefaultBeanLoader.java:152)<br/>	at com.avaje.ebean.server.core.DefaultServer.loadMany(DefaultServer.java:428)<br/>	at com.avaje.ebean.server.loadcontext.DLoadManyContext.loadMany(DLoadManyContext.java:143)<br/>	at com.avaje.ebean.common.AbstractBeanCollection.lazyLoadCollection(AbstractBeanCollection.java:142)<br/>	at com.avaje.ebean.common.BeanList.init(BeanList.java:107)<br/>	at com.avaje.ebean.common.BeanList.size(BeanList.java:393)<br/>	at tk.eabin.event.db.Event.hasNewComments(Event.java:524)<br/>	at tk.eabin.event.client.model.EventModel$EventExtractor.getNewComments(EventModel.java:32)<br/>	... 31 more</p><p>------------</p><p>in the source batch.size() = 1 and list.size() = 0, so you throw a runtimeexception. the resulting list should be empty too, so BeanList.size() should return 0.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;23:39
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>thanks, i'm slowly starting to see the bottom of this. but there is still one more. any idea where this might come from?</p><p>Caused by: java.lang.RuntimeException<br/>	at com.avaje.ebean.server.core.DefaultBeanLoader.loadMany(DefaultBeanLoader.java:152)<br/>	at com.avaje.ebean.server.core.DefaultServer.loadMany(DefaultServer.java:428)<br/>	at com.avaje.ebean.server.loadcontext.DLoadManyContext.loadMany(DLoadManyContext.java:143)<br/>	at com.avaje.ebean.common.AbstractBeanCollection.lazyLoadCollection(AbstractBeanCollection.java:142)<br/>	at com.avaje.ebean.common.BeanList.init(BeanList.java:107)<br/>	at com.avaje.ebean.common.BeanList.size(BeanList.java:393)<br/>	at tk.eabin.event.db.Event.hasNewComments(Event.java:524)<br/>	at tk.eabin.event.client.model.EventModel$EventExtractor.getNewComments(EventModel.java:32)<br/>	... 31 more</p><p>------------</p><p>in the source batch.size() = 1 and list.size() = 0, so you throw a runtimeexception. the resulting list should be empty too, so BeanList.size() should return 0.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;23:42
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>btw: this happens when querying the size of the list with the @Where(clause="${ta}.deleted=0").<br/>when i remove the clause, everything is fine and dandy. although the condition would have no effect, since the list should be empty in both cases.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Mar&nbsp;23:50
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>and one more note: this seems to happen only if the result list is empty.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;00:15
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>i have a run tonight:<br/>is there any way to use IDENTITY instead of SEQUENCE for h2 database? my db uses auto-generated ids everywhere, so all inserts fail miserably.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;09:59
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>DefaultBeanLoader.loadMany(DefaultBeanLoader.java:152)</p><p>... hmmm, looking at this now.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;10:03
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>>> use IDENTITY instead of SEQUENCE for h2 database?</p><p>In H2Platform ... <br/>this.dbIdentity.setIdType(IdType.SEQUENCE);</p><p>... would need to change to:</p><p>ntity.setIdType(IdType.IDENTITY);</p><p>Hmmm.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;10:09
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>>> note: this seems to happen only if the result list is empty.</p><p>Can you show me the actual sql query prior to the exception. It should be a lazy loading query. In theory it should actually return 1 row (and not 0) ... as that is number of top level objects.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;10:14
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>If you can change the code ...</p><pre class="java">if (list.size() != batch.size()) {
+	String msg = "Batch lazy loading on Many "+many.getFullBeanName();
+	msg += " returned incorrect row count? "+list.size() +" &lt;&gt; "+batch.size();
+	msg += ". idList["+idList+"] sql:"+query.getGeneratedSql();
+	throw new RuntimeException(msg);
+}</pre>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;10:20
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>The idList will just have 1 value ... and we should be able to check that against the sql to see what is returned.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:03
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>the only two sql statements that are executed in my test-case: <br/>[code]<br/><sql summary='Event' ><br/>select e.id c0, e.startdate c1, e.enddate c2, e.cdate c3, e.minpeople c4, e.maxpeople c5, e.comment c6, e.canceled c7, e.reason c8, e.deleted c9, e.archived c10, e.creator_id c11, e.category_id c12, e.location_id c13 <br/>from event e<br/>where e.id = ?  <br/></sql><br/><sql mode='+lazy' summary='Event +many:comments' load='path:comments batch:1 actual:1' ><br/>select e.id c0<br/>        , ec.id c1, ec.cdate c2, ec.comment c3, ec.deleted c4, ec.user_id c5, ec.event_id c6 <br/>from event e<br/>left outer join eventcomment ec on ec.event_id = e.id  <br/>where ec.deleted=0 and e.id = ?   <br/>order by e.id , ec.cdate<br/></sql><br/>[/code]</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:04
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>btw: how do i post code so that &lt; and &gt; are not eaten?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:06
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>&lt;pre class="java" &gt;<br/>...<br/>put java code in here...<br/>...<br/>&lt;/pre&gt;</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:07
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>getFullBeanName() = tk.eabin.event.db.Event.comments<br/>list.size = 0<br/>batch.size = 1<br/>idList = [1290]<br/>generatedSql = select e.id c0<br/>        , ec.id c1, ec.cdate c2, ec.comment c3, ec.deleted c4, ec.user_id c5, ec.event_id c6 <br/>from event e<br/>left outer join eventcomment ec on ec.event_id = e.id  <br/>where ec.deleted=0 and e.id = ?   <br/>order by e.id , ec.cdate</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:10
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ok, I think I see the problem:</p><p>select e.id c0<br/>, ec.id c1, ec.cdate c2, ec.comment c3, ec.deleted c4, ec.user_id c5, ec.event_id c6<br/>from event e<br/>left outer join eventcomment ec on ec.event_id = e.id<br/>where ec.deleted=0 and e.id = ?<br/>order by e.id , ec.cdate</p><p>I think we need a nvl type function around the "ec.deleted=0" ...</p><p>Aka ... this has the effect of making the left outer join ... just a join and hence will return no rows. </p><p>Hmmm. Maybe that is actually ok in the lazy loading case... and in fact the code that checks 1 <> 0 ... should just not be there.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:13
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>where ec.deleted=0 and e.id = ?</p><p>-></p><p>where (ec.deleted is null OR ec.deleted=0) and e.id = ?</p><p>So you could try ...</p><p>@Where(${ta}.deleted is null OR ${ta}.deleted=0})</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:18
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@Where(nvl(${ta}.deleted,0) = 0}) ... or isnull() - depends on the DB</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:33
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>adding the null check works, but it seems kind of counter-intuitive to me.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:35
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>put removing the check in DefaultBeanLoader leads to another exception:</p><p>Exception in thread "main" java.lang.NullPointerException<br/>	at com.avaje.ebean.common.BeanList.size(BeanList.java:394)<br/>	at tk.eabin.event.db.Event.hasNewComments(Event.java:524)<br/>	at tk.eabin.event.server.ServerRunner.run(ServerRunner.java:47)<br/>	at tk.eabin.event.server.ServerRunner.main(ServerRunner.java:42)<br/>	at test.DebugServer.main(DebugServer.java:23)</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:39
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>In this case we are lazy loading the many... so you are correct, in this case it really doesn't make a real difference.</p><p>That is, it is really a bug with the check:</p><p>if (list.size() != batch.size()) {  </p><p>}</p><p>It is actually incorrect in this case. It assumed the join would always be effectively an outer join... and there would always be the same number of top level beans fetched as id's - in this case 1.</p><p>However, that is a bad assumption.</p><p>I'll log this as a bug - and remove that checking code.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:47
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Exception in thread "main" java.lang.NullPointerException<br/>at com.avaje.ebean.common.BeanList.size(BeanList.java:394)<br/>at tk.eabin.event.db.Event.hasNewComments(Event.java:524)</p><p>Yup. I think that the query returns 0 rows... so it is not setting an empty list (it is still null) ... and that means the underlying list in BeanList is still null.</p><p>I think that is the bug there - I'll see if I can reproduce.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;12:55
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Yup - reproduced.</p><p>java.lang.NullPointerException<br/>	at com.avaje.ebean.common.BeanList.size(BeanList.java:394)<br/>	at com.avaje.tests.batchload.TestEmptyManyLazyLoad.test(TestEmptyManyLazyLoad.java:28)</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;13:07
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Logged as <a href="http://www.avaje.org/bugdetail-231.html">http://www.avaje.org/bugdetail-231.html</a></p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;13:12
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Fixed in HEAD now.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;13:16
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>thanks, my application now runs without exceptions on a brief test.<br/>but i need IDENTITY instead of SEQUENCE, could you make that into a configurable option via ebean.properties?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;13:28
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Yup - already done so - <a href="http://www.avaje.org/bugdetail-230.html">http://www.avaje.org/bugdetail-230.html</a></p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;13:37
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>many thanks for being such a responsive developer. you most definitely need a donate button - i feel the urge of buying you a beer or two.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+03 Mar&nbsp;20:50
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ha ha ... funny as I put a Donate button on the download page last night :)</p><p>Ebean got it's first donation last week :)</p><p>Cheers, Rob.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="171">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

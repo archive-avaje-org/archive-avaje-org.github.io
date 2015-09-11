@@ -1,0 +1,3258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Ebean Bugs</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Bugs logged for avaje Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bug.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; Bugs
+</div>
+
+<div class="pageactions">
+<h2>
+Please log issues/bugs on <a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?state=open">github</a>
+<!-- <input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');"> -->
+</h2>
+</div>
+
+<h4>Open bugs</h4>
+
+<!-- bug list -->
+<div>
+<table class="grid">
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td width="10%">Status</td>
+<td>Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+
+<p>&nbsp;</p>
+
+<!--
+<h4>Unreviewed Open Bugs </h4>
+onent('cn=app.comp.RecentBugs;version=NEW')
+-->
+<h4>Transferred to github</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  446</td>
+<td>Medium</td>
+<td><a href="bugdetail-446.html">Missing support for @PrimaryKeyJoinColumn/@PrimaryKeyJoinColumns</a></td>
+<td>20 Nov 13&nbsp;10:53</td>
+</tr>
+<tr>
+<td>ENH  443</td>
+<td>Medium</td>
+<td><a href="bugdetail-443.html">Postgres HStore support</a></td>
+<td>02 Apr 13&nbsp;07:22</td>
+</tr>
+<tr>
+<td>BUG  442</td>
+<td>Medium</td>
+<td><a href="bugdetail-442.html">Ebean magically adding +1 hour for a datetime that is inside the hour ...</a></td>
+<td>21 Mar 13&nbsp;14:30</td>
+</tr>
+<tr>
+<td>BUG  438</td>
+<td>High</td>
+<td><a href="bugdetail-438.html">BeanSet of sub type with inheritance has null listen mode</a></td>
+<td>13 Dec 12&nbsp;17:20</td>
+</tr>
+<tr>
+<td>BUG  433</td>
+<td>Medium</td>
+<td><a href="bugdetail-433.html">Ebean doesn't honor @Transient for non-primitive array properties</a></td>
+<td>13 Nov 12&nbsp;16:28</td>
+</tr>
+<tr>
+<td>BUG  426</td>
+<td>High</td>
+<td><a href="bugdetail-426.html">ebean-maven-enhancer throws ClassNotFoundException when entity class r...</a></td>
+<td>19 Sep 12&nbsp;19:41</td>
+</tr>
+<tr>
+<td>BUG  422</td>
+<td>High</td>
+<td><a href="bugdetail-422.html">L2 Cache not working for embedded beans - RuntimeException </a></td>
+<td>09 Sep 12&nbsp;09:33</td>
+</tr>
+<tr>
+<td>ENH  419</td>
+<td>Medium</td>
+<td><a href="bugdetail-419.html">Simplify aggregation queries</a></td>
+<td>21 Aug 12&nbsp;03:10</td>
+</tr>
+<tr>
+<td>ENH  418</td>
+<td>Medium</td>
+<td><a href="bugdetail-418.html">Provide extension points and extension helper api</a></td>
+<td>21 Aug 12&nbsp;02:29</td>
+</tr>
+<tr>
+<td>ENH  411</td>
+<td>Medium</td>
+<td><a href="bugdetail-411.html">RawSql to support discriminator column mapping.</a></td>
+<td>09 Jul 12&nbsp;13:58</td>
+</tr>
+<tr>
+<td>BUG  406</td>
+<td>High</td>
+<td><a href="bugdetail-406.html">ENH: Add support for Postgres Serial type</a></td>
+<td>15 Jun 12&nbsp;02:50</td>
+</tr>
+<tr>
+<td>BUG  405</td>
+<td>High</td>
+<td><a href="bugdetail-405.html">ENH: Add ability to specify a join and alias to use with a specific pr...</a></td>
+<td>15 Jun 12&nbsp;02:22</td>
+</tr>
+<tr>
+<td>BUG  402</td>
+<td>High</td>
+<td><a href="bugdetail-402.html">disjunction expression should not produce inner join - left outer join...</a></td>
+<td>28 May 12&nbsp;03:07</td>
+</tr>
+<tr>
+<td>BUG  396</td>
+<td>Low</td>
+<td><a href="bugdetail-396.html">DDL creation doesn't handle nullable attribute of @JoinColumn</a></td>
+<td>25 Apr 12&nbsp;02:04</td>
+</tr>
+<tr>
+<td>BUG  395</td>
+<td>High</td>
+<td><a href="bugdetail-395.html">On save @OneToOne does not cascade parent IDs to child node</a></td>
+<td>24 Apr 12&nbsp;22:29</td>
+</tr>
+<tr>
+<td>ENH  394</td>
+<td>Medium</td>
+<td><a href="bugdetail-394.html">Use longs for row counts and paging</a></td>
+<td>20 Apr 12&nbsp;19:51</td>
+</tr>
+<tr>
+<td>BUG  392</td>
+<td>High</td>
+<td><a href="bugdetail-392.html">DDL Generation not correct for MS SQL SERVER</a></td>
+<td>10 Apr 12&nbsp;12:47</td>
+</tr>
+<tr>
+<td>ENH  390</td>
+<td>Medium</td>
+<td><a href="bugdetail-390.html">CQuery.GLOBAL_ROW_LIMIT should be configurable</a></td>
+<td>09 Apr 12&nbsp;08:35</td>
+</tr>
+<tr>
+<td>BUG  388</td>
+<td>High</td>
+<td><a href="bugdetail-388.html">When using @Transient along with @Formula I'm not seeing any values in...</a></td>
+<td>04 Apr 12&nbsp;20:38</td>
+</tr>
+<tr>
+<td>ENH  385</td>
+<td>High</td>
+<td><a href="bugdetail-385.html">ENH: Consider query syntax for multiple joins to the same OneToMany re...</a></td>
+<td>20 Mar 12&nbsp;10:08</td>
+</tr>
+<tr>
+<td>ENH  378</td>
+<td>High</td>
+<td><a href="bugdetail-378.html">Support @ElementCollection and @CollectionTable JPA annotations</a></td>
+<td>01 Feb 12&nbsp;19:07</td>
+</tr>
+<tr>
+<td>BUG  365</td>
+<td>High</td>
+<td><a href="bugdetail-365.html">ADD CONSTRAINT SQLite Incompatibility</a></td>
+<td>10 Apr 11&nbsp;11:53</td>
+</tr>
+<tr>
+<td>ENH  353</td>
+<td>Medium</td>
+<td><a href="bugdetail-353.html">Partial queries that return List of Attribute type</a></td>
+<td>17 Feb 11&nbsp;03:43</td>
+</tr>
+<tr>
+<td>ENH  352</td>
+<td>High</td>
+<td><a href="bugdetail-352.html">ENHANCEMENT - Add @UUID support for String UUID generation</a></td>
+<td>26 Jan 11&nbsp;10:40</td>
+</tr>
+<tr>
+<td>ENH  351</td>
+<td>High</td>
+<td><a href="bugdetail-351.html">ENHANCEMENT - Add support for OneToMany JoinTables</a></td>
+<td>26 Jan 11&nbsp;10:38</td>
+</tr>
+<tr>
+<td>ENH  314</td>
+<td>High</td>
+<td><a href="bugdetail-314.html">ENHANCEMENT - Add where() to Update and Delete</a></td>
+<td>02 Jul 10&nbsp;22:48</td>
+</tr>
+<tr>
+<td>ENH  235</td>
+<td>High</td>
+<td><a href="bugdetail-235.html">@PrePersist, @PostPersist, @PostLoad,... </a></td>
+<td>05 Mar 10&nbsp;22:25</td>
+</tr>
+<tr>
+<td>ENH  162</td>
+<td>High</td>
+<td><a href="bugdetail-162.html">ENHANCEMENT: Build in support for Logical Deletion ...</a></td>
+<td>30 Sep 09&nbsp;10:06</td>
+</tr>
+<tr>
+<td>ENH  115</td>
+<td>High</td>
+<td><a href="bugdetail-115.html">Support for mapping a List of enum   (similarly support List of scalar...</a></td>
+<td>23 May 09&nbsp;03:23</td>
+</tr>
+<tr>
+<td>ENH  9</td>
+<td>Medium</td>
+<td><a href="bugdetail-9.html">Support JOINED and TABLE PER CLASS inheritance strategies</a></td>
+<td>19 Nov 06&nbsp;08:52</td>
+</tr>
+<tr>
+<td>ENH  8</td>
+<td>Medium</td>
+<td><a href="bugdetail-8.html">Inheritance support for Postgres Table Inheritance and SQL3 Type Inher...</a></td>
+<td>19 Nov 06&nbsp;08:49</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 3.x</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  449</td>
+<td>High</td>
+<td><a href="bugdetail-449.html">Ebean is trying to delete new objects added to the list of an entity a...</a></td>
+<td>15 Jan 14&nbsp;17:56</td>
+</tr>
+<tr>
+<td>BUG  448</td>
+<td>High</td>
+<td><a href="bugdetail-448.html">Hash values for QueryPlan collide</a></td>
+<td>12 Dec 13&nbsp;00:12</td>
+</tr>
+<tr>
+<td>BUG  447</td>
+<td>High</td>
+<td><a href="bugdetail-447.html">PersistenceException sometimes when using in()</a></td>
+<td>21 Nov 13&nbsp;09:49</td>
+</tr>
+<tr>
+<td>BUG  445</td>
+<td>High</td>
+<td><a href="bugdetail-445.html">rollback in a case of database connection closed, but not close connec...</a></td>
+<td>21 Aug 13&nbsp;19:27</td>
+</tr>
+<tr>
+<td>BUG  444</td>
+<td>Medium</td>
+<td><a href="bugdetail-444.html">Exceptions thrown during rollback hides initial error</a></td>
+<td>28 May 13&nbsp;13:53</td>
+</tr>
+<tr>
+<td>BUG  441</td>
+<td>High</td>
+<td><a href="bugdetail-441.html">Link with @PrivateOwned delete moved children</a></td>
+<td>19 Feb 13&nbsp;11:48</td>
+</tr>
+<tr>
+<td>BUG  439</td>
+<td>High</td>
+<td><a href="bugdetail-439.html">IllegalAccessException if @XmlRootElement does not have public default...</a></td>
+<td>27 Dec 12&nbsp;12:36</td>
+</tr>
+<tr>
+<td>BUG  434</td>
+<td>Medium</td>
+<td><a href="bugdetail-434.html">Turn off DDLGeneration debug output</a></td>
+<td>04 Dec 12&nbsp;18:41</td>
+</tr>
+<tr>
+<td>BUG  432</td>
+<td>High</td>
+<td><a href="bugdetail-432.html">OneToMany attribute not saved after clear</a></td>
+<td>13 Nov 12&nbsp;15:03</td>
+</tr>
+<tr>
+<td>BUG  431</td>
+<td>High</td>
+<td><a href="bugdetail-431.html">Wrong SQL generation with OneToMany relations and subclassing</a></td>
+<td>11 Nov 12&nbsp;21:20</td>
+</tr>
+<tr>
+<td>BUG  430</td>
+<td>High</td>
+<td><a href="bugdetail-430.html">Error thrown when using OneToMany with MapKey</a></td>
+<td>29 Oct 12&nbsp;13:43</td>
+</tr>
+<tr>
+<td>BUG  429</td>
+<td>High</td>
+<td><a href="bugdetail-429.html">Pull Request: jroper - Fixing ManyToMany association saving bug</a></td>
+<td>01 Oct 12&nbsp;22:57</td>
+</tr>
+<tr>
+<td>BUG  428</td>
+<td>High</td>
+<td><a href="bugdetail-428.html">ManyToMany associations not persisted</a></td>
+<td>28 Sep 12&nbsp;09:28</td>
+</tr>
+<tr>
+<td>BUG  427</td>
+<td>High</td>
+<td><a href="bugdetail-427.html">Binding enum on find throws No ScalarType registered</a></td>
+<td>26 Sep 12&nbsp;14:26</td>
+</tr>
+<tr>
+<td>BUG  425</td>
+<td>Medium</td>
+<td><a href="bugdetail-425.html">DDL generator logs to System.out</a></td>
+<td>17 Sep 12&nbsp;12:48</td>
+</tr>
+<tr>
+<td>BUG  420</td>
+<td>High</td>
+<td><a href="bugdetail-420.html">SQLException with CascadeType.REMOVE</a></td>
+<td>30 Aug 12&nbsp;12:06</td>
+</tr>
+<tr>
+<td>BUG  417</td>
+<td>High</td>
+<td><a href="bugdetail-417.html">Inheritance with nullable relationship produces incorrect SQL</a></td>
+<td>29 Jul 12&nbsp;08:33</td>
+</tr>
+<tr>
+<td>BUG  410</td>
+<td>High</td>
+<td><a href="bugdetail-410.html">Performance generated SQL to lazy load of collection</a></td>
+<td>06 Jul 12&nbsp;03:50</td>
+</tr>
+<tr>
+<td>BUG  408</td>
+<td>High</td>
+<td><a href="bugdetail-408.html">Join fetching related objects that use inheritance causes wrong SQL</a></td>
+<td>28 Jun 12&nbsp;12:30</td>
+</tr>
+<tr>
+<td>ENH  387</td>
+<td>Medium</td>
+<td><a href="bugdetail-387.html">mechanism to expose more ResultSet operations via the DataReader inter...</a></td>
+<td>01 Apr 12&nbsp;21:13</td>
+</tr>
+<tr>
+<td>BUG  373</td>
+<td>High</td>
+<td><a href="bugdetail-373.html">MS SQL Server 2005 row limit via TOP and row_number() function</a></td>
+<td>31 Jul 11&nbsp;10:45</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.8.1</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  423</td>
+<td>High</td>
+<td><a href="bugdetail-423.html">Lazy loading reference bean starts use of L2 bean cache</a></td>
+<td>09 Sep 12&nbsp;09:51</td>
+</tr>
+<tr>
+<td>BUG  416</td>
+<td>High</td>
+<td><a href="bugdetail-416.html">Change MySql specific max table and constraint name to 64 characters</a></td>
+<td>29 Jul 12&nbsp;08:27</td>
+</tr>
+<tr>
+<td>BUG  415</td>
+<td>High</td>
+<td><a href="bugdetail-415.html">Using PagingList with RawSql not working ... not using raw sql stateme...</a></td>
+<td>29 Jul 12&nbsp;08:02</td>
+</tr>
+<tr>
+<td>BUG  414</td>
+<td>High</td>
+<td><a href="bugdetail-414.html">Connection not closed in case of exception</a></td>
+<td>20 Jul 12&nbsp;16:38</td>
+</tr>
+<tr>
+<td>ENH  413</td>
+<td>Low</td>
+<td><a href="bugdetail-413.html">QueryIterator should extend java.io.Closeable</a></td>
+<td>19 Jul 12&nbsp;10:31</td>
+</tr>
+<tr>
+<td>BUG  412</td>
+<td>High</td>
+<td><a href="bugdetail-412.html">Connections not propertly closed in case of SQLExceptions</a></td>
+<td>11 Jul 12&nbsp;19:51</td>
+</tr>
+<tr>
+<td>ENH  407</td>
+<td>Low</td>
+<td><a href="bugdetail-407.html">Enable the use of ebean.search.jars for JBoss AS7</a></td>
+<td>22 Jun 12&nbsp;03:04</td>
+</tr>
+<tr>
+<td>BUG  399</td>
+<td>Medium</td>
+<td><a href="bugdetail-399.html">Deleting a bean without an @Id field causes SQL syntax error</a></td>
+<td>12 May 12&nbsp;21:39</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.7.7</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  404</td>
+<td>High</td>
+<td><a href="bugdetail-404.html">Ordering problem with fetch many (bug)</a></td>
+<td>14 Jun 12&nbsp;08:10</td>
+</tr>
+<tr>
+<td>BUG  403</td>
+<td>Low</td>
+<td><a href="bugdetail-403.html">Remove Deprecated methods on Query such as join() ... use fetch() etc</a></td>
+<td>13 Jun 12&nbsp;08:14</td>
+</tr>
+<tr>
+<td>BUG  401</td>
+<td>High</td>
+<td><a href="bugdetail-401.html">ENH: Add ability to specify custom parameters when using Ebean's inter...</a></td>
+<td>27 May 12&nbsp;02:54</td>
+</tr>
+<tr>
+<td>BUG  400</td>
+<td>High</td>
+<td><a href="bugdetail-400.html">Autofetch serializing on shutdown when not required</a></td>
+<td>27 May 12&nbsp;02:51</td>
+</tr>
+<tr>
+<td>BUG  398</td>
+<td>High</td>
+<td><a href="bugdetail-398.html">JsonWriteOptions.parsePath("(id,status,billingAddress(*))"); does not ...</a></td>
+<td>04 May 12&nbsp;12:01</td>
+</tr>
+<tr>
+<td>BUG  397</td>
+<td>High</td>
+<td><a href="bugdetail-397.html">Not a Bug - @ManyToMany fails with duplicate column name </a></td>
+<td>02 May 12&nbsp;08:41</td>
+</tr>
+<tr>
+<td>BUG  393</td>
+<td>High</td>
+<td><a href="bugdetail-393.html">Not A Bug - Gives steps for play 2.0 configuration with mysql db</a></td>
+<td>17 Apr 12&nbsp;12:36</td>
+</tr>
+<tr>
+<td>BUG  389</td>
+<td>High</td>
+<td><a href="bugdetail-389.html">M2M management of additions and removals </a></td>
+<td>07 Apr 12&nbsp;13:20</td>
+</tr>
+<tr>
+<td>BUG  386</td>
+<td>High</td>
+<td><a href="bugdetail-386.html">ebean.allowSubclassing not enforcing on @Sql entity</a></td>
+<td>21 Mar 12&nbsp;00:29</td>
+</tr>
+<tr>
+<td>BUG  384</td>
+<td>High</td>
+<td><a href="bugdetail-384.html">ENH: Ability to add ExpressionList to another ExpressionList</a></td>
+<td>19 Mar 12&nbsp;20:15</td>
+</tr>
+<tr>
+<td>BUG  377</td>
+<td>High</td>
+<td><a href="bugdetail-377.html">XmlConfigLoader breaks down when unable to open a jar from classpath</a></td>
+<td>16 Dec 11&nbsp;23:05</td>
+</tr>
+<tr>
+<td>BUG  376</td>
+<td>Low</td>
+<td><a href="bugdetail-376.html">DDL creation produces invalid constraint-names for column names having...</a></td>
+<td>07 Nov 11&nbsp;08:36</td>
+</tr>
+<tr>
+<td>BUG  375</td>
+<td>Medium</td>
+<td><a href="bugdetail-375.html">RawSql parsing of distinct keyword</a></td>
+<td>11 Oct 11&nbsp;02:40</td>
+</tr>
+<tr>
+<td>BUG  366</td>
+<td>High</td>
+<td><a href="bugdetail-366.html">Enhance does not create equals() if using @MappedSuperclass without @I...</a></td>
+<td>27 Apr 11&nbsp;17:59</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.7.5</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  383</td>
+<td>High</td>
+<td><a href="bugdetail-383.html">Bug when using jdbc batch with cascading save on OneToMany</a></td>
+<td>11 Mar 12&nbsp;11:27</td>
+</tr>
+<tr>
+<td>BUG  382</td>
+<td>High</td>
+<td><a href="bugdetail-382.html">Ebean.endTransaction(); ... trying to rollback - should be same as tra...</a></td>
+<td>11 Mar 12&nbsp;09:56</td>
+</tr>
+<tr>
+<td>BUG  381</td>
+<td>High</td>
+<td><a href="bugdetail-381.html">java.lang.IllegalStateException: ClassReader.accept() should be called...</a></td>
+<td>02 Mar 12&nbsp;10:48</td>
+</tr>
+<tr>
+<td>BUG  380</td>
+<td>High</td>
+<td><a href="bugdetail-380.html">Failed TestManyToManySaveTwice - Unique index or primary key violation...</a></td>
+<td>02 Mar 12&nbsp;07:51</td>
+</tr>
+<tr>
+<td>BUG  379</td>
+<td>High</td>
+<td><a href="bugdetail-379.html">Fix / support for connections using autoCommit = true</a></td>
+<td>27 Feb 12&nbsp;08:00</td>
+</tr>
+<tr>
+<td>BUG  374</td>
+<td>Medium</td>
+<td><a href="bugdetail-374.html">Change default DateTime JSON format to "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"</a></td>
+<td>07 Sep 11&nbsp;09:22</td>
+</tr>
+<tr>
+<td>BUG  308</td>
+<td>High</td>
+<td><a href="bugdetail-308.html">javaagent ... not enhancing bean when defined in DAO using java generi...</a></td>
+<td>07 Jun 10&nbsp;04:22</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.7.4</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  372</td>
+<td>High</td>
+<td><a href="bugdetail-372.html">Cleanup threadLocal and pools for Tomcat webapp context reload</a></td>
+<td>20 Jul 11&nbsp;12:16</td>
+</tr>
+<tr>
+<td>ENH  371</td>
+<td>Low</td>
+<td><a href="bugdetail-371.html">Refactor: Remove Cron Daemon </a></td>
+<td>20 Jul 11&nbsp;10:10</td>
+</tr>
+<tr>
+<td>BUG  370</td>
+<td>High</td>
+<td><a href="bugdetail-370.html">Ability to set validateOnSave in ebean.properties</a></td>
+<td>07 Jul 11&nbsp;08:12</td>
+</tr>
+<tr>
+<td>BUG  368</td>
+<td>High</td>
+<td><a href="bugdetail-368.html">Should never be called on com.company.domain.AbstractBar.foo</a></td>
+<td>13 Jun 11&nbsp;10:55</td>
+</tr>
+<tr>
+<td>BUG  367</td>
+<td>High</td>
+<td><a href="bugdetail-367.html">DeployCreateProperties.determineTargetType(Field) assumes that maps do...</a></td>
+<td>03 May 11&nbsp;01:06</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.7.3</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  364</td>
+<td>High</td>
+<td><a href="bugdetail-364.html">Delete getting ... SQLException:ERROR: column t0.null does not exist </a></td>
+<td>23 Mar 11&nbsp;08:22</td>
+</tr>
+<tr>
+<td>BUG  363</td>
+<td>High</td>
+<td><a href="bugdetail-363.html">Unique index or primary key violation: ... when saving collection</a></td>
+<td>22 Mar 11&nbsp;12:32</td>
+</tr>
+<tr>
+<td>BUG  362</td>
+<td>High</td>
+<td><a href="bugdetail-362.html">Oracle specific issue - Fail to convert to internal representation ......</a></td>
+<td>16 Mar 11&nbsp;10:26</td>
+</tr>
+<tr>
+<td>BUG  361</td>
+<td>High</td>
+<td><a href="bugdetail-361.html">Mysql syntax with findRowCount() ... Every derived table must have its...</a></td>
+<td>16 Mar 11&nbsp;09:29</td>
+</tr>
+<tr>
+<td>BUG  360</td>
+<td>High</td>
+<td><a href="bugdetail-360.html">SEVERE: Error registering the JMX beans for Ebean server [pg]. It seem...</a></td>
+<td>16 Mar 11&nbsp;06:16</td>
+</tr>
+<tr>
+<td>BUG  359</td>
+<td>Medium</td>
+<td><a href="bugdetail-359.html">DDL generation fails if naming convention has schema</a></td>
+<td>09 Mar 11&nbsp;19:12</td>
+</tr>
+<tr>
+<td>BUG  358</td>
+<td>High</td>
+<td><a href="bugdetail-358.html">ENHANCEMENT - Improvements to CsvReader </a></td>
+<td>03 Mar 11&nbsp;11:37</td>
+</tr>
+<tr>
+<td>BUG  357</td>
+<td>High</td>
+<td><a href="bugdetail-357.html">Postgres DDL not using TEXT for Clob properties</a></td>
+<td>03 Mar 11&nbsp;11:36</td>
+</tr>
+<tr>
+<td>BUG  356</td>
+<td>High</td>
+<td><a href="bugdetail-356.html">Query Batch Size of 100 causes Invalid Number Exception in ORA</a></td>
+<td>24 Feb 11&nbsp;09:15</td>
+</tr>
+<tr>
+<td>BUG  354</td>
+<td>High</td>
+<td><a href="bugdetail-354.html">Schema included in default join column </a></td>
+<td>18 Feb 11&nbsp;08:11</td>
+</tr>
+<tr>
+<td>BUG  350</td>
+<td>High</td>
+<td><a href="bugdetail-350.html">Query Cache not invalidated properly when not using bean cache</a></td>
+<td>25 Jan 11&nbsp;09:15</td>
+</tr>
+<tr>
+<td>BUG  349</td>
+<td>High</td>
+<td><a href="bugdetail-349.html">Change DDL generation for SQLite ... inline Primary Key constraints et...</a></td>
+<td>19 Jan 11&nbsp;11:56</td>
+</tr>
+<tr>
+<td>BUG  348</td>
+<td>High</td>
+<td><a href="bugdetail-348.html">Able to set non READ_COMMITED Isolation Level on DataSource ... </a></td>
+<td>19 Jan 11&nbsp;11:51</td>
+</tr>
+<tr>
+<td>BUG  347</td>
+<td>High</td>
+<td><a href="bugdetail-347.html">ClassCastException with lazy loaded Inheritance instance</a></td>
+<td>13 Jan 11&nbsp;15:44</td>
+</tr>
+<tr>
+<td>ENH  341</td>
+<td>Low</td>
+<td><a href="bugdetail-341.html">support for hsqldb</a></td>
+<td>10 Nov 10&nbsp;10:58</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.7.2</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  346</td>
+<td>High</td>
+<td><a href="bugdetail-346.html">ENHANCEMENT - Add "updateNullProperties" option for stateless update</a></td>
+<td>14 Dec 10&nbsp;09:21</td>
+</tr>
+<tr>
+<td>BUG  345</td>
+<td>High</td>
+<td><a href="bugdetail-345.html">NPE when saving UUID type that is null ... aka when a ManyToOne proper...</a></td>
+<td>09 Dec 10&nbsp;10:28</td>
+</tr>
+<tr>
+<td>BUG  344</td>
+<td>High</td>
+<td><a href="bugdetail-344.html">Invalid table alias with orderBy clause referencing property on embedd...</a></td>
+<td>09 Dec 10&nbsp;10:09</td>
+</tr>
+<tr>
+<td>BUG  343</td>
+<td>High</td>
+<td><a href="bugdetail-343.html">NPE when Update only Embedded bean after a refresh()</a></td>
+<td>05 Dec 10&nbsp;09:55</td>
+</tr>
+<tr>
+<td>BUG  342</td>
+<td>High</td>
+<td><a href="bugdetail-342.html">Change AutoFetch to exclude Lobs that are FetchLazy</a></td>
+<td>02 Dec 10&nbsp;08:46</td>
+</tr>
+<tr>
+<td>BUG  313</td>
+<td>High</td>
+<td><a href="bugdetail-313.html">Change update() to support nested saves ... removing unattached detail...</a></td>
+<td>02 Jul 10&nbsp;22:45</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.7.1</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  338</td>
+<td>High</td>
+<td><a href="bugdetail-338.html">Change Defaults  to NO transaction logging and NO Autofetch</a></td>
+<td>05 Nov 10&nbsp;08:53</td>
+</tr>
+<tr>
+<td>BUG  337</td>
+<td>High</td>
+<td><a href="bugdetail-337.html">Update POM to make optional dependencies "provided" </a></td>
+<td>05 Nov 10&nbsp;08:42</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.7.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ENH  340</td>
+<td>High</td>
+<td><a href="bugdetail-340.html">ENHANCEMENT - add Lucene Integration</a></td>
+<td>05 Nov 10&nbsp;23:20</td>
+</tr>
+<tr>
+<td>ENH  339</td>
+<td>High</td>
+<td><a href="bugdetail-339.html">ENHANCEMENT - add query.findIterate() and query.findVisit() for large ...</a></td>
+<td>05 Nov 10&nbsp;23:16</td>
+</tr>
+<tr>
+<td>BUG  336</td>
+<td>High</td>
+<td><a href="bugdetail-336.html">Using DB function in order by clause for ... with query language produ...</a></td>
+<td>03 Nov 10&nbsp;08:42</td>
+</tr>
+<tr>
+<td>BUG  335</td>
+<td>High</td>
+<td><a href="bugdetail-335.html">Bug with RawSqlBuilder - resulting in duplicate order by clause in sql...</a></td>
+<td>02 Nov 10&nbsp;09:58</td>
+</tr>
+<tr>
+<td>BUG  334</td>
+<td>High</td>
+<td><a href="bugdetail-334.html">schema/catalog in NamingConvention are completely ignored, if a @Table...</a></td>
+<td>02 Nov 10&nbsp;08:52</td>
+</tr>
+<tr>
+<td>BUG  333</td>
+<td>High</td>
+<td><a href="bugdetail-333.html">API Change - Simplify logging / Log levels ... have log level per tran...</a></td>
+<td>02 Nov 10&nbsp;08:20</td>
+</tr>
+<tr>
+<td>BUG  332</td>
+<td>Medium</td>
+<td><a href="bugdetail-332.html">ENHANCEMENT - make query.copy() public ... to support using it as a "p...</a></td>
+<td>02 Nov 10&nbsp;08:11</td>
+</tr>
+<tr>
+<td>BUG  331</td>
+<td>High</td>
+<td><a href="bugdetail-331.html">Update of only Embedded bean throwing NPE</a></td>
+<td>14 Oct 10&nbsp;10:21</td>
+</tr>
+<tr>
+<td>BUG  330</td>
+<td>High</td>
+<td><a href="bugdetail-330.html">DDL Generating check constraint with name including "null"</a></td>
+<td>13 Oct 10&nbsp;09:38</td>
+</tr>
+<tr>
+<td>BUG  329</td>
+<td>High</td>
+<td><a href="bugdetail-329.html">DDL Generate NOT NULL constraint for @Version Columns and GeneratedPro...</a></td>
+<td>13 Oct 10&nbsp;09:28</td>
+</tr>
+<tr>
+<td>BUG  328</td>
+<td>High</td>
+<td><a href="bugdetail-328.html">ConcurrentModificationException when running query</a></td>
+<td>13 Oct 10&nbsp;07:56</td>
+</tr>
+<tr>
+<td>BUG  326</td>
+<td>High</td>
+<td><a href="bugdetail-326.html">ENHANCEMENT - Better error message reporting in transaction log</a></td>
+<td>24 Sep 10&nbsp;10:05</td>
+</tr>
+<tr>
+<td>BUG  325</td>
+<td>High</td>
+<td><a href="bugdetail-325.html">ENHANCEMENT - Add fully typed findMap() that takes key property and ke...</a></td>
+<td>24 Sep 10&nbsp;08:35</td>
+</tr>
+<tr>
+<td>BUG  324</td>
+<td>High</td>
+<td><a href="bugdetail-324.html">findMap using key property that is not loaded gives null key values</a></td>
+<td>24 Sep 10&nbsp;08:33</td>
+</tr>
+<tr>
+<td>BUG  323</td>
+<td>High</td>
+<td><a href="bugdetail-323.html">bug in mapping Booleans to java.sql.Types.BIT support (mysql)</a></td>
+<td>19 Sep 10&nbsp;17:58</td>
+</tr>
+<tr>
+<td>BUG  322</td>
+<td>High</td>
+<td><a href="bugdetail-322.html">Transaction log contains duplicate sql for ManyToMany intersection ins...</a></td>
+<td>18 Sep 10&nbsp;11:08</td>
+</tr>
+<tr>
+<td>BUG  321</td>
+<td>High</td>
+<td><a href="bugdetail-321.html">Incorrect table alias with Multiple OneToOne on bean</a></td>
+<td>18 Sep 10&nbsp;09:48</td>
+</tr>
+<tr>
+<td>BUG  320</td>
+<td>High</td>
+<td><a href="bugdetail-320.html">DDL not generating unique constraints</a></td>
+<td>17 Sep 10&nbsp;09:38</td>
+</tr>
+<tr>
+<td>BUG  319</td>
+<td>High</td>
+<td><a href="bugdetail-319.html">SQL exception - Duplicate table alias ...</a></td>
+<td>17 Sep 10&nbsp;05:28</td>
+</tr>
+<tr>
+<td>BUG  318</td>
+<td>High</td>
+<td><a href="bugdetail-318.html">ENHANCEMENT - Ability to specify ebean.logging.directory=${servlet.rea...</a></td>
+<td>09 Sep 10&nbsp;08:28</td>
+</tr>
+<tr>
+<td>BUG  317</td>
+<td>High</td>
+<td><a href="bugdetail-317.html">RawSql cached query plan not binding named parameters - Refer Daryl te...</a></td>
+<td>30 Aug 10&nbsp;09:11</td>
+</tr>
+<tr>
+<td>BUG  316</td>
+<td>High</td>
+<td><a href="bugdetail-316.html">Cascade save on an inheritance hierarchy fails.</a></td>
+<td>03 Aug 10&nbsp;12:45</td>
+</tr>
+<tr>
+<td>BUG  315</td>
+<td>Medium</td>
+<td><a href="bugdetail-315.html">DDL create of Table with no PK & Make column names case insensitive </a></td>
+<td>15 Jul 10&nbsp;12:55</td>
+</tr>
+<tr>
+<td>BUG  312</td>
+<td>High</td>
+<td><a href="bugdetail-312.html">Change delete cascading mechanism to allow unlimited cascade depth wit...</a></td>
+<td>02 Jul 10&nbsp;22:41</td>
+</tr>
+<tr>
+<td>BUG  311</td>
+<td>Medium</td>
+<td><a href="bugdetail-311.html">Change generated equals() method to check specific class type rather t...</a></td>
+<td>02 Jul 10&nbsp;22:39</td>
+</tr>
+<tr>
+<td>BUG  310</td>
+<td>Medium</td>
+<td><a href="bugdetail-310.html">NullPointerException at BeanEmbeddedMetaFactory.java: 46 ... when Embe...</a></td>
+<td>02 Jul 10&nbsp;22:35</td>
+</tr>
+<tr>
+<td>BUG  309</td>
+<td>High</td>
+<td><a href="bugdetail-309.html">Postgres specific error: org.postgresql.util.PSQLException Bad value f...</a></td>
+<td>08 Jun 10&nbsp;10:06</td>
+</tr>
+<tr>
+<td>BUG  307</td>
+<td>High</td>
+<td><a href="bugdetail-307.html">JAXB @XmlType annotation on Enum type causes NoSuchMethodException</a></td>
+<td>07 Jun 10&nbsp;03:30</td>
+</tr>
+<tr>
+<td>BUG  306</td>
+<td>High</td>
+<td><a href="bugdetail-306.html">SequenceIdGenerator should use connection from current transaction ins...</a></td>
+<td>05 Jun 10&nbsp;19:19</td>
+</tr>
+<tr>
+<td>ENH  304</td>
+<td>High</td>
+<td><a href="bugdetail-304.html">ENHANCEMENT - Add support for named and positioned parameters in RawSq...</a></td>
+<td>26 May 10&nbsp;10:52</td>
+</tr>
+<tr>
+<td>ENH  303</td>
+<td>High</td>
+<td><a href="bugdetail-303.html">ENHANCEMENT - Add explicit insert() ... for ease of data copy etc</a></td>
+<td>26 May 10&nbsp;09:38</td>
+</tr>
+<tr>
+<td>ENH  302</td>
+<td>High</td>
+<td><a href="bugdetail-302.html">ENHANCEMENT - Add ability to specify cascadeRemove=false on PrivateOwn...</a></td>
+<td>26 May 10&nbsp;09:10</td>
+</tr>
+<tr>
+<td>BUG  301</td>
+<td>High</td>
+<td><a href="bugdetail-301.html">Optimistic locking without @Version ... use all loaded properties</a></td>
+<td>25 May 10&nbsp;04:41</td>
+</tr>
+<tr>
+<td>BUG  300</td>
+<td>High</td>
+<td><a href="bugdetail-300.html">Able to disable background fetching of Sequences with batch size</a></td>
+<td>21 May 10&nbsp;23:42</td>
+</tr>
+<tr>
+<td>BUG  299</td>
+<td>High</td>
+<td><a href="bugdetail-299.html">API Change for Conjunction / Disjunction (AND/OR) in expression API</a></td>
+<td>20 May 10&nbsp;10:54</td>
+</tr>
+<tr>
+<td>BUG  298</td>
+<td>High</td>
+<td><a href="bugdetail-298.html">ORDER BY I.NULL[*] "; expected "identifier"; .... when orderBy a compl...</a></td>
+<td>20 May 10&nbsp;09:39</td>
+</tr>
+<tr>
+<td>BUG  297</td>
+<td>High</td>
+<td><a href="bugdetail-297.html">RawSql with FetchConfig() and filterMany() giving incorrect SQL</a></td>
+<td>20 May 10&nbsp;01:41</td>
+</tr>
+<tr>
+<td>ENH  296</td>
+<td>High</td>
+<td><a href="bugdetail-296.html">ENHANCEMENT - NamingConvention to support Sequences with primary key c...</a></td>
+<td>20 May 10&nbsp;01:26</td>
+</tr>
+<tr>
+<td>BUG  295</td>
+<td>Medium</td>
+<td><a href="bugdetail-295.html">Better error message mapping RawSql id property to a bean </a></td>
+<td>17 May 10&nbsp;05:18</td>
+</tr>
+<tr>
+<td>BUG  294</td>
+<td>Medium</td>
+<td><a href="bugdetail-294.html">Ability to configure AutofetchConfig logDirectory ... from ebean.prope...</a></td>
+<td>17 May 10&nbsp;04:54</td>
+</tr>
+<tr>
+<td>BUG  293</td>
+<td>High</td>
+<td><a href="bugdetail-293.html">Issue with Embedded Id's with some properties updatable</a></td>
+<td>12 May 10&nbsp;07:57</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.6.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  292</td>
+<td>High</td>
+<td><a href="bugdetail-292.html">Deep query with fetch claues out of order can miss a +query join (Auto...</a></td>
+<td>08 May 10&nbsp;01:58</td>
+</tr>
+<tr>
+<td>BUG  291</td>
+<td>High</td>
+<td><a href="bugdetail-291.html">REFACTOR: Transaction logging for performance</a></td>
+<td>05 May 10&nbsp;03:37</td>
+</tr>
+<tr>
+<td>BUG  290</td>
+<td>High</td>
+<td><a href="bugdetail-290.html">Support where in () for EmbeddedId using expanded format</a></td>
+<td>03 May 10&nbsp;01:46</td>
+</tr>
+<tr>
+<td>BUG  289</td>
+<td>High</td>
+<td><a href="bugdetail-289.html">DDL generating duplicate columns with Embedded foreign key </a></td>
+<td>02 May 10&nbsp;09:19</td>
+</tr>
+<tr>
+<td>BUG  288</td>
+<td>High</td>
+<td><a href="bugdetail-288.html">JTA Transactions - with no current user transaction ... setRollbackOnl...</a></td>
+<td>23 Apr 10&nbsp;10:57</td>
+</tr>
+<tr>
+<td>BUG  287</td>
+<td>High</td>
+<td><a href="bugdetail-287.html">Support having orderBy segments with +query joins / filterMany </a></td>
+<td>22 Apr 10&nbsp;00:00</td>
+</tr>
+<tr>
+<td>BUG  286</td>
+<td>High</td>
+<td><a href="bugdetail-286.html">where().eq("customer", null) ... fails with invalid SQL ... where t.nu...</a></td>
+<td>21 Apr 10&nbsp;13:05</td>
+</tr>
+<tr>
+<td>ENH  285</td>
+<td>High</td>
+<td><a href="bugdetail-285.html">ENHANCEMENT - Add SQLite specific Database Platform</a></td>
+<td>21 Apr 10&nbsp;10:13</td>
+</tr>
+<tr>
+<td>ENH  284</td>
+<td>High</td>
+<td><a href="bugdetail-284.html">ENHANCEMENT - Support external frameworks like Play ... </a></td>
+<td>21 Apr 10&nbsp;10:00</td>
+</tr>
+<tr>
+<td>BUG  283</td>
+<td>High</td>
+<td><a href="bugdetail-283.html">Regression in HEAD. "Vanilla" collections like LinkedHashSet and Array...</a></td>
+<td>21 Apr 10&nbsp;09:12</td>
+</tr>
+<tr>
+<td>BUG  282</td>
+<td>High</td>
+<td><a href="bugdetail-282.html">Incorrect table alias with Multiple OneToOne on bean</a></td>
+<td>21 Apr 10&nbsp;07:44</td>
+</tr>
+<tr>
+<td>BUG  281</td>
+<td>High</td>
+<td><a href="bugdetail-281.html">Connection Leak for erroring queries with implicit transaction demarca...</a></td>
+<td>20 Apr 10&nbsp;07:53</td>
+</tr>
+<tr>
+<td>ENH  280</td>
+<td>High</td>
+<td><a href="bugdetail-280.html">ENHANCEMENT - Enable Context ClassLoader aware ... add LoadAwareClassW...</a></td>
+<td>20 Apr 10&nbsp;03:41</td>
+</tr>
+<tr>
+<td>BUG  279</td>
+<td>High</td>
+<td><a href="bugdetail-279.html">Dynamic Proxy / Subclasses invoking preSetter rather than preSetterMan...</a></td>
+<td>20 Apr 10&nbsp;03:34</td>
+</tr>
+<tr>
+<td>BUG  278</td>
+<td>High</td>
+<td><a href="bugdetail-278.html">NOT A BUG:java.lang.RuntimeException: Error getting BeanDescriptor for...</a></td>
+<td>16 Apr 10&nbsp;15:07</td>
+</tr>
+<tr>
+<td>BUG  277</td>
+<td>High</td>
+<td><a href="bugdetail-277.html">Rien patch for updatable=false ... with DeleteHandler and ImportedIdSi...</a></td>
+<td>14 Apr 10&nbsp;11:39</td>
+</tr>
+<tr>
+<td>BUG  276</td>
+<td>High</td>
+<td><a href="bugdetail-276.html">Save and delete cascade skippable (performance optimisation) needs to ...</a></td>
+<td>14 Apr 10&nbsp;10:35</td>
+</tr>
+<tr>
+<td>BUG  275</td>
+<td>High</td>
+<td><a href="bugdetail-275.html">Invalid Update statement when only changed properties have updatable=f...</a></td>
+<td>14 Apr 10&nbsp;09:50</td>
+</tr>
+<tr>
+<td>BUG  274</td>
+<td>High</td>
+<td><a href="bugdetail-274.html">Use "Fairness" notification on Threads waiting on DataSourcePool that ...</a></td>
+<td>14 Apr 10&nbsp;05:04</td>
+</tr>
+<tr>
+<td>ENH  273</td>
+<td>High</td>
+<td><a href="bugdetail-273.html">ENHANCEMENT - Support for Scala Option type</a></td>
+<td>11 Apr 10&nbsp;23:24</td>
+</tr>
+<tr>
+<td>ENH  272</td>
+<td>High</td>
+<td><a href="bugdetail-272.html">ENHANCEMENT - Support for Scala mutable Buffer Set and Map types</a></td>
+<td>11 Apr 10&nbsp;23:22</td>
+</tr>
+<tr>
+<td>ENH  271</td>
+<td>High</td>
+<td><a href="bugdetail-271.html">ENHANCEMENT - Support for Scala getter setters without enhancement</a></td>
+<td>11 Apr 10&nbsp;09:46</td>
+</tr>
+<tr>
+<td>BUG  270</td>
+<td>High</td>
+<td><a href="bugdetail-270.html">Unidirectional relationship issue with DDL generation</a></td>
+<td>11 Apr 10&nbsp;09:44</td>
+</tr>
+<tr>
+<td>BUG  269</td>
+<td>High</td>
+<td><a href="bugdetail-269.html">Postgres specific ERROR: subquery in FROM must have an alias ... FROM ...</a></td>
+<td>11 Apr 10&nbsp;03:59</td>
+</tr>
+<tr>
+<td>BUG  268</td>
+<td>High</td>
+<td><a href="bugdetail-268.html">ManyToOne association to an Entity with an embedded id the column orde...</a></td>
+<td>08 Apr 10&nbsp;21:59</td>
+</tr>
+<tr>
+<td>BUG  267</td>
+<td>High</td>
+<td><a href="bugdetail-267.html">@Transactional with a TxType ... enhanced with wrong type</a></td>
+<td>08 Apr 10&nbsp;21:06</td>
+</tr>
+<tr>
+<td>BUG  266</td>
+<td>High</td>
+<td><a href="bugdetail-266.html">Various Bug fixes for Embedded Id's ... (patches from Rien)</a></td>
+<td>06 Apr 10&nbsp;09:35</td>
+</tr>
+<tr>
+<td>BUG  265</td>
+<td>High</td>
+<td><a href="bugdetail-265.html">ENHANCEMENT - Add JSON marshalling and unmarshalling support</a></td>
+<td>31 Mar 10&nbsp;10:22</td>
+</tr>
+<tr>
+<td>BUG  264</td>
+<td>Medium</td>
+<td><a href="bugdetail-264.html">ENHANCEMENT - Add FetchConfig.queryFirst(x)  </a></td>
+<td>31 Mar 10&nbsp;07:39</td>
+</tr>
+<tr>
+<td>BUG  263</td>
+<td>High</td>
+<td><a href="bugdetail-263.html">Add support for joining to Non - PK columns</a></td>
+<td>31 Mar 10&nbsp;04:40</td>
+</tr>
+<tr>
+<td>BUG  262</td>
+<td>High</td>
+<td><a href="bugdetail-262.html">JDK 6 with Main getting java.lang.RuntimeException: StackTraceElement ...</a></td>
+<td>31 Mar 10&nbsp;04:32</td>
+</tr>
+<tr>
+<td>BUG  261</td>
+<td>High</td>
+<td><a href="bugdetail-261.html">filterMany requires +query or +lazy join - should automatically conver...</a></td>
+<td>31 Mar 10&nbsp;03:30</td>
+</tr>
+<tr>
+<td>BUG  260</td>
+<td>High</td>
+<td><a href="bugdetail-260.html">IndexOutOfBoundsException with lazy load on ... query joined *ToMany w...</a></td>
+<td>31 Mar 10&nbsp;01:42</td>
+</tr>
+<tr>
+<td>BUG  253</td>
+<td>High</td>
+<td><a href="bugdetail-253.html">NOT A BUG - Under the same number of JDBC and Ebean concurrent compari...</a></td>
+<td>18 Mar 10&nbsp;09:49</td>
+</tr>
+<tr>
+<td>ENH  232</td>
+<td>Medium</td>
+<td><a href="bugdetail-232.html">Add SQLite Dapabase Platform</a></td>
+<td>04 Mar 10&nbsp;10:31</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.5.1</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  259</td>
+<td>High</td>
+<td><a href="bugdetail-259.html">NASTY BUG: You lose some changes on a "partial object" when modifying ...</a></td>
+<td>24 Mar 10&nbsp;21:45</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.5.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  258</td>
+<td>High</td>
+<td><a href="bugdetail-258.html">ENHANCEMENT - Autofetch can be applied in accumulative fashion</a></td>
+<td>21 Mar 10&nbsp;09:23</td>
+</tr>
+<tr>
+<td>BUG  257</td>
+<td>High</td>
+<td><a href="bugdetail-257.html">Join on *ToOne which is optional should cascade the outer join </a></td>
+<td>21 Mar 10&nbsp;05:58</td>
+</tr>
+<tr>
+<td>BUG  256</td>
+<td>High</td>
+<td><a href="bugdetail-256.html">PERFORMANCE - Automatically convert multiple *ToMany joins to query jo...</a></td>
+<td>19 Mar 10&nbsp;08:02</td>
+</tr>
+<tr>
+<td>BUG  255</td>
+<td>Medium</td>
+<td><a href="bugdetail-255.html">Enable query joins (+query ) on deep nodes</a></td>
+<td>19 Mar 10&nbsp;08:00</td>
+</tr>
+<tr>
+<td>BUG  254</td>
+<td>Medium</td>
+<td><a href="bugdetail-254.html">ENHANCEMENT - Allow join to Many not at root level </a></td>
+<td>18 Mar 10&nbsp;22:35</td>
+</tr>
+<tr>
+<td>BUG  252</td>
+<td>High</td>
+<td><a href="bugdetail-252.html">How to configure the JNDI of Tomcat by ebean.properties</a></td>
+<td>17 Mar 10&nbsp;08:30</td>
+</tr>
+<tr>
+<td>BUG  251</td>
+<td>High</td>
+<td><a href="bugdetail-251.html">ENHANCEMENT - Better connection pool leak detection ... via stack trac...</a></td>
+<td>17 Mar 10&nbsp;05:29</td>
+</tr>
+<tr>
+<td>ENH  249</td>
+<td>High</td>
+<td><a href="bugdetail-249.html">NOT A ENH - How to configure the JNDI of Tomcat?</a></td>
+<td>16 Mar 10&nbsp;13:22</td>
+</tr>
+<tr>
+<td>BUG  248</td>
+<td>High</td>
+<td><a href="bugdetail-248.html">When make Paging query the connection is not closed & How to configure...</a></td>
+<td>16 Mar 10&nbsp;13:19</td>
+</tr>
+<tr>
+<td>BUG  247</td>
+<td>High</td>
+<td><a href="bugdetail-247.html">Regression with subquery</a></td>
+<td>16 Mar 10&nbsp;10:31</td>
+</tr>
+<tr>
+<td>BUG  245</td>
+<td>High</td>
+<td><a href="bugdetail-245.html">Cascade the query.setReadOnly(false) ... </a></td>
+<td>15 Mar 10&nbsp;21:05</td>
+</tr>
+<tr>
+<td>BUG  244</td>
+<td>High</td>
+<td><a href="bugdetail-244.html">Problems using field of embedded object in order by</a></td>
+<td>15 Mar 10&nbsp;15:15</td>
+</tr>
+<tr>
+<td>BUG  243</td>
+<td>High</td>
+<td><a href="bugdetail-243.html">java.lang.ClassCastException: com.avaje.ebean.server.transaction.WeakV...</a></td>
+<td>12 Mar 10&nbsp;22:41</td>
+</tr>
+<tr>
+<td>ENH  242</td>
+<td>High</td>
+<td><a href="bugdetail-242.html">ENHANCEMENT - support using objects (rather than ids) in the IN clause...</a></td>
+<td>11 Mar 10&nbsp;19:44</td>
+</tr>
+<tr>
+<td>BUG  241</td>
+<td>High</td>
+<td><a href="bugdetail-241.html">QUERY LANGUAGE CHANGE:  Add query.filterMany(...) method to filter *To...</a></td>
+<td>11 Mar 10&nbsp;09:37</td>
+</tr>
+<tr>
+<td>ENH  240</td>
+<td>Low</td>
+<td><a href="bugdetail-240.html">maven enhancement plugin</a></td>
+<td>10 Mar 10&nbsp;14:51</td>
+</tr>
+<tr>
+<td>BUG  239</td>
+<td>High</td>
+<td><a href="bugdetail-239.html">QUERY LANGUAGE CHANGE:  change predicates on *ToMany to use separate j...</a></td>
+<td>10 Mar 10&nbsp;05:09</td>
+</tr>
+<tr>
+<td>ENH  238</td>
+<td>High</td>
+<td><a href="bugdetail-238.html">ENHANCEMENT - Automatically convert a fetch join to a query join for *...</a></td>
+<td>09 Mar 10&nbsp;23:03</td>
+</tr>
+<tr>
+<td>BUG  237</td>
+<td>High</td>
+<td><a href="bugdetail-237.html">@Transient with @Formula included in many join by default ...</a></td>
+<td>09 Mar 10&nbsp;21:17</td>
+</tr>
+<tr>
+<td>BUG  236</td>
+<td>High</td>
+<td><a href="bugdetail-236.html">Using query language binding a collection parameter to 'in' clause</a></td>
+<td>07 Mar 10&nbsp;07:27</td>
+</tr>
+<tr>
+<td>ENH  234</td>
+<td>High</td>
+<td><a href="bugdetail-234.html">ENHANCEMENT - Automatically add empty sets instead of null </a></td>
+<td>05 Mar 10&nbsp;22:22</td>
+</tr>
+<tr>
+<td>BUG  233</td>
+<td>High</td>
+<td><a href="bugdetail-233.html">Make _ebean properties transient ... to support JSON serializer</a></td>
+<td>05 Mar 10&nbsp;22:17</td>
+</tr>
+<tr>
+<td>BUG  231</td>
+<td>High</td>
+<td><a href="bugdetail-231.html">Lazy loading on OneToMany with @Where clause .... gives errors</a></td>
+<td>03 Mar 10&nbsp;12:57</td>
+</tr>
+<tr>
+<td>BUG  230</td>
+<td>Medium</td>
+<td><a href="bugdetail-230.html">Add ebean.h2platform.useIdentity=true ... option </a></td>
+<td>03 Mar 10&nbsp;10:28</td>
+</tr>
+<tr>
+<td>BUG  229</td>
+<td>Medium</td>
+<td><a href="bugdetail-229.html">ClassCastException in BeanDescriptor.createCopy(BeanDescriptor.java:52...</a></td>
+<td>03 Mar 10&nbsp;07:52</td>
+</tr>
+<tr>
+<td>BUG  228</td>
+<td>High</td>
+<td><a href="bugdetail-228.html">NullPointerException at BeanMapHelp <init> (BeanMapHelp.java:46)</a></td>
+<td>02 Mar 10&nbsp;06:48</td>
+</tr>
+<tr>
+<td>BUG  227</td>
+<td>High</td>
+<td><a href="bugdetail-227.html">MySql decrypt of Umlauts etc not working</a></td>
+<td>01 Mar 10&nbsp;11:42</td>
+</tr>
+<tr>
+<td>BUG  226</td>
+<td>Medium</td>
+<td><a href="bugdetail-226.html">where in(propertyName, Collection c) ... with empty collection results...</a></td>
+<td>28 Feb 10&nbsp;08:51</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.4.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  225</td>
+<td>High</td>
+<td><a href="bugdetail-225.html">DDL generation not generating FK on inheritance ManyToOne</a></td>
+<td>25 Feb 10&nbsp;10:33</td>
+</tr>
+<tr>
+<td>BUG  224</td>
+<td>High</td>
+<td><a href="bugdetail-224.html">Delete cascade on unloaded OneToMany ... gives Referential integrity c...</a></td>
+<td>24 Feb 10&nbsp;09:31</td>
+</tr>
+<tr>
+<td>BUG  223</td>
+<td>High</td>
+<td><a href="bugdetail-223.html">API CHANGE - rename ServerConfig logging property names</a></td>
+<td>23 Feb 10&nbsp;07:23</td>
+</tr>
+<tr>
+<td>BUG  222</td>
+<td>High</td>
+<td><a href="bugdetail-222.html">ENHANCEMENT - Add LDAP support ... find, insert, update delete </a></td>
+<td>22 Feb 10&nbsp;09:54</td>
+</tr>
+<tr>
+<td>BUG  221</td>
+<td>High</td>
+<td><a href="bugdetail-221.html">Delete on bean with ManyToMany ... and no casade.REMOVE should not del...</a></td>
+<td>22 Feb 10&nbsp;09:17</td>
+</tr>
+<tr>
+<td>BUG  220</td>
+<td>High</td>
+<td><a href="bugdetail-220.html">M2M cascade save ... violates foreign key constraint </a></td>
+<td>21 Feb 10&nbsp;08:56</td>
+</tr>
+<tr>
+<td>BUG  219</td>
+<td>High</td>
+<td><a href="bugdetail-219.html">Autofetch tuned query with join and no properties ... and join require...</a></td>
+<td>18 Feb 10&nbsp;11:25</td>
+</tr>
+<tr>
+<td>BUG  218</td>
+<td>Medium</td>
+<td><a href="bugdetail-218.html">Saving ManyToMany relationship ... with bean with no Id value</a></td>
+<td>17 Feb 10&nbsp;06:45</td>
+</tr>
+<tr>
+<td>BUG  217</td>
+<td>High</td>
+<td><a href="bugdetail-217.html">Clearing sets was having no effect</a></td>
+<td>13 Feb 10&nbsp;15:08</td>
+</tr>
+<tr>
+<td>BUG  216</td>
+<td>High</td>
+<td><a href="bugdetail-216.html">EbeanServer needs to unregister from MBeanServer on shutdown</a></td>
+<td>11 Feb 10&nbsp;10:26</td>
+</tr>
+<tr>
+<td>BUG  215</td>
+<td>High</td>
+<td><a href="bugdetail-215.html">@GeneratedValue(strategy = GenerationType.IDENTITY) with Postgres and ...</a></td>
+<td>11 Feb 10&nbsp;09:48</td>
+</tr>
+<tr>
+<td>BUG  214</td>
+<td>High</td>
+<td><a href="bugdetail-214.html">java.lang.NoSuchMethodError ... with transient modifier on inherited c...</a></td>
+<td>06 Feb 10&nbsp;05:57</td>
+</tr>
+<tr>
+<td>BUG  213</td>
+<td>High</td>
+<td><a href="bugdetail-213.html">Issues with Postgres bytea - (Binary, VarBinary and Blob DDL and pstmt...</a></td>
+<td>28 Jan 10&nbsp;13:14</td>
+</tr>
+<tr>
+<td>ENH  212</td>
+<td>High</td>
+<td><a href="bugdetail-212.html">ENHANCEMENT - Add "Vanilla Mode" ... where queries return plain vanill...</a></td>
+<td>28 Jan 10&nbsp;08:10</td>
+</tr>
+<tr>
+<td>ENH  211</td>
+<td>High</td>
+<td><a href="bugdetail-211.html">ENHANCEMENT - Add addJars(...) setJars(...) to ServerConfig </a></td>
+<td>28 Jan 10&nbsp;08:00</td>
+</tr>
+<tr>
+<td>ENH  210</td>
+<td>High</td>
+<td><a href="bugdetail-210.html">ENHANCEMENT: Extend the NamingConvention to support  ... where PK and ...</a></td>
+<td>27 Jan 10&nbsp;07:33</td>
+</tr>
+<tr>
+<td>ENH  209</td>
+<td>High</td>
+<td><a href="bugdetail-209.html">ENHANCEMENT - Add support for DB Encryption of properties</a></td>
+<td>23 Jan 10&nbsp;08:33</td>
+</tr>
+<tr>
+<td>BUG  208</td>
+<td>High</td>
+<td><a href="bugdetail-208.html">BUG: Problems with @Column(table="editions")</a></td>
+<td>22 Jan 10&nbsp;02:54</td>
+</tr>
+<tr>
+<td>ENH  207</td>
+<td>High</td>
+<td><a href="bugdetail-207.html">ENHANCEMENT: Add UUID type to Ebean.SqlRow</a></td>
+<td>15 Jan 10&nbsp;22:37</td>
+</tr>
+<tr>
+<td>BUG  206</td>
+<td>High</td>
+<td><a href="bugdetail-206.html">Problems parsing @OrderBy configuration</a></td>
+<td>13 Jan 10&nbsp;18:05</td>
+</tr>
+<tr>
+<td>BUG  205</td>
+<td>High</td>
+<td><a href="bugdetail-205.html">NPE with ElPropertyChain when an invalid property is used</a></td>
+<td>13 Jan 10&nbsp;07:34</td>
+</tr>
+<tr>
+<td>BUG  204</td>
+<td>High</td>
+<td><a href="bugdetail-204.html">Regression: @Lob types DDL generated incorrectly - mapped to wrong sca...</a></td>
+<td>12 Jan 10&nbsp;09:17</td>
+</tr>
+<tr>
+<td>BUG  203</td>
+<td>High</td>
+<td><a href="bugdetail-203.html">Map sql Types.BINARY to Blob for Oracle platform</a></td>
+<td>11 Jan 10&nbsp;10:52</td>
+</tr>
+<tr>
+<td>BUG  202</td>
+<td>High</td>
+<td><a href="bugdetail-202.html">Lazy loading of Lob property on the exported side of a OneToOne</a></td>
+<td>11 Jan 10&nbsp;08:37</td>
+</tr>
+<tr>
+<td>BUG  201</td>
+<td>High</td>
+<td><a href="bugdetail-201.html">Scheme is ignored on join table mapping</a></td>
+<td>08 Jan 10&nbsp;16:19</td>
+</tr>
+<tr>
+<td>ENH  200</td>
+<td>Low</td>
+<td><a href="bugdetail-200.html">ENHANCEMENT: Add saveAssociation() method like 194</a></td>
+<td>08 Jan 10&nbsp;16:17</td>
+</tr>
+<tr>
+<td>BUG  199</td>
+<td>High</td>
+<td><a href="bugdetail-199.html">Ebean can not parse the parameter has underline "_"</a></td>
+<td>07 Jan 10&nbsp;03:00</td>
+</tr>
+<tr>
+<td>ENH  198</td>
+<td>Medium</td>
+<td><a href="bugdetail-198.html">ENHANCEMENT: Add direct update method to ebeanServer</a></td>
+<td>04 Jan 10&nbsp;01:48</td>
+</tr>
+<tr>
+<td>ENH  197</td>
+<td>Medium</td>
+<td><a href="bugdetail-197.html">ENHANCEMENT: Delete record by PK and @Id</a></td>
+<td>04 Jan 10&nbsp;01:44</td>
+</tr>
+<tr>
+<td>ENH  196</td>
+<td>Medium</td>
+<td><a href="bugdetail-196.html">ENHANCEMENT: Add Boolean type to Ebean.createSqlQuery</a></td>
+<td>04 Jan 10&nbsp;01:41</td>
+</tr>
+<tr>
+<td>ENH  195</td>
+<td>Medium</td>
+<td><a href="bugdetail-195.html">ENHANCEMENT - Add EnumValue annotation ... to better map enum fields t...</a></td>
+<td>17 Dec 09&nbsp;10:24</td>
+</tr>
+<tr>
+<td>ENH  165</td>
+<td>High</td>
+<td><a href="bugdetail-165.html">ENHANCEMENT: Support offline generation of DDL ... aka without a Conne...</a></td>
+<td>07 Oct 09&nbsp;06:53</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.3.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  194</td>
+<td>Medium</td>
+<td><a href="bugdetail-194.html">Add a saveManyToManyAssociations() method ... </a></td>
+<td>15 Dec 09&nbsp;13:21</td>
+</tr>
+<tr>
+<td>BUG  193</td>
+<td>High</td>
+<td><a href="bugdetail-193.html">Enable cascade delete on ManyToMany</a></td>
+<td>12 Dec 09&nbsp;08:59</td>
+</tr>
+<tr>
+<td>BUG  192</td>
+<td>High</td>
+<td><a href="bugdetail-192.html">StringIndexOutOfBoundsException when using javaagent .... for enhancin...</a></td>
+<td>08 Dec 09&nbsp;12:03</td>
+</tr>
+<tr>
+<td>BUG  191</td>
+<td>High</td>
+<td><a href="bugdetail-191.html">NPE  bug in SqlTreeNodeBean.createListProxies when the entity that the...</a></td>
+<td>08 Dec 09&nbsp;07:49</td>
+</tr>
+<tr>
+<td>BUG  190</td>
+<td>High</td>
+<td><a href="bugdetail-190.html">Query that creates a proxy to a bean set that holds a hierarchy ... ca...</a></td>
+<td>08 Dec 09&nbsp;07:40</td>
+</tr>
+<tr>
+<td>BUG  189</td>
+<td>High</td>
+<td><a href="bugdetail-189.html">Autoboxing on primitive Id's can have issues with persistence context ...</a></td>
+<td>03 Dec 09&nbsp;08:00</td>
+</tr>
+<tr>
+<td>BUG  188</td>
+<td>High</td>
+<td><a href="bugdetail-188.html">Reverse Bug 174 behaviour ... save for ManyToMany will save relationsh...</a></td>
+<td>03 Dec 09&nbsp;07:45</td>
+</tr>
+<tr>
+<td>ENH  187</td>
+<td>Medium</td>
+<td><a href="bugdetail-187.html">ENHANCEMENT - Add CSV support via CsvReader</a></td>
+<td>02 Dec 09&nbsp;11:06</td>
+</tr>
+<tr>
+<td>ENH  186</td>
+<td>High</td>
+<td><a href="bugdetail-186.html">ENHANCEMENT - Add Currency, Locale, TimeZone scalar types</a></td>
+<td>02 Dec 09&nbsp;08:47</td>
+</tr>
+<tr>
+<td>BUG  185</td>
+<td>High</td>
+<td><a href="bugdetail-185.html">v2.2 Regression - ManyToMany not adding/removing from intersection</a></td>
+<td>02 Dec 09&nbsp;06:07</td>
+</tr>
+<tr>
+<td>BUG  184</td>
+<td>High</td>
+<td><a href="bugdetail-184.html">Doesn't work cascade persisting using auto-increment</a></td>
+<td>30 Nov 09&nbsp;13:57</td>
+</tr>
+<tr>
+<td>BUG  183</td>
+<td>High</td>
+<td><a href="bugdetail-183.html">.RuntimeException: Error getting BeanDescriptor for path customer(id,n...</a></td>
+<td>30 Nov 09&nbsp;09:14</td>
+</tr>
+<tr>
+<td>BUG  182</td>
+<td>High</td>
+<td><a href="bugdetail-182.html">NPE When reading a null from a OneToMany </a></td>
+<td>30 Nov 09&nbsp;07:52</td>
+</tr>
+<tr>
+<td>BUG  181</td>
+<td>High</td>
+<td><a href="bugdetail-181.html">Performance - Add support for cachable UpdatePlans ... </a></td>
+<td>24 Nov 09&nbsp;08:43</td>
+</tr>
+<tr>
+<td>BUG  159</td>
+<td>High</td>
+<td><a href="bugdetail-159.html">ebeanServer.createNamedQuery() throw PersistenceException</a></td>
+<td>23 Sep 09&nbsp;03:24</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.2.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  180</td>
+<td>High</td>
+<td><a href="bugdetail-180.html">Update on bean with only id and byte[] blob ... when not changed gives...</a></td>
+<td>20 Nov 09&nbsp;11:18</td>
+</tr>
+<tr>
+<td>BUG  179</td>
+<td>High</td>
+<td><a href="bugdetail-179.html">DML on partial with version property ... but version not loaded genera...</a></td>
+<td>19 Nov 09&nbsp;11:58</td>
+</tr>
+<tr>
+<td>BUG  178</td>
+<td>High</td>
+<td><a href="bugdetail-178.html">select of a @Transient property using non raw SQL throwing NPE</a></td>
+<td>19 Nov 09&nbsp;08:14</td>
+</tr>
+<tr>
+<td>BUG  177</td>
+<td>High</td>
+<td><a href="bugdetail-177.html">BeanPersistController.preInsert() firing after validation ... so valid...</a></td>
+<td>18 Nov 09&nbsp;09:45</td>
+</tr>
+<tr>
+<td>BUG  176</td>
+<td>High</td>
+<td><a href="bugdetail-176.html">Shutdown taking 1 minute or so ... should be immediate</a></td>
+<td>17 Nov 09&nbsp;10:32</td>
+</tr>
+<tr>
+<td>BUG  175</td>
+<td>High</td>
+<td><a href="bugdetail-175.html">icontains ... is NOT case insensitive ... but it should be.</a></td>
+<td>14 Nov 09&nbsp;23:29</td>
+</tr>
+<tr>
+<td>BUG  174</td>
+<td>High</td>
+<td><a href="bugdetail-174.html">Change behaviour ... save for ManyToMany will save relationship withou...</a></td>
+<td>02 Nov 09&nbsp;11:59</td>
+</tr>
+<tr>
+<td>ENH  173</td>
+<td>High</td>
+<td><a href="bugdetail-173.html">ENHANCEMENT: +query ... "query joins" or "secondary queries"</a></td>
+<td>01 Nov 09&nbsp;09:41</td>
+</tr>
+<tr>
+<td>ENH  172</td>
+<td>High</td>
+<td><a href="bugdetail-172.html">ENHANCEMENT: +lazy ... control over lazy loading query into batch size...</a></td>
+<td>01 Nov 09&nbsp;09:29</td>
+</tr>
+<tr>
+<td>ENH  171</td>
+<td>High</td>
+<td><a href="bugdetail-171.html">ENHANCEMENT: Add ability to chain Order By clause for a Query</a></td>
+<td>31 Oct 09&nbsp;04:17</td>
+</tr>
+<tr>
+<td>ENH  170</td>
+<td>High</td>
+<td><a href="bugdetail-170.html">ENHANCEMENT: Have control over lazy loading (batch size, select and jo...</a></td>
+<td>30 Oct 09&nbsp;12:01</td>
+</tr>
+<tr>
+<td>ENH  169</td>
+<td>High</td>
+<td><a href="bugdetail-169.html">ENHANCEMENT: Add support for intercepting Queries </a></td>
+<td>30 Oct 09&nbsp;11:26</td>
+</tr>
+<tr>
+<td>ENH  168</td>
+<td>Medium</td>
+<td><a href="bugdetail-168.html">ENHANCEMENT: Add support for delete orphan type feature</a></td>
+<td>28 Oct 09&nbsp;07:52</td>
+</tr>
+<tr>
+<td>BUG  167</td>
+<td>High</td>
+<td><a href="bugdetail-167.html">Oracle + DDL Generation + MappedSuperClass + generatedKeys</a></td>
+<td>17 Oct 09&nbsp;04:29</td>
+</tr>
+<tr>
+<td>BUG  166</td>
+<td>High</td>
+<td><a href="bugdetail-166.html">NPE in BeanProperty getValue when ManyToOne, Inheritance and root leve...</a></td>
+<td>10 Oct 09&nbsp;23:09</td>
+</tr>
+<tr>
+<td>BUG  164</td>
+<td>High</td>
+<td><a href="bugdetail-164.html">wrong sql generated from criteria when entity with many-to-one assoc</a></td>
+<td>06 Oct 09&nbsp;11:23</td>
+</tr>
+<tr>
+<td>BUG  163</td>
+<td>High</td>
+<td><a href="bugdetail-163.html">Identifiers can be max 30 on ORA - we're generating with length 32 if ...</a></td>
+<td>06 Oct 09&nbsp;10:04</td>
+</tr>
+<tr>
+<td>BUG  161</td>
+<td>High</td>
+<td><a href="bugdetail-161.html">Honor the Lazy loading annotations for non-partial object queries - es...</a></td>
+<td>30 Sep 09&nbsp;09:34</td>
+</tr>
+<tr>
+<td>BUG  160</td>
+<td>High</td>
+<td><a href="bugdetail-160.html">Assoc OneToOne with Cascade on both sides - Delete gives OptimisticLoc...</a></td>
+<td>28 Sep 09&nbsp;10:16</td>
+</tr>
+<tr>
+<td>BUG  158</td>
+<td>High</td>
+<td><a href="bugdetail-158.html">Query syntax not support "LIMIT {max rows} [ OFFSET {first row} ] " bu...</a></td>
+<td>22 Sep 09&nbsp;02:55</td>
+</tr>
+<tr>
+<td>ENH  157</td>
+<td>Medium</td>
+<td><a href="bugdetail-157.html">ant enhancer: add capability of configuring a classpath</a></td>
+<td>19 Sep 09&nbsp;12:33</td>
+</tr>
+<tr>
+<td>BUG  156</td>
+<td>High</td>
+<td><a href="bugdetail-156.html">Add support for MySql MediumClob and LongClob, MediumBlob etc datatype...</a></td>
+<td>17 Sep 09&nbsp;13:14</td>
+</tr>
+<tr>
+<td>BUG  155</td>
+<td>High</td>
+<td><a href="bugdetail-155.html">Change Request - persist of ManyToMany for new collections </a></td>
+<td>16 Sep 09&nbsp;09:21</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.1.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  154</td>
+<td>High</td>
+<td><a href="bugdetail-154.html">discriminatorType = DiscriminatorType.INTEGER - A type for discriminat...</a></td>
+<td>15 Sep 09&nbsp;08:46</td>
+</tr>
+<tr>
+<td>BUG  153</td>
+<td>High</td>
+<td><a href="bugdetail-153.html">${ta} table alias place holder not replaced for @Where annotation</a></td>
+<td>14 Sep 09&nbsp;12:14</td>
+</tr>
+<tr>
+<td>BUG  152</td>
+<td>High</td>
+<td><a href="bugdetail-152.html">@SqlSelect ... dynamic where and having clauses not getting parsed pro...</a></td>
+<td>12 Sep 09&nbsp;00:47</td>
+</tr>
+<tr>
+<td>BUG  151</td>
+<td>High</td>
+<td><a href="bugdetail-151.html">Disable lazy loading on @SqlSelect based beans ... </a></td>
+<td>12 Sep 09&nbsp;00:30</td>
+</tr>
+<tr>
+<td>BUG  150</td>
+<td>High</td>
+<td><a href="bugdetail-150.html">@Formula ... use in where clause and using with @Transient  </a></td>
+<td>11 Sep 09&nbsp;20:05</td>
+</tr>
+<tr>
+<td>BUG  149</td>
+<td>High</td>
+<td><a href="bugdetail-149.html">failing test TestSqlBasedEntity</a></td>
+<td>09 Sep 09&nbsp;11:06</td>
+</tr>
+<tr>
+<td>BUG  148</td>
+<td>High</td>
+<td><a href="bugdetail-148.html">problems querying property by class</a></td>
+<td>08 Sep 09&nbsp;14:28</td>
+</tr>
+<tr>
+<td>BUG  147</td>
+<td>High</td>
+<td><a href="bugdetail-147.html">TestLimitQuery failing with NPE</a></td>
+<td>30 Aug 09&nbsp;06:57</td>
+</tr>
+<tr>
+<td>BUG  146</td>
+<td>High</td>
+<td><a href="bugdetail-146.html">Lazy Loading invoking PropertyChangeListener ... getting too many even...</a></td>
+<td>27 Aug 09&nbsp;11:58</td>
+</tr>
+<tr>
+<td>BUG  145</td>
+<td>High</td>
+<td><a href="bugdetail-145.html">With Inheritance get NullPointerException in BeanProperty.read(BeanPro...</a></td>
+<td>27 Aug 09&nbsp;11:53</td>
+</tr>
+<tr>
+<td>BUG  144</td>
+<td>High</td>
+<td><a href="bugdetail-144.html">ENHANCEMENT: Add support for cancelling a Query .... query.cancel()</a></td>
+<td>19 Aug 09&nbsp;12:46</td>
+</tr>
+<tr>
+<td>BUG  143</td>
+<td>High</td>
+<td><a href="bugdetail-143.html">Uses SQL limiting via limit offset (or rownum etc) when it should not</a></td>
+<td>19 Aug 09&nbsp;11:57</td>
+</tr>
+<tr>
+<td>BUG  142</td>
+<td>High</td>
+<td><a href="bugdetail-142.html">ENHANCEMENT: Add support/api for PagingList and Page ... with fetch ah...</a></td>
+<td>19 Aug 09&nbsp;11:51</td>
+</tr>
+<tr>
+<td>BUG  141</td>
+<td>High</td>
+<td><a href="bugdetail-141.html">ENHANCEMENT: Add support for executing queries fully in the background...</a></td>
+<td>18 Aug 09&nbsp;08:32</td>
+</tr>
+<tr>
+<td>BUG  140</td>
+<td>High</td>
+<td><a href="bugdetail-140.html">ENHANCEMENT: Add support for JDBC Statement.setFetchSize() hint... for...</a></td>
+<td>18 Aug 09&nbsp;08:11</td>
+</tr>
+<tr>
+<td>BUG  139</td>
+<td>High</td>
+<td><a href="bugdetail-139.html">Order By clause included in findRowCount query ... </a></td>
+<td>14 Aug 09&nbsp;21:09</td>
+</tr>
+<tr>
+<td>BUG  138</td>
+<td>High</td>
+<td><a href="bugdetail-138.html">DDL generation of Boolean types mapped to Integer and Varchar columns ...</a></td>
+<td>13 Aug 09&nbsp;10:52</td>
+</tr>
+<tr>
+<td>BUG  137</td>
+<td>High</td>
+<td><a href="bugdetail-137.html">NullPointerException in IdBinderSimple.convertSetId for Postgres</a></td>
+<td>12 Aug 09&nbsp;18:45</td>
+</tr>
+<tr>
+<td>BUG  136</td>
+<td>High</td>
+<td><a href="bugdetail-136.html">Add support for using java.util.logging.Logger ... to log transaction ...</a></td>
+<td>11 Aug 09&nbsp;10:38</td>
+</tr>
+<tr>
+<td>ENH  59</td>
+<td>High</td>
+<td><a href="bugdetail-59.html">Caching persistant objects</a></td>
+<td>14 Jan 09&nbsp;01:10</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.0.2</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  135</td>
+<td>High</td>
+<td><a href="bugdetail-135.html">Add support to get properties file name from System.getenv("EBEAN_PROP...</a></td>
+<td>07 Aug 09&nbsp;08:30</td>
+</tr>
+<tr>
+<td>BUG  134</td>
+<td>High</td>
+<td><a href="bugdetail-134.html">"Type for discriminator value [] was not found" error</a></td>
+<td>04 Aug 09&nbsp;09:59</td>
+</tr>
+<tr>
+<td>BUG  133</td>
+<td>High</td>
+<td><a href="bugdetail-133.html">Transaction is Inactive when rolling back nested transaction </a></td>
+<td>01 Aug 09&nbsp;05:19</td>
+</tr>
+<tr>
+<td>BUG  132</td>
+<td>High</td>
+<td><a href="bugdetail-132.html">ClassCastException ... java.lang.RuntimeException: set details on ... ...</a></td>
+<td>01 Aug 09&nbsp;02:31</td>
+</tr>
+<tr>
+<td>BUG  131</td>
+<td>High</td>
+<td><a href="bugdetail-131.html">NPE in BeanSet line 179 ... when refresh on a bean with a PropertyChan...</a></td>
+<td>30 Jul 09&nbsp;12:30</td>
+</tr>
+<tr>
+<td>BUG  130</td>
+<td>High</td>
+<td><a href="bugdetail-130.html">Add back support for setting namingconvention via ebean.properties</a></td>
+<td>28 Jul 09&nbsp;11:22</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.0.1</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  129</td>
+<td>High</td>
+<td><a href="bugdetail-129.html">Lazy loading not invoking dirty checking</a></td>
+<td>19 Jul 09&nbsp;10:11</td>
+</tr>
+<tr>
+<td>BUG  128</td>
+<td>High</td>
+<td><a href="bugdetail-128.html">NPE running an update where the ManyToOne</a></td>
+<td>19 Jul 09&nbsp;09:41</td>
+</tr>
+<tr>
+<td>ENH  121</td>
+<td>Low</td>
+<td><a href="bugdetail-121.html">var type boxing</a></td>
+<td>08 Jun 09&nbsp;07:04</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 2.0.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  127</td>
+<td>Medium</td>
+<td><a href="bugdetail-127.html">Error in Enhancement. Only expecting to add <init> of intercept object...</a></td>
+<td>30 Jun 09&nbsp;12:03</td>
+</tr>
+<tr>
+<td>BUG  126</td>
+<td>Medium</td>
+<td><a href="bugdetail-126.html">NPE when a entity class has no default constructor</a></td>
+<td>30 Jun 09&nbsp;09:49</td>
+</tr>
+<tr>
+<td>BUG  125</td>
+<td>High</td>
+<td><a href="bugdetail-125.html">Change the SQL statement on a SqlUpdate multiple times...</a></td>
+<td>18 Jun 09&nbsp;02:38</td>
+</tr>
+<tr>
+<td>BUG  124</td>
+<td>High</td>
+<td><a href="bugdetail-124.html">Issue with Save Cascade on both sides of bi-directional relationship w...</a></td>
+<td>17 Jun 09&nbsp;13:02</td>
+</tr>
+<tr>
+<td>BUG  123</td>
+<td>High</td>
+<td><a href="bugdetail-123.html">Support for @Column insertable=false, updateable=false</a></td>
+<td>11 Jun 09&nbsp;11:28</td>
+</tr>
+<tr>
+<td>BUG  122</td>
+<td>High</td>
+<td><a href="bugdetail-122.html">Entity with no @Id ... can return null</a></td>
+<td>10 Jun 09&nbsp;00:05</td>
+</tr>
+<tr>
+<td>BUG  120</td>
+<td>High</td>
+<td><a href="bugdetail-120.html">SqlSelect java.lang.NullPointerException</a></td>
+<td>08 Jun 09&nbsp;06:55</td>
+</tr>
+<tr>
+<td>BUG  119</td>
+<td>High</td>
+<td><a href="bugdetail-119.html">MapBean - replaced by SqlRow .... and insert, update, delete functiona...</a></td>
+<td>29 May 09&nbsp;23:26</td>
+</tr>
+<tr>
+<td>ENH  118</td>
+<td>High</td>
+<td><a href="bugdetail-118.html">Add support for DDL Generation support</a></td>
+<td>29 May 09&nbsp;23:23</td>
+</tr>
+<tr>
+<td>BUG  117</td>
+<td>High</td>
+<td><a href="bugdetail-117.html">isDirty() checking not sufficent when save cascade on OneToMany ... wi...</a></td>
+<td>29 May 09&nbsp;23:11</td>
+</tr>
+<tr>
+<td>BUG  116</td>
+<td>High</td>
+<td><a href="bugdetail-116.html">PropertyChangeSupport in entity beans</a></td>
+<td>29 May 09&nbsp;13:56</td>
+</tr>
+<tr>
+<td>BUG  110</td>
+<td>High</td>
+<td><a href="bugdetail-110.html">@Lob annotation required on Clob / Blob fields ... could auto-detect t...</a></td>
+<td>30 Apr 09&nbsp;11:57</td>
+</tr>
+<tr>
+<td>BUG  50</td>
+<td>High</td>
+<td><a href="bugdetail-50.html">Eclipse IDE Enhancement plugin and @Transactional on interfaces</a></td>
+<td>25 Nov 08&nbsp;05:59</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 1.2.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  114</td>
+<td>Medium</td>
+<td><a href="bugdetail-114.html">API Change: Removed isSql flag from Update.setUpdate()</a></td>
+<td>12 May 09&nbsp;13:58</td>
+</tr>
+<tr>
+<td>ENH  113</td>
+<td>High</td>
+<td><a href="bugdetail-113.html">ENHANCEMENT: Add support for local sorting of Lists</a></td>
+<td>11 May 09&nbsp;07:37</td>
+</tr>
+<tr>
+<td>BUG  112</td>
+<td>High</td>
+<td><a href="bugdetail-112.html">REFACTOR: Meta data for Query executon statistics and Autofetch inform...</a></td>
+<td>10 May 09&nbsp;02:09</td>
+</tr>
+<tr>
+<td>BUG  111</td>
+<td>High</td>
+<td><a href="bugdetail-111.html">ORA-00918: column ambiguously defined  ... when using a max rows or fi...</a></td>
+<td>07 May 09&nbsp;11:04</td>
+</tr>
+<tr>
+<td>BUG  109</td>
+<td>High</td>
+<td><a href="bugdetail-109.html">setLoaded() on embedded beans not called after update (to allow furthe...</a></td>
+<td>30 Apr 09&nbsp;09:06</td>
+</tr>
+<tr>
+<td>ENH  108</td>
+<td>High</td>
+<td><a href="bugdetail-108.html">ENHANCEMENT: Update only changed properties</a></td>
+<td>25 Apr 09&nbsp;23:02</td>
+</tr>
+<tr>
+<td>BUG  107</td>
+<td>High</td>
+<td><a href="bugdetail-107.html">REFACTOR: BeanController, BeanListener etc</a></td>
+<td>25 Apr 09&nbsp;22:57</td>
+</tr>
+<tr>
+<td>BUG  106</td>
+<td>High</td>
+<td><a href="bugdetail-106.html">Add support for Joda DateMidnight</a></td>
+<td>23 Apr 09&nbsp;08:52</td>
+</tr>
+<tr>
+<td>BUG  105</td>
+<td>High</td>
+<td><a href="bugdetail-105.html">Ebean.diff() - java.lang.ClassCastException: [B cannot be cast to java...</a></td>
+<td>20 Apr 09&nbsp;08:45</td>
+</tr>
+<tr>
+<td>BUG  104</td>
+<td>High</td>
+<td><a href="bugdetail-104.html">lookup property paths in BeanDescriptor.findBeanProperty</a></td>
+<td>15 Apr 09&nbsp;11:35</td>
+</tr>
+<tr>
+<td>ENH  103</td>
+<td>High</td>
+<td><a href="bugdetail-103.html">provide bean with OptimisticLockExcetion</a></td>
+<td>08 Apr 09&nbsp;08:00</td>
+</tr>
+<tr>
+<td>BUG  102</td>
+<td>High</td>
+<td><a href="bugdetail-102.html">Incorrect join when fetching parent and a manyToMany property</a></td>
+<td>02 Apr 09&nbsp;11:11</td>
+</tr>
+<tr>
+<td>BUG  101</td>
+<td>High</td>
+<td><a href="bugdetail-101.html">Saving (insert) a bean with a ManyToMany ... does not insert into the ...</a></td>
+<td>02 Apr 09&nbsp;10:53</td>
+</tr>
+<tr>
+<td>BUG  100</td>
+<td>Medium</td>
+<td><a href="bugdetail-100.html">Add support to configure behaviour for ending query only transactions</a></td>
+<td>02 Apr 09&nbsp;09:07</td>
+</tr>
+<tr>
+<td>BUG  99</td>
+<td>High</td>
+<td><a href="bugdetail-99.html">Support for mapping booleans to java.sql.Types.BIT </a></td>
+<td>02 Apr 09&nbsp;09:01</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 1.1.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ENH  98</td>
+<td>High</td>
+<td><a href="bugdetail-98.html">ENHANCEMENT: Log a warning when mapping a primitive type to a nullable...</a></td>
+<td>28 Mar 09&nbsp;09:41</td>
+</tr>
+<tr>
+<td>ENH  97</td>
+<td>High</td>
+<td><a href="bugdetail-97.html">ENHANCEMENT: Add support for URL and URI scalar types</a></td>
+<td>28 Mar 09&nbsp;01:56</td>
+</tr>
+<tr>
+<td>BUG  96</td>
+<td>High</td>
+<td><a href="bugdetail-96.html">REFACTOR: Removed com.avaje.lib.log.*   - moved into separate project ...</a></td>
+<td>28 Mar 09&nbsp;01:52</td>
+</tr>
+<tr>
+<td>BUG  95</td>
+<td>High</td>
+<td><a href="bugdetail-95.html">Oracle specific bug - treat empty strings as null... for optimistic co...</a></td>
+<td>25 Mar 09&nbsp;12:09</td>
+</tr>
+<tr>
+<td>ENH  94</td>
+<td>High</td>
+<td><a href="bugdetail-94.html">ENHANCEMENT: basic use with Groovy and Scala</a></td>
+<td>25 Mar 09&nbsp;11:48</td>
+</tr>
+<tr>
+<td>BUG  93</td>
+<td>High</td>
+<td><a href="bugdetail-93.html">Support for boolean fields/properties starting with "is"</a></td>
+<td>23 Mar 09&nbsp;09:15</td>
+</tr>
+<tr>
+<td>ENH  92</td>
+<td>High</td>
+<td><a href="bugdetail-92.html">ENHANCEMENT: Add In Sub Query expression</a></td>
+<td>19 Mar 09&nbsp;12:01</td>
+</tr>
+<tr>
+<td>ENH  91</td>
+<td>High</td>
+<td><a href="bugdetail-91.html">ENHANCEMENT: Query By Example ... type expression</a></td>
+<td>19 Mar 09&nbsp;07:55</td>
+</tr>
+<tr>
+<td>BUG  90</td>
+<td>High</td>
+<td><a href="bugdetail-90.html">java.lang.NoSuchFieldError: with static access to field from another c...</a></td>
+<td>19 Mar 09&nbsp;07:52</td>
+</tr>
+<tr>
+<td>BUG  89</td>
+<td>High</td>
+<td><a href="bugdetail-89.html">@OrderBy not used for lazy loading query</a></td>
+<td>19 Mar 09&nbsp;07:47</td>
+</tr>
+<tr>
+<td>BUG  88</td>
+<td>High</td>
+<td><a href="bugdetail-88.html">missing table alias with embedded key</a></td>
+<td>13 Mar 09&nbsp;10:01</td>
+</tr>
+<tr>
+<td>BUG  87</td>
+<td>High</td>
+<td><a href="bugdetail-87.html">Postgres requires "AS" keyword for column alias</a></td>
+<td>07 Mar 09&nbsp;03:04</td>
+</tr>
+<tr>
+<td>BUG  86</td>
+<td>High</td>
+<td><a href="bugdetail-86.html">field [linkUrl] not found ... when mixing Enhanced and subclassed bean...</a></td>
+<td>06 Mar 09&nbsp;19:19</td>
+</tr>
+<tr>
+<td>BUG  85</td>
+<td>High</td>
+<td><a href="bugdetail-85.html">avoid creating sequence names on "sql only" based entities</a></td>
+<td>04 Mar 09&nbsp;12:28</td>
+</tr>
+<tr>
+<td>BUG  84</td>
+<td>High</td>
+<td><a href="bugdetail-84.html">@ManyToMany without foreign keys causes MatchingProperty not found Run...</a></td>
+<td>04 Mar 09&nbsp;02:57</td>
+</tr>
+<tr>
+<td>BUG  83</td>
+<td>High</td>
+<td><a href="bugdetail-83.html">REFACTOR: NamingConvention ... refactoring</a></td>
+<td>03 Mar 09&nbsp;06:27</td>
+</tr>
+<tr>
+<td>BUG  82</td>
+<td>High</td>
+<td><a href="bugdetail-82.html">Add support for excluding specific properties from weaving </a></td>
+<td>01 Mar 09&nbsp;08:38</td>
+</tr>
+<tr>
+<td>BUG  81</td>
+<td>High</td>
+<td><a href="bugdetail-81.html">ExeUpdateSql.java:parseUpdate fails... with "delete from mytable"</a></td>
+<td>24 Feb 09&nbsp;22:05</td>
+</tr>
+<tr>
+<td>BUG  80</td>
+<td>High</td>
+<td><a href="bugdetail-80.html">regression after fix for BUG 76</a></td>
+<td>24 Feb 09&nbsp;15:42</td>
+</tr>
+<tr>
+<td>BUG  79</td>
+<td>High</td>
+<td><a href="bugdetail-79.html">propertyEvaluator eats characters beween tokens</a></td>
+<td>24 Feb 09&nbsp;11:31</td>
+</tr>
+<tr>
+<td>BUG  78</td>
+<td>High</td>
+<td><a href="bugdetail-78.html">allow to configure autofetch directory</a></td>
+<td>24 Feb 09&nbsp;11:06</td>
+</tr>
+<tr>
+<td>BUG  77</td>
+<td>High</td>
+<td><a href="bugdetail-77.html">introduce a DataSourcePoolListener</a></td>
+<td>24 Feb 09&nbsp;10:14</td>
+</tr>
+<tr>
+<td>BUG  76</td>
+<td>High</td>
+<td><a href="bugdetail-76.html">.equals() enhancement ... not right for primitive id types (int and lo...</a></td>
+<td>24 Feb 09&nbsp;09:52</td>
+</tr>
+<tr>
+<td>BUG  75</td>
+<td>High</td>
+<td><a href="bugdetail-75.html">autoFetch builds different queryHashCode between runs</a></td>
+<td>22 Feb 09&nbsp;10:43</td>
+</tr>
+<tr>
+<td>BUG  70</td>
+<td>High</td>
+<td><a href="bugdetail-70.html">weaver and inheritance results in IllegalAccessError</a></td>
+<td>15 Feb 09&nbsp;10:14</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 1.0.3</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  74</td>
+<td>High</td>
+<td><a href="bugdetail-74.html">Classpath search not working in resin 2.1.17 - No entities found</a></td>
+<td>19 Feb 09&nbsp;09:55</td>
+</tr>
+<tr>
+<td>BUG  73</td>
+<td>High</td>
+<td><a href="bugdetail-73.html">PersistenceException throw when query master detail... with concatinat...</a></td>
+<td>17 Feb 09&nbsp;08:47</td>
+</tr>
+<tr>
+<td>BUG  72</td>
+<td>High</td>
+<td><a href="bugdetail-72.html">DefaultAutoFetchManager creates CallStack with a dummy element when ma...</a></td>
+<td>17 Feb 09&nbsp;07:45</td>
+</tr>
+<tr>
+<td>BUG  71</td>
+<td>High</td>
+<td><a href="bugdetail-71.html">autoFetchTuned does not correctly work with inherited tables</a></td>
+<td>15 Feb 09&nbsp;10:53</td>
+</tr>
+<tr>
+<td>BUG  69</td>
+<td>High</td>
+<td><a href="bugdetail-69.html">npe if inherited class has no properties and @Inheritance on parent le...</a></td>
+<td>15 Feb 09&nbsp;09:48</td>
+</tr>
+<tr>
+<td>BUG  68</td>
+<td>High</td>
+<td><a href="bugdetail-68.html">make @SequenceGenerator annotation work</a></td>
+<td>15 Feb 09&nbsp;09:17</td>
+</tr>
+<tr>
+<td>BUG  67</td>
+<td>High</td>
+<td><a href="bugdetail-67.html">avoid duplicate column names with associations</a></td>
+<td>14 Feb 09&nbsp;15:46</td>
+</tr>
+<tr>
+<td>BUG  66</td>
+<td>High</td>
+<td><a href="bugdetail-66.html">support for insertable/updatable</a></td>
+<td>14 Feb 09&nbsp;15:45</td>
+</tr>
+<tr>
+<td>BUG  65</td>
+<td>High</td>
+<td><a href="bugdetail-65.html">BeanPropertyAssocOne not initialized</a></td>
+<td>14 Feb 09&nbsp;12:03</td>
+</tr>
+<tr>
+<td>BUG  64</td>
+<td>High</td>
+<td><a href="bugdetail-64.html">version counter of type long results in ClassCastException</a></td>
+<td>14 Feb 09&nbsp;11:57</td>
+</tr>
+<tr>
+<td>BUG  63</td>
+<td>High</td>
+<td><a href="bugdetail-63.html">weaving tables with many fields results in NegativeArraySizeException</a></td>
+<td>14 Feb 09&nbsp;10:13</td>
+</tr>
+<tr>
+<td>BUG  62</td>
+<td>High</td>
+<td><a href="bugdetail-62.html">NullPointerException NPE thrown in ScalarTypeUtilDate when date is nul...</a></td>
+<td>23 Jan 09&nbsp;21:52</td>
+</tr>
+<tr>
+<td>BUG  61</td>
+<td>High</td>
+<td><a href="bugdetail-61.html">PersistenceException in ... com.avaje.ebean.server.deploy.parse.JoinDe...</a></td>
+<td>23 Jan 09&nbsp;10:08</td>
+</tr>
+<tr>
+<td>BUG  60</td>
+<td>High</td>
+<td><a href="bugdetail-60.html">java.lang.NoSuchMethodError: ... in ... $$EntityBean$h2._ebean_createC...</a></td>
+<td>23 Jan 09&nbsp;08:00</td>
+</tr>
+<tr>
+<td>BUG  56</td>
+<td>High</td>
+<td><a href="bugdetail-56.html">@MappedSuperclass ignored</a></td>
+<td>12 Jan 09&nbsp;07:35</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 1.0.2</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  58</td>
+<td>High</td>
+<td><a href="bugdetail-58.html">Class that extends BeanControllerAdapter not being 'registered' with E...</a></td>
+<td>13 Jan 09&nbsp;11:08</td>
+</tr>
+<tr>
+<td>BUG  57</td>
+<td>High</td>
+<td><a href="bugdetail-57.html">@EmbeddedColumns and @AttributeOverride not working on @Embedded beans...</a></td>
+<td>12 Jan 09&nbsp;07:37</td>
+</tr>
+<tr>
+<td>BUG  55</td>
+<td>High</td>
+<td><a href="bugdetail-55.html">@Version annotation ignored</a></td>
+<td>12 Jan 09&nbsp;07:32</td>
+</tr>
+<tr>
+<td>BUG  54</td>
+<td>High</td>
+<td><a href="bugdetail-54.html">Ebean.refresh() needs to run in its own 'persistence context'</a></td>
+<td>11 Jan 09&nbsp;08:53</td>
+</tr>
+<tr>
+<td>BUG  53</td>
+<td>High</td>
+<td><a href="bugdetail-53.html">Finding the same bean twice in a single transaction returns null</a></td>
+<td>11 Jan 09&nbsp;08:44</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 1.0.1</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  52</td>
+<td>High</td>
+<td><a href="bugdetail-52.html">Class oath searching not working... when path has space characters</a></td>
+<td>15 Dec 08&nbsp;10:29</td>
+</tr>
+<tr>
+<td>BUG  51</td>
+<td>High</td>
+<td><a href="bugdetail-51.html">Entity based on VIEW ... view not found... get NPE NullPointerExceptio...</a></td>
+<td>15 Dec 08&nbsp;10:23</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 1.0.0</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  49</td>
+<td>Medium</td>
+<td><a href="bugdetail-49.html">ebean.properties  - load.properties.override or load.properties not be...</a></td>
+<td>25 Nov 08&nbsp;05:52</td>
+</tr>
+<tr>
+<td>BUG  48</td>
+<td>Medium</td>
+<td><a href="bugdetail-48.html">ArrayIndexOutOfBoundsException: 0   ... at CallStack.getFirstStackTrac...</a></td>
+<td>24 Oct 08&nbsp;01:55</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 0.9.8</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  47</td>
+<td>High</td>
+<td><a href="bugdetail-47.html">Query objects not Serializable...</a></td>
+<td>22 Oct 08&nbsp;00:21</td>
+</tr>
+<tr>
+<td>BUG  46</td>
+<td>High</td>
+<td><a href="bugdetail-46.html">table alias "AS" causes SQL error...</a></td>
+<td>19 Oct 08&nbsp;09:26</td>
+</tr>
+<tr>
+<td>BUG  45</td>
+<td>Low</td>
+<td><a href="bugdetail-45.html">StringIndexOutOfBoundsException when a entity bean does not have a pac...</a></td>
+<td>19 Oct 08&nbsp;09:02</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 0.9.7</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  28</td>
+<td>Medium</td>
+<td><a href="bugdetail-28.html">schema attribute of @Table annotation is ignored</a></td>
+<td>22 Nov 07&nbsp;19:55</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 0.9.6</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  44</td>
+<td>High</td>
+<td><a href="bugdetail-44.html">@Transient on list property .. gives stack trace</a></td>
+<td>26 Mar 08&nbsp;08:04</td>
+</tr>
+<tr>
+<td>BUG  43</td>
+<td>High</td>
+<td><a href="bugdetail-43.html">query.select() containing a many property errors...</a></td>
+<td>18 Mar 08&nbsp;08:11</td>
+</tr>
+<tr>
+<td>BUG  42</td>
+<td>Medium</td>
+<td><a href="bugdetail-42.html">Order by... with 'master & detail' join... not quite right.</a></td>
+<td>13 Mar 08&nbsp;23:28</td>
+</tr>
+<tr>
+<td>BUG  41</td>
+<td>Medium</td>
+<td><a href="bugdetail-41.html">Join Tree - not fully built ... limiting query joins...</a></td>
+<td>25 Feb 08&nbsp;20:55</td>
+</tr>
+<tr>
+<td>BUG  40</td>
+<td>Medium</td>
+<td><a href="bugdetail-40.html">java.util.Date ... actually returned as java.sql.Timestamp.</a></td>
+<td>22 Feb 08&nbsp;05:31</td>
+</tr>
+<tr>
+<td>BUG  39</td>
+<td>Low</td>
+<td><a href="bugdetail-39.html">Query.findList() with Query.setId() ... errors...</a></td>
+<td>22 Feb 08&nbsp;03:02</td>
+</tr>
+<tr>
+<td>BUG  38</td>
+<td>High</td>
+<td><a href="bugdetail-38.html">Join missing in sql select ... when WHERE expression requires join...</a></td>
+<td>22 Feb 08&nbsp;02:41</td>
+</tr>
+<tr>
+<td>BUG  37</td>
+<td>High</td>
+<td><a href="bugdetail-37.html">Expr.in() method does not allow Collection types (only arrays).</a></td>
+<td>22 Feb 08&nbsp;02:03</td>
+</tr>
+<tr>
+<td>BUG  36</td>
+<td>High</td>
+<td><a href="bugdetail-36.html">@Transient  types not mapped to a known ScalarType throw error...</a></td>
+<td>21 Feb 08&nbsp;05:36</td>
+</tr>
+<tr>
+<td>BUG  35</td>
+<td>High</td>
+<td><a href="bugdetail-35.html">Save cascade on partially populated bean ... invokes lazy loading</a></td>
+<td>21 Feb 08&nbsp;02:09</td>
+</tr>
+<tr>
+<td>BUG  34</td>
+<td>High</td>
+<td><a href="bugdetail-34.html">Query with partial properties, using a reference generates wrong sql s...</a></td>
+<td>20 Feb 08&nbsp;21:29</td>
+</tr>
+<tr>
+<td>ENH  32</td>
+<td>Medium</td>
+<td><a href="bugdetail-32.html">debug.start.delay and debug.shutdown.why</a></td>
+<td>04 Feb 08&nbsp;10:05</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 0.9.5</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  33</td>
+<td>High</td>
+<td><a href="bugdetail-33.html">Logging level on Handlers defaulting to INFO.... rather than ALL</a></td>
+<td>04 Feb 08&nbsp;10:09</td>
+</tr>
+<tr>
+<td>BUG  31</td>
+<td>High</td>
+<td><a href="bugdetail-31.html">Column Alias not used in raw sql select... uses rsmd.getColumnName() </a></td>
+<td>30 Jan 08&nbsp;05:44</td>
+</tr>
+<tr>
+<td>BUG  30</td>
+<td>High</td>
+<td><a href="bugdetail-30.html">Incorrect table alias when joining with quoted identifiers</a></td>
+<td>17 Dec 07&nbsp;09:09</td>
+</tr>
+<tr>
+<td>BUG  29</td>
+<td>High</td>
+<td><a href="bugdetail-29.html">Query with setId() ignores other predicates</a></td>
+<td>13 Dec 07&nbsp;19:47</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 0.9.4</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+
+<h4>Fixed in 0.9.3</h4>
+
+<!-- bug list -->
+<div>
+<table>
+<thead>
+<tr>
+<td width="10%">Bug Id</td>
+<td width="10%">Priority</td>
+<td >Title</td>
+<td width="15%">Last Updated</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG  27</td>
+<td>High</td>
+<td><a href="bugdetail-27.html">Custom ScalarType ... </a></td>
+<td>17 Oct 07&nbsp;05:32</td>
+</tr>
+<tr>
+<td>BUG  26</td>
+<td>Medium</td>
+<td><a href="bugdetail-26.html">File Logging not flushed after publish.... should be</a></td>
+<td>04 Oct 07&nbsp;09:31</td>
+</tr>
+<tr>
+<td>BUG  25</td>
+<td>High</td>
+<td><a href="bugdetail-25.html">addBetween... binds the last value twice - ignoring the first bind val...</a></td>
+<td>21 Aug 07&nbsp;22:32</td>
+</tr>
+<tr>
+<td>BUG  24</td>
+<td>High</td>
+<td><a href="bugdetail-24.html">Incorrect parsing: Query threw SQLException:Unknown column 'bug.produc...</a></td>
+<td>13 Aug 07&nbsp;06:28</td>
+</tr>
+<tr>
+<td>BUG  23</td>
+<td>Medium</td>
+<td><a href="bugdetail-23.html">Case Sensitive Column names - BeanPropertyAssoc </a></td>
+<td>06 Aug 07&nbsp;06:41</td>
+</tr>
+<tr>
+<td>BUG  22</td>
+<td>Medium</td>
+<td><a href="bugdetail-22.html">ResourceManager could not find directory [WEB-INF]</a></td>
+<td>22 Jul 07&nbsp;04:40</td>
+</tr>
+<tr>
+<td>BUG  21</td>
+<td>Medium</td>
+<td><a href="bugdetail-21.html">@MapKey not used on Save</a></td>
+<td>10 Jul 07&nbsp;20:37</td>
+</tr>
+<tr>
+<td>BUG  20</td>
+<td>High</td>
+<td><a href="bugdetail-20.html">mappedBy attribute support</a></td>
+<td>02 Jul 07&nbsp;09:54</td>
+</tr>
+<tr>
+<td>BUG  19</td>
+<td>Medium</td>
+<td><a href="bugdetail-19.html">Shutdown hook not removed - issue for tomcat reload</a></td>
+<td>23 Jun 07&nbsp;10:17</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

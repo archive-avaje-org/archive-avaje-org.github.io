@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Forum: Database specific</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+div.forum {
+	border:2px solid #ccc;
+	margin-bottom:20px;
+}
+div.headerNewTopic {
+	float:right;
+}
+div.header {
+	padding:3px 7px;
+	font-size:105%; font-weight:bold;
+	background: #ddd;color:#25345f; color:#eee;
+}
+td.indent {width:2em;}
+td.lastposted {width:10em;}
+td.postcount {text-align: center;	width:10em;}
+</style>
+
+
+</head>
+
+<body>
+<form action='/forumdetail-2.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forums</a> &raquo; Database specific
+</div>
+
+<div class="pageactions">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-2.html');">
+</div>
+
+<div class="forum">
+<div class="header">
+<a href="forumdetail-2.html" title="View all Topics in this forum"><img src="/image/forum.gif"> Database specific</a>
+</div>
+<div id="hot2">
+<table>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-227.html" title="View this Topic"><img src="/image/forumtopic.gif"> How do i close database connections when using Future list ..?</a></td>
+<td class="lastposted">08:20&nbsp;&nbsp;&nbsp;25 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-226.html" title="View this Topic"><img src="/image/forumtopic.gif"> Getting </a></td>
+<td class="lastposted">06:02&nbsp;&nbsp;&nbsp;25 Apr</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-224.html" title="View this Topic"><img src="/image/forumtopic.gif"> How to convert  List  to an object of type com.avaje.ebean.PagingList</a></td>
+<td class="lastposted">04:47&nbsp;&nbsp;&nbsp;08 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-212.html" title="View this Topic"><img src="/image/forumtopic.gif"> Play framework + Postgres HStore</a></td>
+<td class="lastposted">07:21&nbsp;&nbsp;&nbsp;02 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-210.html" title="View this Topic"><img src="/image/forumtopic.gif"> Error on join in Oracle 8</a></td>
+<td class="lastposted">14:12&nbsp;&nbsp;&nbsp;14 Feb</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-209.html" title="View this Topic"><img src="/image/forumtopic.gif"> SQLite </a></td>
+<td class="lastposted">13:46&nbsp;&nbsp;&nbsp;04 Feb</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-206.html" title="View this Topic"><img src="/image/forumtopic.gif"> EBEAN project With HSQLDB</a></td>
+<td class="lastposted">12:40&nbsp;&nbsp;&nbsp;24 Jun</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-203.html" title="View this Topic"><img src="/image/forumtopic.gif"> Release connection from pool that not in use</a></td>
+<td class="lastposted">20:38&nbsp;&nbsp;&nbsp;14 May</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-196.html" title="View this Topic"><img src="/image/forumtopic.gif"> Enum type in Postgresql</a></td>
+<td class="lastposted">10:05&nbsp;&nbsp;&nbsp;12 Oct</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-175.html" title="View this Topic"><img src="/image/forumtopic.gif"> SQLite</a></td>
+<td class="lastposted">21:22&nbsp;&nbsp;&nbsp;15 Mar</td>
+<td class="postcount">7 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-144.html" title="View this Topic"><img src="/image/forumtopic.gif"> Oracle column alias missing with 1.1.0</a></td>
+<td class="lastposted">01:42&nbsp;&nbsp;&nbsp;08 May</td>
+<td class="postcount">7 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-132.html" title="View this Topic"><img src="/image/forumtopic.gif"> Optimistic Concurrency Checking on Oracle</a></td>
+<td class="lastposted">12:10&nbsp;&nbsp;&nbsp;25 Mar</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-100.html" title="View this Topic"><img src="/image/forumtopic.gif"> Parameter asignment operator conflicting with type conversion in PostgreSql</a></td>
+<td class="lastposted">05:53&nbsp;&nbsp;&nbsp;17 Feb</td>
+<td class="postcount">5 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-95.html" title="View this Topic"><img src="/image/forumtopic.gif"> DMBS configurations that do not support transactions</a></td>
+<td class="lastposted">07:17&nbsp;&nbsp;&nbsp;07 Jan</td>
+<td class="postcount">3 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-98.html" title="View this Topic"><img src="/image/forumtopic.gif"> ebean DataSource vs external DataSource</a></td>
+<td class="lastposted">22:18&nbsp;&nbsp;&nbsp;06 Jan</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-94.html" title="View this Topic"><img src="/image/forumtopic.gif"> Problems with Postgresql and autofetch?</a></td>
+<td class="lastposted">10:10&nbsp;&nbsp;&nbsp;03 Jan</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-10.html" title="View this Topic"><img src="/image/forumtopic.gif"> How do I control which DbPlugin is used?</a></td>
+<td class="lastposted">03:59&nbsp;&nbsp;&nbsp;19 Nov</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-2.html" title="View this Topic"><img src="/image/forumtopic.gif"> How do you get the inserted seq back for Oracle?</a></td>
+<td class="lastposted">03:57&nbsp;&nbsp;&nbsp;19 Nov</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-7.html" title="View this Topic"><img src="/image/forumtopic.gif"> Does MySql support CLOBs?</a></td>
+<td class="lastposted">03:44&nbsp;&nbsp;&nbsp;19 Nov</td>
+<td class="postcount">1 posts</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+<input type="hidden" name="f_forumid" value="2">
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

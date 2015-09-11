@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Query joins</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Queries in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/ebean/introquery_joinquery.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/ebean/introduction.html">Ebean</a>
+&raquo; <a href="/ebean/documentation.html">Docs</a>
+&raquo; <a href="/ebean/introquery.html">Queries</a>
+&raquo; <span>Query Joins</span>
+</div>
+
+
+
+
+
+<div class="columnlayout">
+
+<h3>Queries in Ebean</h3>
+<ul>
+<li><a href="introquery.html">Basics</a></li>
+<li><a href="introquery_join.html">Fetch (paths)</a></li>
+<li><a href="introquery_joinquery.html">Query Joins</a></li>
+<li><a href="introquery_partialobject.html">Partial Objects</a></li>
+<li><a href="introquery_autofetch.html">Autofetch - Automatic query tuning</a></li>
+<li><a href="introquery_future.html">Asynchrous Query execution</a></li>
+<li><a href="introquery_paginglist.html">PagingList</a></li>
+<li><a href="introquery_rawsql.html">RawSql</a></li>
+</ul>
+
+<h4>Query Joins</h4>
+
+
+<div class="col70">
+<p>
+You use FetchConfig to define that you want to use a separate SQL query to fetch that part of the object graph (to use a "query join" rather than a "fetch join").
+What this means is that Ebean will use 2 SQL queries rather than 1 to build the object graph.
+</p>
+<p>
+Note that you do not need to expicitly use FetchConfig if you don't want to. In that case Ebean will automatically convert any fetch paths over to use
+FetchConfig if it needs to (multiple *ToMany relationships etc).
+
+</p>
+</div>
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+// a normal 'fetch join' results in a single SQL query 
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.fetch("customer")
+		.findList();
+</pre>
+</div>
+
+<div class="col70">
+<p>
+Example: A "Query Join" results in 2 SQL queries used to build the object graph
+</p>
+<pre class="java:nogutter:nocontrols">
+// 2 SQL statements are used to build this object graph
+// The first SQL query fetches the Orders and the second
+// SQL query fetches customers 
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.fetch("customer", new FetchConfig().query())
+		.findList();
+
+// Sql query 1) fetches the orders
+// Sql query 2) fetches the customers for those orders
+</pre>
+<p>
+Example: More realistic when we additionally want a join to a OneToMany 
+(customer contacts) from our ManyToOne (customer) 
+</p>
+<pre class="java:nogutter:nocontrols">
+// A more realistic example where we want to also join
+// customer contacts (A OneToMany from customer)
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.fetch("customer", new FetchConfig().query())
+		.fetch("customer.contacts")
+		.findList();
+
+// Sql query 1) fetches the orders
+// Sql query 2) fetches the customers and their contacts
+</pre>
+</div>
+</div>
+<div class="col70">
+<p>
+There are a number of cases where using multiple SQL queries is
+more efficient than a single query.
+</p>
+<p>
+Any time you want to load multiple OneToMany associations it will likely be more
+performant as multiple SQL queries. If a single SQL query was used that would result in a
+Cartesian product.
+</p>
+<pre class="java:nogutter:nocontrols">
+// We want to fetch 2 or more OneToMany associations
+// ... fetch one of the OneToMany (bug attachments) as a 'fetch join'
+// ... and the other (bug details) as a 'query join'
+List&lt;Bug&gt; bugs = 
+	Ebean.find(Bug.class)
+		.fetch("attachments")
+		.fetch("details", new FetchConfig().query())
+		.findList();
+
+// Sql query 1) fetches the bugs and bug attachments
+// Sql query 2) fetches the bug details
+// ... Two SQL queries avoiding a cartesian product
+
+// NOTE: If you did not specify FetchConfig in this case
+// ebean would automatically do so as we are fetching
+// multiple *ToMany relationships (to avoid Cartesian product).
+
+</pre>
+<p>
+There can also be cases loading across a single OneToMany where 2 SQL queries (using
+Ebean "query join") can be more efficient than one SQL query (using Ebean "fetch join").
+When the "One" side is wide (lots of columns) and the cardinality difference is high (a lot
+of "Many" beans per "One" bean) then this can be more efficient loaded as 2 SQL queries.
+</p>
+<p>
+Additionally you can make use of query joins when you want to use maxRows to limit a result and also join a OneToMany association. You use maxRows with the query (resulting in SQL limit/offset or rownum etc) and then with the query join you can fetch all or some of the associated OneToMany beans.
+</p>
+
+<pre class="java:nogutter:nocontrols">
+// We want to use SQL limit/offset (or rownum etc) to
+// limit the number of orders returned to 100, we also
+// want the order details for the first 20 orders
+// (after that lazy load 20 at a time)  
+List&lt;Order&gt; orders =
+        Ebean.find(Order.class)
+                .fetch("details", new FetchConfig().queryFirst(20).lazy(20))
+                .setMaxRows(100)
+                .where().eq("status",Order.Status.NEW)
+                .order().desc("id")
+                .findList();
+
+// Note: You can alternatively make use of a subquery rather than
+// use a query join in some cases. 
+</pre>
+
+</div>
+
+<div class="col70">
+
+</div>
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<p>
+Example: Using 2 Query Joins - results in 3 SQL queries used to build this object graph. Also note the use of partial objects.
+</p>
+
+</div>
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.select("status, shipDate")
+
+		.fetch("details", "orderQty, unitPrice", new FetchConfig().query())
+		.fetch("details.product", "sku, name")
+
+		.fetch("customer", "name", new FetchConfig().queryFirst(10).lazy(10))
+		.fetch("customer.contacts","firstName, lastName, mobile")
+		.fetch("customer.shippingAddress","line1, city")
+		.findList();
+</pre>
+</div>
+
+<div class="col70">
+</div>
+<div class="colend"></div>
+
+<div class="col70 colnext">
+<a class="h3" href="/ebean/introquery_partialobject.html">Next: Partial Objects</a>
+</div>
+<div class="colend"></div>
+
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

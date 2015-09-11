@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Transactions in Ebean</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Transactions in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+#txtype th, #txtype td {border:1px #ccc solid; padding:5px;}
+#txtype th {background:#fda; padding:3px;}
+</style>
+
+
+</head>
+
+<body>
+<form action='/ebean/introtrans_transactional.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/ebean/introduction.html">Ebean</a>
+&raquo; <a href="/ebean/documentation.html">Docs</a>
+&raquo; <span>Transactions</span>
+</div>
+
+
+
+
+
+
+
+<div class="columnlayout">
+
+<h3>Transactions in Ebean</h3>
+<ul>
+<li><a href="introtrans.html">Implicit Transactions</a></li>
+<li><a href="introtrans_transactional.html">@Transactional</a></li>
+<li><a href="introtrans_txrunnable.html">TxRunnable & TxCallable</a></li>
+<li><a href="introtrans_begin.html">begin, commit, rollback, end</a></li>
+</ul>
+
+<h4>@Transactional</h4>
+
+
+<div class="col70">
+<p>
+You must be using <em>ENHANCEMENT</em> for @Transactional to work. That means you 
+must be enhancing the classes via IDE Plugin, Ant Task or javaagent. Refer to the
+user guide for more details on enhancement.
+</p>
+<p>
+Ebean can enhance your pojos to add transactional support. To do so put the
+@Transaction annotation on a method or class. Ebean enhancement will then add
+the supporting transactional logic (begin transaction, commit, rollback, suspend and resuming transactions etc).
+</p>
+</div>
+
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+...
+// any old pojo
+public class MyService {
+
+	@Transactional
+	public void runFirst() throws IOException {
+
+		// run in a Transaction (REQUIRED is the default)
+
+		// find a customer
+		Customer customer = Ebean.find(Customer.class, 1);
+
+		// call another "transactional" method
+		runInTrans();
+	}
+
+	@Transactional(type=TxType.REQUIRES_NEW)
+	public void runInTrans() throws IOException {
+
+		// run in its own NEW transaction 
+		// ... suspend an existing transaction if required
+		// ... and resume it when this method ends
+
+		// find new orders
+		List&lt;Order&gt; orders = Ebean.find(Order.class)
+									.where().eq("status",OrderStatus.NEW)
+									.findList();
+		...
+
+</pre>
+</div>
+<div class="col70">
+<p>
+Put the @Transactional annotation on you methods and Ebean
+can enhance the classes adding the Transactional management.
+</p>
+<h4 class="plain">Standard transaction scope types</h4>
+<p>
+This supports the standard propagation rules of 
+REQUIRED (the default), REQUIRES_NEW, MANDATORY, SUPPORTS, NOT_SUPPORTS, NEVER.  
+These are an exact match of the EJB TransactionAttributeTypes.
+</p>
+<h4 class="plain">Nested Transactions</h4>
+<p>
+Transactional methods can be nested as in the above example where 
+runFirst() calls runInTrans().
+</p>
+<h4 class="plain">Isolation level and specific exception support</h4>
+<p>
+@Transactional (like Spring) supports isolation levels and explicit 
+handling of Exceptions (to rollback or not for specific exceptions).
+Please refer to the User Guide for a more detailed explanation.
+</p>
+<h4 class="plain">Interfaces</h4>
+<p>
+You can put @Transactional on interfaces and classes that
+implement those interfaces will get the transactional enhancement.
+</p>
+</div>
+
+<div class="colend"></div>
+
+<div class="col70">
+
+<h4 class="plain">TxType Descriptions</h4>
+
+<table id="txtype">
+<tr>
+<th style="width:30%">TxType</th><th style="width:70%">Description</th>
+</tr>
+
+<tr>
+<td>REQUIRED</td><td>
+Runs in a Transaction. Will use an existing transaction if it exists,
+otherwise will create a new Transaction.</td>
+</tr>
+
+<tr>
+<td>REQUIRES_NEW</td><td>
+Runs in a new Transaction. 
+If a current transaction exists it will be suspended.</td>
+</tr>
+
+<tr>
+<td>MANDATORY</td><td>
+Runs in the existing Transaction. If there is no current existing transaction 
+an exception is thrown. 
+</td>
+</tr>
+
+<tr>
+<td>SUPPORTS</td><td>
+Use a transaction if it already exists. If it does not then the method runs without a transaction.
+</td>
+</tr>
+
+<tr>
+<td>NOT_SUPPORTS</td><td>
+Always runs without a transaction. If one already exists then it is suspended. 
+</td>
+</tr>
+
+<tr>
+<td>NEVER</td><td>
+Always runs without a transaction. If one already exists then it throws an exception. 
+</td>
+</tr>
+
+</table>
+</div>
+<div class="colend"></div>
+
+<div class="col70 colnext">
+<a class="h3" href="introtrans_txrunnable.html">Next: TxRunnable</a>
+</div>
+<div class="colend"></div>
+
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

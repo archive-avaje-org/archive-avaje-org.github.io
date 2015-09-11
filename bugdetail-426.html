@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: ebean-maven-enhancer throws ClassNotFoundException when entity class refers to external definitions</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="sr">
+<meta name="description" content="The plugin throws ClassNotFound exception whenever a model class under consideration implements an interface whose definition resides inside an artifact For example one of my model classes implements ApplicationContextAware interface from the spring framework The interface definition is inside a jar that is not part of class sources specified via classSource Although the plugin does allow for user specified classpath via classpath I couldn t find a portable way to pass it e g maven compile classpath resolves to null Instead I ve patched the plugin to default to the project s compile time classpath by reconstructing it from the injected MavenProject instance The patch fixes my problem and I also believe it should address the problem mentioned here https groups google com forum fromgroups se">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-426.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 426 : ebean-maven-enhancer throws ClassNotFoundException when entity class refers to external definitions
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 426 : ebean-maven-enhancer throws ClassNotFoundException when entity class refers to external definitions </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">sr</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">github</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">19/09/2012</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">19/09/2012</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>The plugin throws ClassNotFound exception whenever a (model) class under consideration implements an interface whose definition resides inside an artifact.  For example, one of my model classes implements ApplicationContextAware interface from the spring framework.  The interface definition is inside a jar that is not part of class sources (specified via ${classSource}).</p><p>Although, the plugin does allow for user-specified classpath via ${classpath}, I couldn't find a portable way to pass it; e.g., ${maven.compile.classpath} resolves to null.<br/>Instead I've patched the plugin to default to the project's (compile time) classpath by reconstructing it from the injected MavenProject instance.  The patch fixes my problem, and I also believe it should address the problem mentioned here:<br/> <br/><a href="https://groups.google.com/forum/?fromgroups">https://groups.google.com/forum/?fromgroups</a>=#!searchin/ebean/ClassNotFoundException/ebean/AkFIZW_<br/>g3M/7xAkeYy_Tz0J</p><p><br/>I don't see an attachment option, so here is the patch inlined:<br/>==========================================</p><p><br/>Index: src/main/java/com/avaje/ebean/enhance/maven/MavenEnhanceTask.java<br/>===================================================================<br/>--- src/main/java/com/avaje/ebean/enhance/maven/MavenEnhanceTask.java	(revision 1517)<br/>+++ src/main/java/com/avaje/ebean/enhance/maven/MavenEnhanceTask.java	(working copy)<br/>@@ -1,10 +1,15 @@<br/> package com.avaje.ebean.enhance.maven;<br/> <br/> import java.io.File;<br/>+import java.util.Arrays;<br/>+import java.util.HashSet;<br/>+import java.util.Set;<br/> <br/>+import org.apache.commons.lang.StringUtils;<br/> import org.apache.maven.plugin.AbstractMojo;<br/> import org.apache.maven.plugin.MojoExecutionException;<br/> import org.apache.maven.plugin.logging.Log;<br/>+import org.apache.maven.project.MavenProject;<br/> <br/> import com.avaje.ebean.enhance.agent.Transformer;<br/> import com.avaje.ebean.enhance.ant.OfflineFileTransform;<br/>@@ -20,7 +25,8 @@<br/>  * The parameters are:<br/>  * <ul><br/>  * <li><b>classSource</b> This is the root directory where the .class files are<br/>- * found. If this is left out then this defaults to ${project.build.outputDirectory}.</li><br/>+ * found. If this is left out then this defaults to<br/>+ * ${project.build.outputDirectory}.</li><br/>  * <li><b>classDestination</b> This is the root directory where the .class files<br/>  * are written to. If this is left out then this defaults to the<br/>  * <b>classSource</b>.</li><br/>@@ -68,89 +74,115 @@<br/>  * @see com.avaje.ebean.enhance.ant.AntEnhanceTask<br/>  * @goal enhance<br/>  * @phase process-classes<br/>+ * <br/>+ * @requiresDependencyResolution compile<br/>+ * <br/>  */<br/> public class MavenEnhanceTask extends AbstractMojo {<br/>-  /**<br/>-   * the classpath used to search for e.g. inherited classes<br/>-   * <br/>-   * @parameter<br/>-   */<br/>-  private String classpath;<br/>+	/**<br/>+	 * The maven project.<br/>+	 * <br/>+	 * @parameter expression="${project}"<br/>+	 * @required<br/>+	 * @readonly<br/>+	 */<br/>+	protected MavenProject project;<br/> <br/>-  /**<br/>-   * Set the directory holding the class files we want to transform.<br/>-   * <br/>-   * @parameter default-value="${project.build.outputDirectory}"<br/>-   */<br/>-  private String classSource;<br/>+	/**<br/>+	 * the classpath used to search for e.g. inherited classes<br/>+	 * <br/>+	 * @parameter<br/>+	 */<br/>+	private String classpath;<br/> <br/>-  /**<br/>-   * Set the destination directory where we will put the transformed classes.<br/>-   * <p><br/>-   * This is commonly the same as the classSource directory.<br/>-   * </p><br/>-   * <br/>-   * @parameter<br/>-   */<br/>-  String classDestination;<br/>+	/**<br/>+	 * Set the directory holding the class files we want to transform.<br/>+	 * <br/>+	 * @parameter default-value="${project.build.outputDirectory}"<br/>+	 */<br/>+	private String classSource;<br/> <br/>-  /**<br/>-   * Set the arguments passed to the transformer.<br/>-   * <br/>-   * @parameter<br/>-   */<br/>-  String transformArgs;<br/>+	/**<br/>+	 * Set the destination directory where we will put the transformed classes.<br/>+	 * <p><br/>+	 * This is commonly the same as the classSource directory.<br/>+	 * </p><br/>+	 * <br/>+	 * @parameter<br/>+	 */<br/>+	private String classDestination;<br/> <br/>-  /**<br/>-   * Set the package name to search for classes to transform.<br/>-   * <p><br/>-   * If the package name ends in "/**" then this recursively transforms all sub<br/>-   * packages as well.<br/>-   * </p><br/>-   * <br/>-   * @parameter<br/>-   */<br/>-  String packages;<br/>+	/**<br/>+	 * Set the arguments passed to the transformer.<br/>+	 * <br/>+	 * @parameter<br/>+	 */<br/>+	private String transformArgs;<br/> <br/>-  public void execute() throws MojoExecutionException {<br/>+	/**<br/>+	 * Set the package name to search for classes to transform.<br/>+	 * <p><br/>+	 * If the package name ends in "/**" then this recursively transforms all<br/>+	 * sub packages as well.<br/>+	 * </p><br/>+	 * <br/>+	 * @parameter<br/>+	 */<br/>+	private String packages;<br/> <br/>-    final Log log = getLog();<br/>-    if (classSource == null) {<br/>-      classSource = "target/classes";<br/>-    }<br/>+	public void execute() throws MojoExecutionException {<br/>+		final Log log = getLog();<br/> <br/>-    if (classDestination == null) {<br/>-      classDestination = classSource;<br/>-    }<br/>+		if (classSource == null) {<br/>+			classSource = "target" + System.getProperty("file.separator") + "classes";<br/>+		}<br/> <br/>-    File f = new File("");<br/>-    log.info("Current Directory: " + f.getAbsolutePath());<br/>+		if (classDestination == null) {<br/>+			classDestination = classSource;<br/>+		}<br/>+		File f = new File("");<br/>+		log.info("Current Directory: " + f.getAbsolutePath());<br/> <br/>-    StringBuilder extraClassPath = new StringBuilder();<br/>-    extraClassPath.append(classSource);<br/>-    if (classpath != null) {<br/>-      if (!extraClassPath.toString().endsWith(";")) {<br/>-        extraClassPath.append(";");<br/>-      }<br/>-      extraClassPath.append(classpath);<br/>-    }<br/>-    Transformer t = new Transformer(extraClassPath.toString(), transformArgs);<br/>-    ClassLoader cl = MavenEnhanceTask.class.getClassLoader();<br/>+		String pathSeparator = System.getProperty("path.separator");<br/>+		Set<String> allClassPathElements = new HashSet<String>();<br/>+		allClassPathElements.addAll(Arrays.asList(StringUtils.split(classSource, pathSeparator)));<br/> <br/>-    log.info("classSource=" + classSource + "  transformArgs=" + transformArgs <br/>-        + "  classDestination=" + classDestination + "  packages="+ packages);<br/>+		if (classpath == null) {<br/>+			log.info("'classpath' is null; will use project's classpath");<br/>+			Set<String> compileClassPathElements;<br/> <br/>-    OfflineFileTransform ft = new OfflineFileTransform(t, cl, classSource, classDestination);<br/>-    ft.setListener(new TransformationListener() {<br/>+			try {<br/>+				compileClassPathElements = new HashSet<String>(project.getCompileClasspathElements());<br/>+			} catch (Exception e) {<br/>+				throw new MojoExecutionException(<br/>+						"Unable to retrieve classpath elements", e);<br/>+			}<br/>+			allClassPathElements.addAll(compileClassPathElements);<br/>+		}<br/>+		// TODO: ebean internals are expecting ";" in place of<br/>+		// ${path.separator}; e.g., see Transformer.parseClassPaths<br/>+		String derivedClassPath = StringUtils.join(allClassPathElements, ";");<br/>+		log.debug("Using classpath: " + derivedClassPath);<br/> <br/>-      public void logEvent(String msg) {<br/>-        log.info(msg);<br/>-      }<br/>+		Transformer t = new Transformer(derivedClassPath, transformArgs);<br/>+		ClassLoader cl = MavenEnhanceTask.class.getClassLoader();<br/> <br/>-      public void logError(String msg) {<br/>-    	  log.error(msg);<br/>-      }<br/>-    });<br/>-    ft.process(packages);<br/>-  }<br/>-}<br/>\ No newline at end of file<br/>+		log.info("classSource=" + classSource + "  transformArgs="<br/>+				+ transformArgs + "  classDestination=" + classDestination<br/>+				+ "  packages=" + packages);<br/>+<br/>+		OfflineFileTransform ft = new OfflineFileTransform(t, cl, classSource,<br/>+				classDestination);<br/>+		ft.setListener(new TransformationListener() {<br/>+<br/>+			public void logEvent(String msg) {<br/>+				log.info(msg);<br/>+			}<br/>+<br/>+			public void logError(String msg) {<br/>+				log.error(msg);<br/>+			}<br/>+		});<br/>+		ft.process(packages);<br/>+	}<br/>+}<br/>Index: pom.xml<br/>===================================================================<br/>--- pom.xml	(revision 1517)<br/>+++ pom.xml	(working copy)<br/>@@ -118,6 +118,11 @@<br/> 			<version>2.0</version><br/> 		</dependency><br/> 		<dependency><br/>+            <groupId>org.apache.maven</groupId><br/>+            <artifactId>maven-core</artifactId><br/>+            <version>2.0</version><br/>+        </dependency><br/>+		<dependency><br/> 			<groupId>junit</groupId><br/> 			<artifactId>junit</artifactId><br/> 			<version>4.8.1</version><br/>@@ -125,6 +130,12 @@<br/> 			<scope>test</scope><br/> 		</dependency><br/> 		<dependency><br/>+			<groupId>commons-lang</groupId><br/>+			<artifactId>commons-lang</artifactId><br/>+			<version>2.6</version><br/>+			<type>jar</type><br/>+		</dependency><br/>+		<dependency><br/> 			<groupId>org.avaje</groupId><br/> 			<artifactId>ebean</artifactId><br/> 			<version>${ebean.version}</version></p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+
+<input type="hidden" name="f_bugid" value="426">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-426.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="426">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

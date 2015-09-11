@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>JPA Entity Bean Code Generator</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Using the Code Generator">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/codegen.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="configure.html">Configure</a>
+&raquo; <span>Code Generator</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+<h3>Installing the Code Generator</h3>
+
+<p>
+The Code generator is used to generate annotated Entity Beans
+from the Database schema.
+</p>
+<h4>1. Move the code generator files into the working directory</h4>
+<p>
+Firstly you have to move the files from the codegen subdirectory
+into your working directory.
+</p>
+<p>
+This includes... 
+</p>
+<table>
+<tr>
+<td>codegen.properties</td>
+<td>properties file to configure the code generation</td>
+</tr>
+
+<tr>
+<td>codegen.bat</td>
+<td>batch file to run the code generator</td>
+</tr>
+    
+<tr>
+<td>setclasspath.bat</td>
+<td>batch file to help build the classpath</td>
+</tr>
+
+<tr>
+<td>beanGenerator.vm</td>
+<td>Velocity template for Beans</td>
+</tr>
+
+<tr>
+<td>embeddedIdGenerator.vm</td>
+<td>Velocity template for EmbeddedId Beans</td>
+</tr>
+
+</table>		
+        
+
+
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="configure.html">Configure</a></li>
+<li><a href="getstarted.html">Getting Started</a></li>
+<li><a href="plugin.html">Database Plugin Configuration</a></li>
+<li><a href="servletcontainer.html">Configure to run in a Servlet Container</a></li>
+<li>Code Generator</li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<td class="main">
+
+<h4>2. Edit codegen.bat file</h4>
+<p>
+To run the codegen.bat we need to configure the classpath.
+To do this there are two parameters which point to two 
+directories which can contain jar files.
+</p>
+<p>
+All the jar files in these directories will be put into the
+classpath using the setclasspath.bat file.
+</p>
+<p>
+Configure the JARLIB_DIR1 & JARLIB_DIR2 parameters.
+</p>
+<pre>
+<code>
+set JARLIB_DIR1=webapp\WEB-INF\lib
+set JARLIB_DIR2=lib
+
+REM   Comment out JARLIB_DIR2 if all your jars 
+REM   are in a single directory
+</code>
+</pre>
+
+<h4>3. Edit the codegen.properties</h4> 
+<p>
+You should probably look at all the properties but take
+special note of these ones
+</p>
+<pre>
+<code>
+#
+# Need generate mode to create files
+# test mode will not create any files
+#
+#ebean.codegen.mode=generate
+ebean.codegen.mode=test
+
+#
+# The source code directory
+#
+ebean.codegen.source.directory=c:/devjava/project/appZsite/src
+
+#
+# The java package name for the generated beans
+#
+ebean.codegen.javapackage=app.data.test
+
+#
+# patterns for database dictionary loading
+# by default loads all tables into the dictionary
+#
+#ebean.codegen.catalog
+#ebean.codegen.schema
+#ebean.codegen.table=b_%
+
+</code>
+</pre>
+
+<h4>4. run codegen.bat from a command line</h4>
+<p>
+And you should see something like this....
+</p>
+<pre>
+<code>
+
+C:\devjava\project\appZSite>codegen
+----------------------------------
+CLASSPATH = .;webapp\WEB-INF\lib\avajeCodeGen.jar;webapp\WEB-INF\lib\avajeEbean.jar;...
+----------------------------------
+ INFO: Ebean Version[0.9.0-061028] Java Version[1.5.0_03]
+ INFO: DataSourcePool [mysql] autoCommit[false] transIsolation[READ_COMMITTED] min[1] max[25]
+ INFO: DataSourcePool [mysql] grow pool;  busy[0] size[0] max[25]
+ INFO: IoRepository initialised dirs[C:/devjava/project/appzsite/webapp/WEB-INF/data] zips[]
+ INFO: DictionaryInfo deserialized from file -
+ [C:/devjava/project/appzsite/webapp/WEB-INF/data\primarydatabase.dictionary]
+ INFO: Plugin[][com.avaje.ebean.server.plugin.MySqlPlugin]
+ INFO: VelocityManager initialising
+ INFO: Dictionary registering [null][null][null]
+==================================================
+Generate:
+==================================================
+BugAttachment                  property   [abstract] uses java reserved word. Set to [summary]
+Role                           OneToOne   RoleTest test
+Role                           ManyToMany tables s_role to s_user via s_user_role
+Role                           ManyToMany User users
+User                           ManyToMany tables s_user to s_role via s_user_role
+User                           ManyToMany Role roles
+RoleTest                       OneToOne   Role role
+==================================================
+Summary:
+==================================================
+
+
+Matched:
+-------------------------------------
+UserPreferenceId
+UserPreference
+BugType
+Topic
+UserStatus
+Comment
+BugStatus
+Forum
+Product
+BugAttachment
+RoleModuleId
+RoleModule
+Role
+BugDetail
+CommentLink
+Bug
+TopicPost
+User
+RoleTest
+BugPriority
+Module
+UserLog
+TopicType
+
+Lookup:
+-------------------------------------
+
+Hairy:
+-------------------------------------
+
+Intersection:
+-------------------------------------
+s_user_role
+
+==================================================
+ INFO: Stopping []
+ INFO: ThreadPool [TransactionManager] Shutting down; threadCount[1] busyCount[0]
+ INFO: DataSourcePool [mysql] shutdown
+ INFO: Closing Connection[mysql.1] psReuse[0] psCreate[0] psSize[0]
+C:\devjava\project\appZSite>
+
+</code>
+</pre>
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

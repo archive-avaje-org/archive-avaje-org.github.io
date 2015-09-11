@@ -1,0 +1,478 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: @ManyToMany mapping matching property not found</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="William DeMoss">
+<meta name="description" content="I have mapped a user to role like this ManyToMany JoinTable name user roles joinColumns JoinColumn name user id inverseJoinColumns JoinColumn name role id public Set getRoles return this roles but when I configure my server I get the following error INFO Dictionary Table ebean test users has no imported or exported foreign keys Mar 3 2009 3 38 07 PM com avaje ebean server lib sql TableInfo loadFKeys INFO Dictionary Table ebean test tasks has no imported or exported foreign keys Mar 3 2009 3 38 07 PM com avaje ebean server lib sql TableInfo loadFKeys INFO Dictionary Table ebean test roles has no imported or exported foreign keys Mar 3 2009 3 38 07 PM com avaje ebean server lib sql TableInfo loadFKeys INFO Dictionary Table ebean test user roles has no imported or exported foreign keys Mar 3 ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-120.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by William DeMoss </span>
+03 Mar&nbsp;20:45
+</div>
+@ManyToMany mapping matching property not found
+<div class="body">
+<p>I have mapped a user to role like this</p><p>@ManyToMany<br/>@JoinTable(<br/>name="user_roles", <br/>joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="role_id"))<br/>public Set<Role> getRoles() {<br/>	return this.roles;<br/>}</p><p>but when I configure my server I get the following error:<br/>INFO: Dictionary: Table [ebean_test.users] has no imported or exported foreign keys.<br/>Mar 3, 2009 3:38:07 PM com.avaje.ebean.server.lib.sql.TableInfo loadFKeys<br/>INFO: Dictionary: Table [ebean_test.tasks] has no imported or exported foreign keys.<br/>Mar 3, 2009 3:38:07 PM com.avaje.ebean.server.lib.sql.TableInfo loadFKeys<br/>INFO: Dictionary: Table [ebean_test.roles] has no imported or exported foreign keys.<br/>Mar 3, 2009 3:38:07 PM com.avaje.ebean.server.lib.sql.TableInfo loadFKeys<br/>INFO: Dictionary: Table [ebean_test.user_roles] has no imported or exported foreign keys.<br/>Mar 3, 2009 3:38:07 PM com.avaje.ebean.server.deploy.BeanDescriptorFactory logStatus<br/>INFO: Entities enhanced[0] subclassed[4]<br/>Exception in thread "main" java.util.concurrent.ExecutionException: java.lang.RuntimeException: Matching property not found? matchColumn[user_id] localColumn[user_id]<br/>	at java.util.concurrent.FutureTask$Sync.innerGet(FutureTask.java:222)<br/>	at java.util.concurrent.FutureTask.get(FutureTask.java:83)<br/>	at eg.Main.main(Main.java:22)<br/>Caused by: java.lang.RuntimeException: Matching property not found? matchColumn[user_id] localColumn[user_id]<br/>	at com.avaje.ebean.server.deploy.BeanPropertyAssoc.createImportedScalar(BeanPropertyAssoc.java:324)<br/>	at com.avaje.ebean.server.deploy.BeanPropertyAssoc.createImportedId(BeanPropertyAssoc.java:284)<br/>	at com.avaje.ebean.server.deploy.BeanPropertyAssocMany.initialise(BeanPropertyAssocMany.java:136)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptor.initialiseOther(BeanDescriptor.java:490)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorCacheFactory.initialiseAll(BeanDescriptorCacheFactory.java:142)<br/>	at com.avaje.ebean.server.deploy.DeploymentManager.<init>(DeploymentManager.java:80)<br/>	at com.avaje.ebean.server.plugin.PluginCore.<init>(PluginCore.java:39)<br/>	at com.avaje.ebean.server.plugin.PluginFactory.create(PluginFactory.java:85)<br/>	at com.avaje.ebean.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:155)<br/>	at com.avaje.ebean.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:56)<br/>	at com.avaje.ebean.Ebean$ServerManager.register(Ebean.java:190)<br/>	at com.avaje.ebean.Ebean$ServerManager.access$300(Ebean.java:129)<br/>	at com.avaje.ebean.Ebean.registerServer(Ebean.java:327)<br/>	at eg.RegisterServer.run(Main.java:139)<br/>	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)<br/>	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)<br/>	at java.util.concurrent.FutureTask.run(FutureTask.java:138)<br/>	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:885)<br/>	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:907)<br/>	at java.lang.Thread.run(Thread.java:637)</p><p>When I set a break point and debug where the exception is occurring I find that the props being passed in are for the roles table instead of the users table.</p><p>Any help would be appreciated.</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+04 Mar&nbsp;00:01
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Well... to get you going I'd suggest you add the foreign keys.</p><p>That means that Ebean will be able read the foreign key relationships between the user, role and user_role tables ... and you won't need to define @JoinTable at all.</p><p>... aka just have the @ManyToMany ... and Ebean will work out the joins etc based on the foreign keys.</p><p>That said, I'm thinking you may have hit a bug related to defining ManyToMany joins manually without any foreign keys... So I'll see if I can reproduce that.</p><p>Any reason for not having the foreign keys?</p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+04 Mar&nbsp;00:03
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Oh, remember to delete the .dictionary file after changing the schema. </p><p>That is, Ebean reads the schema information and stores it in a .dictionary file for performance reasons as reading meta data from the DB can be slow.</p><p>... so deleting the file means that Ebean will rebuild it reading the DB meta data again.</p><p><br/>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+04 Mar&nbsp;01:27
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+04 Mar&nbsp;01:51
+</div>
+<span>by William DeMoss</span>
+<div class="body">
+<p>Rob thanks for the quick responses.</p><p>Well... to get you going I'd suggest you add the foreign keys.<br/>- I'm using the myisam table type, so no foreign keys.</p><p>Oh, remember to delete the .dictionary file after changing the schema.<br/>- My test cases that I'm using to play around with Ebean automatically deletes the .dictionary files before each run.</p><p>Is the source tree in the source forge svn repository under ebean/trunk the current working tree? If so, I can see if I can figure out whats going on as well. So far the source code seems fairly easy to follow from what little digging around I've done.</p><p>Thanks for looking at it.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+04 Mar&nbsp;03:21
+</div>
+<span>by William DeMoss</span>
+<div class="body">
+<p>I've created a bug for this at <a href="http://www.avaje.org/bugdetail-84.html">http://www.avaje.org/bugdetail-84.html</a></p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+04 Mar&nbsp;03:42
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Cool - just saw the bug - thanks.</p><p>Yes ebean/trunk ... is the current tree being worked on, so when I say fixed in HEAD ... I mean the code has been committed up into ebean/trunk. </p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+04 Mar&nbsp;03:45
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Just as a thought... being a many to many ... there is generally a requirement to join from user -> user_role -> role.</p><p>The JoinTable on User ... defines the first join.. but not the second join from user_role -> role. From the test case... there was not a reverse relationship from role -> user_role ... so the issue could be around there (no definition of the relationship from role -> user_role). Thats my first hunch anyway...</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+30 Mar&nbsp;16:31
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>if i may add to this:<br/>    @ManyToMany<br/>    /*@JoinTable(<br/>            name="event_group" ,<br/>            joinColumns =<br/>                    @JoinColumn(name="event_id"),<br/>            inverseJoinColumns =<br/>                    @JoinColumn(name="usergroup_id")<br/>    ) */<br/>    private List<Usergroup> groups;<br/>.<br/>.<br/>.<br/>      Query<Event> q = Ebean.createQuery(Event.class);<br/>      q.join("groups");<br/>      q.where("groups.id=1");<br/>      final List<Event> eventList = q.findList();<br/>.<br/>.<br/>.<br/>select e.id, e.startdate, e.enddate, e.cdate, e.minpeople, e.maxpeople, e.comment, e.canceled, e.reason, e.deleted, e.archived, e.creator_id, e.category_id, e.location_id, g.id, g.name, g.description <br/>from event e<br/>left outer join event_group d on e.ID = d.event_id <br/>left outer join usergroup g on e.usergroup_id = g.ID  <br/>where g.id=1</p><p>-------------------------------</p><p>the join is wrong.<br/>left outer join usergroup g on e.usergroup_id = g.ID  <br/>should be <br/>left outer join usergroup g on d.usergroup_id = g.ID</p><p><br/>i'm using svn head from today.</p><p>regards,<br/>-erwin</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+30 Mar&nbsp;22:46
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>the haxor fix for this to let me continue working:<br/>SqlTreeNodeBean.java:434<br/>  node.tableJoin.localTableAlias = manyToManyJoin.getForeignTableAlias();<br/>(make the fields public and non-final).</p><p>and yes, i know that this is even uglier than it sounds when you first see it. but it makes waiting for a real fix easier ;)</p><p>keep it up,<br/>-erwin</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+31 Mar&nbsp;10:15
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>persisting this ManyToMany relationship tries to execute the following sql statement:</p><p>delete from EVENT_GROUP where ID is null and EVENT_ID=? and USERGROUP_ID=?</p><p>which throws an optimistic lock exception, because the ID is not (and cannot be) null.</p><p>btw: i do not have a seperate class for the table EVENT_GROUP.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+31 Mar&nbsp;12:14
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>as a working solution, i dropped the primary key from the assoc-table. depending on your POV, this might be considered better design anyway.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+31 Mar&nbsp;12:29
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ok. I have reproduced the first problem - my ManyToManyAuto test missed this scenario :( ... so I'll have a look at this tomorrow.</p><p>Yes, I'm aiming to get my tests cleaned up and published ... getting there.</p><p>Anyways, I'll have a detailed look tomorrow.</p><p>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+31 Mar&nbsp;13:57
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>one more thing: it seems that ManyToMany associations are not saved on new Objects.</p><p>x = new Foo();<br/>x.setMany(theList);<br/>Ebean.save(x);</p><p>Ebean.getReference(Foo.class, x.getId()).getMany(); <--- empty</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+31 Mar&nbsp;14:26
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>one more thing: it seems that ManyToMany associations are not saved on new Objects.</p><p>x = new Foo();<br/>x.setMany(theList);<br/>Ebean.save(x);</p><p>Ebean.getReference(Foo.class, x.getId()).getMany(); <--- empty</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+31 Mar&nbsp;14:26
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>sorry, my fault. i messed up the creation of theList. this works as expected.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+31 Mar&nbsp;22:54
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>me again.</p><p>just as a btw: the following seems a bit non-intuitive. is there any other way of doing this?</p><p>  public Set<Usergroup> getGroups() {<br/>    if ( groups == null ) {<br/>      final BeanSet<Usergroup> set = new BeanSet<Usergroup>();<br/>      set.setModifyListening(true);<br/>      setGroups(set);<br/>    }<br/>    return groups;<br/>  }</p><p>this occurs when dealing with a new Foo() where i want to add groups before saving the object the first time.<br/>the main issue i have with this is that new BeanSet() does not enable modify listening by default. it took me quite some time to figure that one out.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+01 Apr&nbsp;00:23
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Hmm...</p><p>I think this is actually a bug.</p><p>AKA:<br/>If you are inserting a new Foo (not update) <br/>... then Ebean should treat every entry in the ManyToMany Set as a new association (and insert into the intersection table).</p><p>I'll have a little think, but I feel this is a bug in that once you know Foo is being inserted, anything in the ManyToMany *MUST* be a new association.</p><p>For an update of Foo, listening on BeanSet/List/Map detects the changes (adds/removes)... but for insert of Foo this should not be needed.</p><p>I'll check but yes, this looks like a bug to me.</p><p>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+01 Apr&nbsp;10:24
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>while you're at it: why not accept any instance of List/Set/Map for vanilla inserts?<br/>at the moment, you just get a warning that the collection does not implement BeanCollection. You could replace it on save with a BeanCollection. The only problem I see with this is, that if somebody kept a reference to the original collection, it will be out of date after the insert.</p><p>best,<br/>-erwin</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+02 Apr&nbsp;11:34
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Logged bugs:<br/><a href="http://www.avaje.org/bugdetail-101.html">http://www.avaje.org/bugdetail-101.html</a><br/><a href="http://www.avaje.org/bugdetail-102.html">http://www.avaje.org/bugdetail-102.html</a></p><p><b> > why not accept any instance of List/Set/Map for vanilla inserts?</b><br/>Yes. We need to do that - you don't want to use Ebeans BeanList/BeanSet or BeanMap so yes, I have done that.</p><p><b> > You could replace it on save with a BeanCollection </b><br/>At the moment I think the best approach is to not do this. That is, it someone wants to later do an update Ebean will ignore any changes to the ManyToMany (and log the warning) .. so people should fetch that entity and update - rather than just resave the original instance.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+09 Apr&nbsp;21:41
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>thanks, i tested this in head, and it works fine.</p><p>but it seems i can't stop digging for new issues ;)<br/>the current puzzle i'm trying to solve is how to join 3 tables (with one additional assoc. table).<br/>user(id, login, ...)<br/>subscription(id, user_id, type, ...)<br/>group(id, name, ...)<br/>user_group(user_id, group_id)</p><p>i want to fetch all subscriptions for all users of a certain group. is this possible? i tried the following:</p><p>    Query&lt;Subscription&gt; find = Ebean.createQuery(Subscription.class);<br/>    find.join("user");<br/>    find.join("user.groups");<br/>    find.where("groups.id IN (1)");<br/>    find.findList();</p><p><br/>just as a test, two tables work like this:<br/>    Query&lt;User&gt; find = Ebean.createQuery(User.class);<br/>    find.join("groups");<br/>    find.where("groups.id IN (1)");<br/>    System.out.println(find.findList().size());</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+09 Apr&nbsp;22:02
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>solved it with @SqlSelect for the moment, and found this bug along the way (@SqlSelect with no where clause):<br/>Caused by: java.lang.NullPointerException<br/>	at com.avaje.ebean.server.deploy.DeploySqlSelect.buildSql(DeploySqlSelect.java:198)<br/>	at com.avaje.ebean.server.query.RawSqlSelectClauseBuilder.build(RawSqlSelectClauseBuilder.java:88)<br/>	... 7 more</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Apr&nbsp;05:40
+</div>
+<span>by Rob</span>
+<div class="body">
+<p><b> find.where("groups.id IN (1)"); </b></p><p>Looks to me like that should be:</p><p>find.where("user.groups.id IN (1)");</p><p>... but yes, that may not include the many but I'll have a look.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Apr&nbsp;09:24
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>solved it with @SqlSelect for the moment, and found this bug along the way (@SqlSelect with no where clause):<br/>Caused by: java.lang.NullPointerException<br/>	at com.avaje.ebean.server.deploy.DeploySqlSelect.buildSql(DeploySqlSelect.java:198)<br/>	at com.avaje.ebean.server.query.RawSqlSelectClauseBuilder.build(RawSqlSelectClauseBuilder.java:88)<br/>	... 7 more</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Apr&nbsp;09:34
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>i tried user.groups.id too, but to no avail.<br/>and i'm sorry that i'm starting to really bother you, but i have found another issue. JoinTables are ignored when trying to use the same intersection type twice. example:</p><p>  @ManyToMany<br/>  @OrderBy("name")<br/>  @JoinTable(<br/>          name="user_group",<br/>          joinColumns = {<br/>                  @JoinColumn(name="user_id")<br/>          },<br/>          inverseJoinColumns = {<br/>                  @JoinColumn(name="usergroup_id")<br/>          }<br/>  )<br/>  Set&lt;Usergroup&gt; groups;</p><p>  @ManyToMany<br/>  @OrderBy("name")<br/>  @JoinTable(<br/>          name="group_admin",<br/>          joinColumns = {<br/>                  @JoinColumn(name="user_id")<br/>          },<br/>          inverseJoinColumns = {<br/>                  @JoinColumn(name="usergroup_id")<br/>          }<br/>  )<br/>  Set&lt;Usergroup&gt; adminGroups;</p><p>this will throw:<br/>SEVERE: ERROR COMING: Multiple Intersections [Source[USERGROUP] Dest[SYSTEMUSER] Intersection[GROUP_ADMIN]]<br/>java.lang.ExceptionInInitializerError<br/>	at tk.eabin.event.server.ServerRunner$IdleWorker.run(ServerRunner.java:27)<br/>	at java.lang.Thread.run(Thread.java:619)<br/>Caused by: javax.persistence.PersistenceException: java.sql.SQLException: Found [2] intersection tables between [usergroup] and [systemuser]?  Only expecting one or none.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Apr&nbsp;09:52
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>hm, this might be me misunderstanding the JPA.<br/>i thought it was enough to define the JoinTable on one side, and only use "mappedBy" on the other side.<br/>If I define the JoinTable on both sides, this works as expected. is this well define behaviour?</p><p>regards,<br/>-erwin</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Apr&nbsp;10:25
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>please write a good test case for this situation, because it isn't 100% clean. e.g. on the inverse side (class Usergroup) i get the same set of results when calling getUsers() and getAdmins(). but saving them uses again the correct table. i think the result of get*() may depend on what was called first, and the second one will just reuse the same data.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Apr&nbsp;10:27
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>just tested the above hypothesis, and it is true. the data of the first call is re-used for the second call.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Apr&nbsp;10:54
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>i tracked this down to the following:<br/>DefaultOrmQuery.calculateHash(QueryRequest) does not include table. i added:<br/>    hc = hc * 31 + (includeTableJoin == null ? 0 : includeTableJoin.getTable().hashCode()); </p><p>and i'm fine again.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="120">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Ebean Documentation</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+a.large, td.c1 a {
+   font-size:120%;
+   font-weight:bold;
+}
+h3 {
+margin-top:40px;
+margin-bottom:20px;
+}
+div.page td a span {
+  font-size:80%;
+}
+div.page td {
+  text-align:top;
+  padding:20px;
+}
+div.page td.c1 {
+  width:30%;
+}
+</style> 
+
+
+
+</head>
+
+<body>
+<form action='/ebean/documentation.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/">ebean</a>
+&raquo; <span>docs</span>
+</div>
+
+
+
+
+<div class="page">
+<h4>Kickstart projects</h4>
+<table>
+<tr>
+<td class="c1">
+<a class="large" href="maven.html">Maven kickstart project</a>
+</td>
+<td>
+<a href="http://github.com/ebean-orm-demo/demo-maven-config">
+http://github.com/ebean-orm-demo/demo-maven-config</a>
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a class="large" href="http://github.com/ebean-orm-demo/demo-order">Demo project</a>
+</td>
+<td>
+<a href="http://github.com/ebean-orm-demo/demo-order">
+http://github.com/ebean-orm-demo/demo-order</a>
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a href="http://github.com/pmendelson/demo-wicket-order" class="large">WEB Based (Wicket) Demo project</a>
+</td>
+<td>
+<a href="http://github.com/pmendelson/demo-wicket-order">
+http://github.com/pmendelson/demo-wicket-order</a>
+</td>
+</tr>
+</table>
+
+
+<p>
+&nbsp;
+</p>
+
+<h4>Documentation</h4>
+<table>
+<tr>
+<td class="c1">
+<a class="large" href="getstarted_props.html">Getting started<br/><span>(with ebean.properties)</span></a>
+</td>
+<td>
+Gives steps for getting started with ebean using a ebean.properties file for configuration.
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a class="large" href="getstarted_programmatic.html">Getting started<br/><span>(programmatic configuration)</span></a>
+</td>
+<td>
+Gives steps for getting started with ebean programmatic configuration via ServerConfig.
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a class="large" href="getstarted_spring.html">Getting started<br/><span>(spring configuration)</span></a>
+</td>
+<td>
+Getting started with ebean in a Spring environment. This covers using Spring configuration of
+EbeanServer instances and use of Spring transaction management.
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a class="large" href="/static/javadoc/pub/index.html">Javadoc of Ebean API</a>
+</td>
+<td>
+Standard javadoc of Ebean's public API. The javadoc is also included in the sourceforge download.
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a class="large" href="/doc/ebean-userguide.pdf">Reference guide (pdf)</a>
+</td>
+<td>
+This is the PDF reference guide for using Ebean.
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</table>
+
+<h4>Functional documentation</h4>
+
+<table>
+<tr>
+<td class="c1">
+<a class="large" href="/ebean/encryption.html">Transparent Encryption support</a>
+</td>
+<td>
+Ebean supports transparent encryption and decryption of properties.
+It can do this DB encryption functions (so that properties can still
+be used in WHERE clauses) or using Java client side encryption.
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a href="/ebean/introquery.html">Queries</a>
+</td>
+<td>
+Introduction to Ebean's query language and query functionality.
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a href="/ebean/introtrans.html">Transactions</a>
+</td>
+<td>
+Introduction to transaction demarcation.
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a href="/ebean/introsavedelete.html">Save and  Delete</a>
+</td>
+<td>
+Introduction to save and delete functionality.
+</td>
+</tr>
+<tr>
+<td class="c1">
+<a href="/ebean/jaxrs.html">JAX-RS Integration</a>
+</td>
+<td>
+JAX-RS Integration to help develop RESTful (well REST like) API's 
+to Entities. 
+</td>
+</tr>
+<tr>
+<td class="c1">
+</td>
+<td>
+</td>
+</tr>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

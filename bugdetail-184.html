@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: Doesn't work cascade persisting using auto-increment</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Yaroslav Kosinov">
+<meta name="description" content="We have two tables with one reference and two beans for it Ebean version 2 2 0 RDBMS DB2 9 7 0 441 Entity name Person Table name PERSONS public class Person implements Serializable private Long id private String surname private String name private List phones public Person Id GeneratedValue strategy javax persistence GenerationType AUTO Column name ID unique true nullable false public Long getId return id public void setId Long id this id id Column name SURNAME nullable false unique false columnDefinition varchar 64 public String getSurname return surname public void setSurname String surname this surname surname Column name NAME nullable false unique false columnDefinition varchar 64 public String getName return name public void setName String name this name name OneToMany targetEntity Ph">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-184.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 184 : Doesn't work cascade persisting using auto-increment
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 184 : Doesn't work cascade persisting using auto-increment </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Yaroslav Kosinov</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.3.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">30/11/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">30/11/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>We have two tables with one reference and two beans for it (Ebean version 2.2.0; RDBMS DB2 9.7.0.441).</p><p>@Entity(name = "Person")<br/>@Table(name = "PERSONS")<br/>public class Person implements Serializable {</p><p>	private Long id;<br/>	private String surname;<br/>	private String name;<br/>	private List<Phone> phones;<br/>	<br/>	public Person() {<br/>	}</p><p>	@Id<br/>    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)<br/>    @Column(name = "ID", unique = true, nullable = false)<br/>    public Long getId() {<br/>		return id;<br/>	}</p><p>	public void setId(Long id) {<br/>		this.id = id;<br/>	}</p><p>	@Column(name = "SURNAME", nullable = false, unique = false, columnDefinition = "varchar(64)")<br/>    public String getSurname() {<br/>		return surname;<br/>	}</p><p>	public void setSurname(String surname) {<br/>		this.surname = surname;<br/>	}</p><p>	@Column(name = "NAME", nullable = false, unique = false, columnDefinition = "varchar(64)")<br/>    public String getName() {<br/>		return name;<br/>	}</p><p>	public void setName(String name) {<br/>		this.name = name;<br/>	}</p><p>	@OneToMany(targetEntity = Phone.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")<br/>    public List<Phone> getPhones() {<br/>		return phones;<br/>	}</p><p>	public void setPhones(List<Phone> phones) {<br/>		this.phones = phones;<br/>	}<br/>	<br/>}</p><p>@Entity(name = "Phone")<br/>@Table(name = "PHONES")<br/>public class Phone implements Serializable {</p><p>	private Long id;<br/>	private String phoneNumber;<br/>	private Person person;<br/>	<br/>	public Phone() {<br/>	}</p><p>	@Id<br/>    @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)<br/>    @Column(name = "ID", unique = true, nullable = false)<br/>    public Long getId() {<br/>		return id;<br/>	}</p><p>	public void setId(Long id) {<br/>		this.id = id;<br/>	}</p><p>	@Column(name = "PHONE_NUMBER", nullable = false, unique = true, columnDefinition = "varchar(7)")<br/>    public String getPhoneNumber() {<br/>		return phoneNumber;<br/>	}</p><p>	public void setPhoneNumber(String phoneNumber) {<br/>		this.phoneNumber = phoneNumber;<br/>	}</p><p>	@NotNull<br/>    @ManyToOne(targetEntity = Person.class, cascade=CascadeType.ALL, fetch = FetchType.LAZY)<br/>    @JoinColumn(name = "PERSON_ID", nullable = false)<br/>	public Person getPerson() {<br/>		return person;<br/>	}</p><p>	public void setPerson(Person person) {<br/>		this.person = person;<br/>	}</p><p>}</p><p>We want to make cascade persisting of objects in these tables in such a way:</p><p>public class DMLTest {	</p><p>	public DMLTest() {<br/>	}</p><p>	public static void main(String[] args) {<br/>        DMLTest dmlTest = new DMLTest();<br/>        dmlTest.deleteAll();<br/>		dmlTest.insertData();<br/>	}<br/>	<br/>	public void deleteAll() {<br/>		Ebean.beginTransaction();<br/>		try {<br/>			Ebean.createUpdate(Phone.class, "delete from phone").execute();	<br/>			<br/>			Ebean.createUpdate(Person.class, "delete from person").execute();	<br/>			<br/>			Ebean.commitTransaction();<br/>		} finally {<br/>			Ebean.endTransaction();<br/>		}<br/>	}</p><p>	private void insertData(){<br/>		Person person=new Person();<br/>		person.setSurname("Kosinov");<br/>		person.setName("Yaroslav");<br/>		Phone phone=new Phone();<br/>		phone.setPhoneNumber("5244011");<br/>		List<Phone> phones = new ArrayList<Phone>();<br/>		phones.add(phone);<br/>		person.setPhones(phones);<br/>		Ebean.save(person);<br/>		<br/>		person=new Person();<br/>		person.setSurname("Kosinov");<br/>		person.setName("Gennady");<br/>		phone=new Phone();<br/>		phone.setPhoneNumber("5712658");<br/>		phone.setPerson(person);<br/>		Ebean.save(phone);<br/>	}</p><p>}</p><p>Rows in the database was created without EBean exceptions BUT! all rows in the PHONES table haven't values in the PERSON_ID column :( All auto-generated values for primary keyes was created correctly.</p><p>Example of the constructed data:</p><p>PHONES<br/>ID-PHONE-PERSON_ID<br/>27-5244011-NULL<br/>28-5712658-NULL</p><p>PERSONS<br/>27-Kosinov-Yaroslav<br/>28-Kosinov-Gennady</p><p>We think that the problem is that after Ebean.save(...) method getId() - is still equals to NULL but the value in the database already is created.</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+02 Dec&nbsp;06:50
+</div>
+Hmmm - couldn't reproduce.
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Hmmmm, seemed to work for me - aka the person_id's where inserted with values.</p><p>trans[1003], 06:42:33.818, Delete table[PHONES] rows[0] bind[null] <br/>trans[1003], 06:42:33.823, Delete table[PERSONS] rows[0] bind[null] <br/>trans[1004], 06:42:33.935, insert into PERSONS (ID, SURNAME, NAME) values (?, ?, ?) <br/>trans[1004], 06:42:33.936, Binding Insert [PERSONS]  set[id=1, surname=Kosinov, name=Yaroslav, ] <br/>trans[1004], 06:42:34.436, Inserted [Person] [1] <br/>trans[1004], 06:42:34.443, insert into PHONES (ID, PHONE_NUMBER, PERSON_ID) values (?, ?, ?) <br/>trans[1004], 06:42:34.444, Binding Insert [PHONES]  set[id=1, phoneNumber=5244011, PERSON_ID=1, ] <br/>trans[1004], 06:42:34.446, Inserted [Phone] [1] <br/>trans[1005], 06:42:34.466, insert into PERSONS (ID, SURNAME, NAME) values (?, ?, ?) <br/>trans[1005], 06:42:34.467, Binding Insert [PERSONS]  set[id=2, surname=Kosinov, name=Gennady, ] <br/>trans[1005], 06:42:34.468, Inserted [Person] [2] <br/>trans[1005], 06:42:34.468, insert into PHONES (ID, PHONE_NUMBER, PERSON_ID) values (?, ?, ?) <br/>trans[1005], 06:42:34.468, Binding Insert [PHONES]  set[id=2, phoneNumber=5712658, PERSON_ID=2, ] <br/>trans[1005], 06:42:34.469, Inserted [Phone] [2]</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+02 Dec&nbsp;06:55
+</div>
+Transaction logs... or Asserts ?
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Can you provide the transaction log output?  ... or perhaps some Assert statements that fail - showing the problem?</p><p>Thanks, Rob.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+06 Dec&nbsp;08:58
+</div>
+Opps DB2
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>As an update ... this is DB2, and currently looking into platform support for DB2.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+15 Dec&nbsp;14:20
+</div>
+Hmmm...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Sent a DBPlatform and waiting to see how that went.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+17 Dec&nbsp;10:38
+</div>
+I'll close this...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I'll close this... can re-open if anyone gets interested in following through with DB2.</p><p>If you want DB2 support please let me know.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="184">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-184.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="184">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

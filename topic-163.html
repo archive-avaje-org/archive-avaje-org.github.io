@@ -1,0 +1,573 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: PK save problems, some sentences</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Ilya Skorik">
+<meta name="description" content="Good afternoon Rob Thanks for your remarkable library I only have started to work with it For me the following problem here my code At its execution I receive an PK error Edition edition new Edition edition setColor FFFFFF edition setTitle test edition setStitle This is JPA test edition setEnabled true editionJPA create edition edition setEnabled false editionJPA save edition And such code works Edition item ebeanServer find Edition class UUID fromString e86a1e4f 3d22 42af ab9d 732e23f735b1 item setEnabled false ebeanServer save item I have a sentence to add a method update which will generate exclusively sql update a code and a method insertOrUpdate which will check presence of the object and to save or refresh it And my second sentence to add a method exist which will check whether there">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-163.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Ilya Skorik </span>
+03 Jan&nbsp;20:50
+</div>
+PK save problems, some sentences
+<div class="body">
+<p>Good afternoon, Rob. Thanks for your remarkable library, I only have started to work with it. For me the following problem, here my code. At its execution I receive an PK error:</p><p>Edition edition = new Edition();<br/>edition.setColor("FFFFFF");<br/>edition.setTitle("test");<br/>edition.setStitle("This is JPA test");<br/>edition.setEnabled(true);</p><p>editionJPA.create(edition);<br/>edition.setEnabled(false);<br/>editionJPA.save(edition);</p><p>And such code works:</p><p>...</p><p>Edition item = ebeanServer.find(Edition.class, UUID.fromString("e86a1e4f-3d22-42af-ab9d-732e23f735b1"));<br/>item.setEnabled(false);<br/>ebeanServer.save(item);</p><p>I have a sentence, to add a method "update" which will generate exclusively "sql update" a code and a method "insertOrUpdate" which will check presence of the object and to save or refresh it.</p><p>--</p><p>And my second sentence to add a method "exist", which will check, whether there is a record in a DB by it PK and to return true or false boolean value.</p><p>Thank you!</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+06 Jan&nbsp;21:45
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>I don't understand the problem/example.</p><p>You are getting a PK exception - which line are you getting it on? It is not clear to me what the editionJPA object is... and what it's create() and save() methods do.</p><p>Can you provide more detail?</p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+07 Jan&nbsp;13:47
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>"editionJPA" is simple POJO object. The problem that I cannot create POJO object and transfers it to EbeanServer.save(java.lang.Object) method. EbeanServer considers that it is new record for which it is necessary to do insert, but it is necessary for me that has been made update.</p><p>I looked in source code, a choice between insert and update depends on variables which Ebean adds automatically, for example at obtaining of the object with a ebeanServer.find method. But I create POJO object passing ebeanServer, and in it there are no structures  which adds ebean.</p><p>I will describe the typical scenario. I obtain the data from an web page through spring-mvc which automatically creates necessary POJO object (Edition) and makes its validation before send to DAO:</p><p>@RequestMapping(value = "/settings/editions/update/")<br/>public String Edit(@Valid Edition edition,<br/>    BindingResult bindingResult, Model model) {</p><p>    if (!hasErrors(bindingResult))<br/>        editionsService.update(edition);</p><p>    jsonHelper.getModel(model, bindingResult);<br/>    return "jsonView";<br/>}</p><p>This is EditionService.update:</p><p>public void update(Edition object) {<br/>    editionJPA.update(object);<br/>}</p><p>And this is EditionJPA.update:</p><p>@Override<br/>public void update(Edition object) {<br/>        <br/>    String dml = "UPDATE inp_editions SET " +<br/>        "edition_enabled = :enabled, " +<br/>        "edition_color  = :color, " +<br/>        "edition_title  = :title, " +<br/>        "edition_stitle = :stitle, " +<br/>        "edition_description = :description, " +<br/>        "edition_updated = now()" +<br/>        "WHERE edition_uuid = :id";</p><p>    SqlUpdate query = ebeanServer.createSqlUpdate(dml)<br/>        .setParameter("enabled", object.getEnabled())<br/>        .setParameter("color", object.getColor())<br/>        .setParameter("title", object.getTitle())<br/>        .setParameter("stitle", object.getStitle())<br/>        .setParameter("description", object.getDescription())<br/>        .setParameter("id", object.getUuid());<br/>        <br/>    int rows = query.execute();<br/>}</p><p>All that I want, it to reduce code EditionJPA.update to:</p><p>@Override<br/>public void update(Edition object) {<br/>    ebeanServer.update(object);<br/>}</p><p>As experiment I have added a update method by copy of a code of a save method, having made an unambiguous choice for update, all works fine. Only I do not wish to use own assemblage because of possible problems with compatibility.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+11 Jan&nbsp;00:23
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>>> EbeanServer considers that it is new record for which it is necessary to do insert, but it is necessary for me that has been made update.</p><p>I think this is because you don't have a version property/column. That is... your bean is not enhanced etc (I call this a "vanilla" bean in my own terminology). For "vanilla" beans with a version property ... Ebean will check the value of the version property to determine if it is an insert or an update. However, your vanilla bean doesn't have a version property so Ebean just does a update.</p><p>Refer to DefaultPersister.saveVanilla(...)</p><p>Now, I understand you want to add an explicit ebeanServer.update() method ... but firstly I'd like to know if there is a reason not to have a version property - aka you are not getting any optimistic concurrency checking on your update, so I'd advise that you add a version property if at all possible.</p><p>Are you able to add a version property/column?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+11 Jan&nbsp;11:58
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>I develop the web application, in which 90 % of queries standard and very simple CRUD operations. I think that they do not know about "optimistic concurrency checking". Here the interface with base DAO for all CRUD objects:</p><p>public interface BasicDao <T> {</p><p>    public void create (T object);<br/>    public void update (T object);<br/>    public void delete (UUID id);</p><p>    public void enable (UUID id);<br/>    public void disable (UUID id);</p><p>    public Boolean exist (UUID id);<br/>    <br/>    public List <T> findAll ();<br/>    <br/>    public T findById (UUID id);</p><p>}</p><p>Certainly I can add version propperty and I will without fail try to make it. This property should be saved in a DB?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+11 Jan&nbsp;15:12
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>1. I have made changes to my domain object:</p><p>@Column(insertable = false, updatable = false) private Timestamp created;</p><p>@Version private Timestamp updated;</p><p>The version (timestamp) forms in a database. But still I receive an error "ERROR: duplicate key value violates unique constraint &quot;inp_editions_pkey&quot;" Means ebean still considers that it needs to make insert query.</p><p>2. I have added property version:</p><p>private Timestamp version;</p><p>public Timestamp getVersion() {<br/>    return version;<br/>}</p><p>public void setVersion(Timestamp version) {<br/>    this.version = version;<br/>}</p><p>It too has not helped.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+11 Jan&nbsp;15:21
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>1.1, I have made changes to my DaoImpl for "create" method:</p><p>object.setUpdated(new Timestamp((new java.util.Date()).getTime()));<br/>ebeanServer.save(object);</p><p>And now I have this error:<br/>"javax.persistence.OptimisticLockException: Data has changed. updated [0] rows"</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+11 Jan&nbsp;15:35
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>I have understood, how it works. What to do update, the object should contain the version propperty and then the query will look as "update... where version =:version". But I do not want together with PK propperty move the version propperty through a web layer. </p><p>Therefore I vote for separate "update" method which as a matter of fact will be the designer of sql update query for object.class.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+12 Jan&nbsp;01:17
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Hmmm, I'm not convinced that the version property was added correctly. Can you show me your entire entity bean?</p><p>Specifically I'm looking to see if you added a version property like:</p><p>@Version<br/>Timestamp lastUpdate;</p><p>public Timestamp getLastUpdate() {<br/>  return lastUpdate;<br/>}</p><p>public void setLastUpdate(Timestamp lastUpdate) {<br/>  this.lastUpdate = lastUpdate;<br/>}</p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+12 Jan&nbsp;01:21
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Also note that you (your application code) doesn't need to set the value for a @Version property - Ebean will do that.</p><p>Aka you don't need code like this:<br/>>> object.setUpdated(new Timestamp((new java.util.Date()).getTime()));</p><p>Similarly if you use @CreatedTimestamp for a created timestamp Ebean will automatically set that value when a bean is created (and not include it in update statements).</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+15 Jan&nbsp;22:33
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>This is my Domain object:</p><p>@Entity<br/>public class Edition {</p><p>@Id<br/>@NotNull<br/>private UUID id;</p><p>@NotNull<br/>private String color = "FFFFFF";</p><p>@NotNull<br/>private String title;</p><p>@NotNull<br/>private String stitle;</p><p>@NotNull<br/>private String description = "";</p><p>@NotNull<br/>private Boolean enabled = true;</p><p>@Column(insertable = false, updatable = false)<br/>private Timestamp created;</p><p>@Version<br/>private Timestamp updated;</p><p>// standart getters and setters...</p><p>-----</p><p>This is my DaoImpl class</p><p>public void update(Edition object) {<br/>    ebeanServer.save(object);<br/>}</p><p>Where the Edition object is checked already up and is correct and valid.</p><p>This is error:<br/>org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "inp_editions_pkey"</p><p>This is query from log:</p><p>trans[1010], 01:26:33.624, Binding Insert [inp_editions]  set[id=63c666d4-d8c1-41e1-b67d-27e4b262d7a3, color=000000, tit<br/>le=blablabla, stitle=blablabla, description=, enabled=true, updated=2010-01-16 01:26:33.624, ]</p><p>Ebean continues to consider that it needs to make insert query.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+15 Jan&nbsp;22:34
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>With direct call update it would be much easier.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+17 Jan&nbsp;20:48
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>With the version column... the second save should result in an update. I'll try and reproduce this.</p><p>Aka, we need to resolve when you are getting a second insert before we add an update() method.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;01:30
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>Why the second insert? It is the first and unique call of a "save" method. Edition entity created in a program code, on the fly. Not from a database by ebean call.</p><p>I.e. I create Edition object (instead of I call it from a database), I assign to it an id and I wish to save (update) this in a database.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;07:02
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>I can't reproduce your behaviour:</p><pre class="java">package com.avaje.tests.model.basic;
+
+import java.sql.Timestamp;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
+
+@Entity
+@Table(name="e_basicver")
+public class EBasicVer {
+    
+    @Id
+    Integer id;
+    
+    String name;
+    
+    @Version
+    Timestamp lastUpdate;
+    
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+}</pre>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;07:03
+</div>
+<span>by Rob</span>
+<div class="body">
+<pre class="java">package com.avaje.tests.basic;
+
+import java.sql.Timestamp;
+
+import junit.framework.Assert;
+import junit.framework.TestCase;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.bean.EntityBean;
+import com.avaje.tests.model.basic.EBasicVer;
+
+public class TestIUDVanilla extends TestCase {
+
+    public void test() {
+        
+        EBasicVer e0 = new EBasicVer();
+        e0.setName("vanilla");
+        
+        Ebean.save(e0);
+        
+        boolean entity = (e0 instanceof EntityBean);
+        Assert.assertTrue(!entity);
+        
+        Assert.assertNotNull(e0.getId());
+        Assert.assertNotNull(e0.getLastUpdate());
+        
+        Timestamp lastUpdate0 = e0.getLastUpdate();
+        
+        e0.setName("modified");
+        Ebean.save(e0);
+        
+        Timestamp lastUpdate1 = e0.getLastUpdate();
+        Assert.assertNotNull(lastUpdate1);
+        Assert.assertNotSame(lastUpdate0, lastUpdate1);
+        
+    }
+}</pre>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;07:03
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>The transaction log:</p><p>trans[1003], 07:01:01.254, insert into e_basicver (id, name, last_update) values (?, ?, ?) <br/>trans[1003], 07:01:01.257, Binding Insert [e_basicver]  set[id=1, name=vanilla, lastUpdate=2010-01-18 07:01:01.256, ] <br/>trans[1003], 07:01:01.283, Inserted [EBasicVer] [1] <br/>trans[1004], 07:01:01.284, update e_basicver set name=?, last_update=? where id=? and last_update=? <br/>trans[1004], 07:01:01.286, Binding Update [e_basicver]  set[name=modified, lastUpdate=2010-01-18 07:01:01.285, ] where[id=1, lastUpdate=2010-01-18 07:01:01.256, ] <br/>trans[1004], 07:01:01.287, Updated [EBasicVer] [1]</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;07:04
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Can you try the code above and/or produce a test case that shows your problem.</p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;07:06
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Note that I have turned off enhancement... hence Assert.assertTrue(!entity);  ... and the second save produces an update statement.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;08:09
+</div>
+<span>by Ilya Skorik</span>
+<div class="body">
+<p>Rob, excuse me. I probably very badly explain the thought. It is a language problem.</p><p>Your test absolutely correctly works. My problem in other. I _do_not_ save a bean before update it. In my case the first strings of the test would look like:</p><p>EBasicVer e0 = new EBasicVer();  <br/>e0.setId(1);<br/>e0.setName("vanilla");<br/>Ebean.save(e0);</p><p>And in this case I need to make update query, instead of insert query.</p><p>It is actual for my web program. In which web interface I edit properties of the object, then I press a "save" button. Data are transferred to a server with get url server.com?id=1&name=la-la-la.</p><p>I certainly can do something like</p><p>EBasicVer object = ebean->find(EBasicVer.class, id), then modify object via get/set and then fo ebean->save(object);</p><p>but I would not like to do superfluous find query. I trust the received data and I wish to make at once save, i.e. to make update query.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;10:02
+</div>
+<span>by Rob</span>
+<div class="body">
+<pre class="java">public void test() {
+        
+        EBasicVer e0 = new EBasicVer();
+        e0.setName("vanilla");
+        
+        Ebean.save(e0);
+      
+        // only use the below test when not using enhancement
+        boolean entity = (e0 instanceof EntityBean);
+        Assert.assertTrue(!entity);
+        
+        Assert.assertNotNull(e0.getId());
+        Assert.assertNotNull(e0.getLastUpdate());
+        
+        Timestamp lastUpdate0 = e0.getLastUpdate();
+        
+        e0.setName("modified");
+        Ebean.save(e0);
+        
+        Timestamp lastUpdate1 = e0.getLastUpdate();
+        Assert.assertNotNull(lastUpdate1);
+        Assert.assertNotSame(lastUpdate0, lastUpdate1);
+        
+        // This does an update because it has a lastUpdate/version
+        // property set ... AND it will use optimistic concurrency checking
+        EBasicVer e2 = new EBasicVer();
+        e2.setName("forcedUpdate");
+        e2.setId(e0.getId());
+        e2.setLastUpdate(lastUpdate1);
+        
+        Ebean.save(e2);
+        
+    }</pre>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;10:03
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>trans[1003], 10:00:43.259, insert into e_basicver (id, name, last_update) values (?, ?, ?) <br/>trans[1003], 10:00:43.262, Binding Insert [e_basicver]  set[id=1, name=vanilla, lastUpdate=2010-01-18 10:00:43.261, ] <br/>trans[1003], 10:00:43.263, Inserted [EBasicVer] [1] <br/>trans[1004], 10:00:43.265, update e_basicver set name=?, last_update=? where id=? and last_update=? <br/>trans[1004], 10:00:43.266, Binding Update [e_basicver]  set[name=modified, lastUpdate=2010-01-18 10:00:43.265, ] where[id=1, lastUpdate=2010-01-18 10:00:43.261, ] <br/>trans[1004], 10:00:43.267, Updated [EBasicVer] [1] <br/>trans[1005], 10:00:43.268, update e_basicver set name=?, last_update=? where id=? and last_update=? <br/>trans[1005], 10:00:43.268, Binding Update [e_basicver]  set[name=forcedUpdate, lastUpdate=2010-01-18 10:00:43.268, ] where[id=1, lastUpdate=2010-01-18 10:00:43.265, ] <br/>trans[1005], 10:00:43.268, Updated [EBasicVer] [1]</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;10:05
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Aka... it will do an update (for a "vanilla/non-enhanced bean") when the version property has a value set.  Note that IMO this value SHOULD be set ... as that is what enables the Optimistic Concurrency checking (aka to avoid lost updates).</p><p>Does that make sense?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;20:03
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ok, been doing a bit more thinking ... and there is more to this. </p><p>Specifically when we only want to update part of a bean (effectively a partial object or thinking said way... when only some of the properties of the bean exist in your stateless web page).</p><p>I'll add some more details here about that scenario (which I'd expect to be fairly common).</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;20:05
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Also to be explicit... in my last example the e2 instance is only saved once... and results in an update.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Jan&nbsp;20:05
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ok, the situation is you have a stateless webapp and you want to effectively do an update.</p><p>The options are to use Ebean.createUpdate(...), Ebean.createSqlUpdate(...), or when you are using dynamic subclasses (aka not enhancement) you can use code like the above.</p><p>The problem with the code above (which relies on the existance of the version property) is that there is an underlying assumption that the bean is fully populated.</p><p>That is, any property on the bean which is left null will result in it being set to null via the update. You can get around this using EbeanServer.createEntity(...) and BeanState.setLoaded(...) but that is relatively advanced and I would expect people not to be keen on that.</p><p>The result is that I'm looking to implement a Ebean.update(...) and EbeanServer.update(...) methods which will handle partial objects and choose the appropriate concurrency mode based on the existance of a version property value.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+20 Jan&nbsp;08:24
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>For ENH 198 ... added an update() method to Ebean and EbeanServer.</p><p>That now makes it much easier to do this. The main thing to note is that by default only the non-null properties are included in the update - the thinking here is that otherwise adding a property to the model would effectively break existing updates.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="163">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

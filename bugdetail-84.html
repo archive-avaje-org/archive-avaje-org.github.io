@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: @ManyToMany without foreign keys causes MatchingProperty not found Runtime Exception </title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="William DeMoss">
+<meta name="description" content="package eg import java io File import java io FilenameFilter import java sql Connection import java sql DriverManager import java sql SQLException import java util HashSet import java util Set import javax persistence Column import javax persistence Entity import javax persistence GeneratedValue import javax persistence Id import javax persistence JoinColumn import javax persistence JoinTable import javax persistence ManyToMany import javax persistence Table import org junit Assert import org junit BeforeClass import org junit Test import com avaje ebean Ebean import com avaje ebean ServerConfiguration public class ManyToManyTest static String base tmp ebean many to many test static String dictionary base dictionary static String logs base logs BeforeClass public static void setupClass thr">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-84.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 84 : @ManyToMany without foreign keys causes MatchingProperty not found Runtime Exception 
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 84 : @ManyToMany without foreign keys causes MatchingProperty not found Runtime Exception  </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">William DeMoss</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">1.1.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">04/03/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">04/03/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>package eg;</p><p>import java.io.File;<br/>import java.io.FilenameFilter;<br/>import java.sql.Connection;<br/>import java.sql.DriverManager;<br/>import java.sql.SQLException;<br/>import java.util.HashSet;<br/>import java.util.Set;</p><p>import javax.persistence.Column;<br/>import javax.persistence.Entity;<br/>import javax.persistence.GeneratedValue;<br/>import javax.persistence.Id;<br/>import javax.persistence.JoinColumn;<br/>import javax.persistence.JoinTable;<br/>import javax.persistence.ManyToMany;<br/>import javax.persistence.Table;</p><p>import org.junit.Assert;<br/>import org.junit.BeforeClass;<br/>import org.junit.Test;</p><p>import com.avaje.ebean.Ebean;<br/>import com.avaje.ebean.ServerConfiguration;</p><p>public class ManyToManyTest {<br/>	static String base = "/tmp/ebean/many_to_many_test";<br/>	static String dictionary = base + "/dictionary";<br/>	static String logs = base + "/logs";</p><p>	@BeforeClass<br/>	public static void setupClass() throws Exception {<br/>		createTables();<br/>		deleteCacheFiles();<br/>		registerServer();<br/>	}</p><p>	private static void registerServer() {<br/>		ServerConfiguration configuration = new ServerConfiguration("ebean_test");<br/>		configuration.setDefaultServer(true);<br/>		configuration.setDataSourceDriver("com.mysql.jdbc.Driver");<br/>		configuration.setDataSourceUsername("root");<br/>		configuration.setDataSourcePassword("root");<br/>		configuration.setDataSourceUrl("jdbc:mysql://localhost:3306/ebean_test");<br/>		configuration.setDataSourceMaxConnections(100);</p><p>		configuration.setProperty("ebean.log.directory", logs);<br/>		configuration.setProperty("ebean.log.level", "2");<br/>		configuration.setProperty("ebean.log.iud", "2");</p><p>		configuration.setProperty("ebean.dictionary.directory", dictionary);<br/>		configuration.setProperty("ebean.autofetch.querytuning", "true");<br/>		configuration.setProperty("ebean.autofetch.profiling", "true");<br/>		configuration.setProperty("ebean.log.sqltoconsole", "false");</p><p>		configuration.addEntity(Foo.class);<br/>		configuration.addEntity(Bar.class);</p><p>		Ebean.registerServer(configuration);<br/>	}</p><p>	private static void deleteCacheFiles() {<br/>		File file = new File(dictionary);<br/>		if (file.exists()) {<br/>			File[] files = file.listFiles(new FilenameFilter() {<br/>				public boolean accept(File dir, String name) {<br/>					return name.startsWith(".ebean.");<br/>				}<br/>			});<br/>			for (File f : files) {<br/>				f.delete();<br/>			}<br/>		}<br/>	}</p><p>	private static void createTables() throws ClassNotFoundException, SQLException {<br/>		Class.forName("com.mysql.jdbc.Driver");<br/>		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebean_test", "root", "root");<br/>		try {<br/>			connection.createStatement().execute("drop table if exists foo");<br/>			connection.createStatement().execute("create table foo (foo_id varchar(36), primary key(foo_id))");<br/>			connection.createStatement().execute("drop table if exists bar");<br/>			connection.createStatement().execute("create table bar (bar_id varchar(36), primary key(bar_id))");<br/>			connection.createStatement().execute("drop table if exists foo_bars");<br/>			connection.createStatement().execute("create table foo_bars (foo_id varchar(36), bar_id varchar(36), primary key(foo_id, bar_id))");<br/>		} finally {<br/>			connection.close();<br/>		}<br/>	}</p><p>	@Test<br/>	public void test() throws Exception {<br/>		Foo foo = new Foo();<br/>		Ebean.save(foo);<br/>		final String fooId = foo.getId();<br/>		Assert.assertNotNull(fooId);</p><p>		Bar bar = new Bar();<br/>		Ebean.save(bar);<br/>		Assert.assertNotNull(bar.getId());</p><p>		foo.getBars().add(bar);<br/>		Ebean.save(foo);</p><p>		Assert.assertFalse(Ebean.find(Foo.class, fooId).getBars().isEmpty());<br/>		System.out.println("done");<br/>	}</p><p>	@Entity<br/>	@Table(name="foo")<br/>	public static class Foo {</p><p>		@Id<br/>		@Column(name="foo_id")<br/>		@GeneratedValue(generator="auto.uuid")<br/>		String id;</p><p>		@ManyToMany<br/>		@JoinTable(name="foo_bars", joinColumns=@JoinColumn(name="foo_id"), inverseJoinColumns=@JoinColumn(name="bar_id"))<br/>		Set<Bar> bars = new HashSet<Bar>();</p><p>		public String getId() {<br/>			return this.id;<br/>		}</p><p>		public void setId(String id) {<br/>			this.id = id;<br/>		}</p><p>		public Set<Bar> getBars() {<br/>			return this.bars;<br/>		}</p><p>		public void setBars(Set<Bar> bars) {<br/>			this.bars = bars;<br/>		}<br/>	}</p><p>	@Entity<br/>	@Table(name="bar")<br/>	public static class Bar {</p><p>		@Id<br/>		@Column(name="bar_id")<br/>		@GeneratedValue(generator="auto.uuid")<br/>		String id;</p><p>		public String getId() {<br/>			return this.id;<br/>		}</p><p>		public void setId(String id) {<br/>			this.id = id;<br/>		}<br/>	}</p><p>}</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+04 Mar&nbsp;03:53
+</div>
+Unidirectional
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Hmmm... just a quick note that this is unidirectional ... meaning that the relationship from "Bar" to "Foo" is not defined...</p><p>... unidirectional is generally fine ... except in this case where we are defining the relationships manually (not reading FK relationships from DB) ... then there is no explicit definition of how to get from "FooBar" to "Bar".</p><p>"Foo" -> "FooBar" is defined<br/>"FooBar" -> "Bar" ... is not defined </p><p>... AKA could be derived as reverse of "Bar" -> "FoorBar" but there is not a @ManyToMany on "Bar"</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+04 Mar&nbsp;11:19
+</div>
+inverseJoinColumns being ignored
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>This is definately a bug. Essentially Ebean is ignoring the inverseJoinColumns side...</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+04 Mar&nbsp;12:27
+</div>
+WARNING: Save cascade on ManyToMany [bars]. ...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Note: This code near the end of the test raises a warning currently in Ebean</p><p>foo.getBars().add(bar);<br/>Ebean.save(foo);</p><p>5/03/2009 1:21:56 AM com.avaje.ebean.server.persist.DefaultPersister saveAssocManyIntersection<br/>WARNING: Save cascade on ManyToMany [bars]. The collection [class java.util.HashSet]was not a BeanCollection. The additions and removals can not be determined and *NO* inserts or deletes to the intersection table occured.</p><p><br/>I Changed the code to:</p><p>Foo f = Ebean.find(Foo.class, fooId);<br/>f.getBars().add(bar);<br/>Ebean.save(f);</p><p>.. the set of Bar returned from the fetch... is a Ebean specific Set (BeanCollection) that keeps track of inserts and deletes from the Set (to translate that into inserts/deletes from the intersection table).</p><p>Hmmm.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+04 Mar&nbsp;12:28
+</div>
+Anyways...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I have a fix for this bug... but need to do a little more testing before I commit it up into HEAD.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+07 Mar&nbsp;02:47
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="84">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-84.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="84">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

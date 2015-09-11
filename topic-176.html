@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: NumberFormatException</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Eabin">
+<meta name="description" content="Hi rob i think i have a tough one here i m not really sure what happens but maybe you got an idea java lang NumberFormatException For input string java lang NumberFormatException forInputString NumberFormatException java 48 java lang Long parseLong Long java 431 java lang Long valueOf Long java 498 java lang Long decode Long java 641 org h2 util MathUtils decodeLong MathUtils java 160 org h2 value Value convertTo Value java 741 org h2 value Value getLong Value java 415 org h2 jdbc JdbcResultSet getLong JdbcResultSet java 613 com avaje ebean server type RsetDataReader getLong RsetDataReader java 169 com avaje ebean server type ScalarTypeLong read ScalarTypeLong java 46 com avaje ebean server type ScalarTypeLong read ScalarTypeLong java 30 com avaje ebean server deploy BeanProperty read Bean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-176.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Eabin </span>
+09 Mar&nbsp;17:17
+</div>
+NumberFormatException
+<div class="body">
+<p>Hi rob,</p><p>i think i have a tough one here. i'm not really sure what happens, but maybe you got an idea:</p><p>java.lang.NumberFormatException: For input string: ""<br/>	java.lang.NumberFormatException.forInputString(NumberFormatException.java:48)<br/>	java.lang.Long.parseLong(Long.java:431)<br/>	java.lang.Long.valueOf(Long.java:498)<br/>	java.lang.Long.decode(Long.java:641)<br/>	org.h2.util.MathUtils.decodeLong(MathUtils.java:160)<br/>	org.h2.value.Value.convertTo(Value.java:741)<br/>	org.h2.value.Value.getLong(Value.java:415)<br/>	org.h2.jdbc.JdbcResultSet.getLong(JdbcResultSet.java:613)<br/>	com.avaje.ebean.server.type.RsetDataReader.getLong(RsetDataReader.java:169)<br/>	com.avaje.ebean.server.type.ScalarTypeLong.read(ScalarTypeLong.java:46)<br/>	com.avaje.ebean.server.type.ScalarTypeLong.read(ScalarTypeLong.java:30)<br/>	com.avaje.ebean.server.deploy.BeanProperty.read(BeanProperty.java:565)<br/>	com.avaje.ebean.server.deploy.id.IdBinderSimple.readSet(IdBinderSimple.java:138)<br/>	com.avaje.ebean.server.query.SqlTreeNodeBean.load(SqlTreeNodeBean.java:225)<br/>	com.avaje.ebean.server.query.SqlTreeNodeManyRoot.load(SqlTreeNodeManyRoot.java:29)<br/>	com.avaje.ebean.server.query.SqlTreeNodeBean.load(SqlTreeNodeBean.java:294)<br/>	com.avaje.ebean.server.query.CQuery.readRow(CQuery.java:557)<br/>	com.avaje.ebean.server.query.CQuery.readIntoCurrentDetailCollection(CQuery.java:617)<br/>	com.avaje.ebean.server.query.CQuery.readBeanInternal(CQuery.java:602)<br/>	com.avaje.ebean.server.query.CQuery.readTheRows(CQuery.java:674)<br/>	com.avaje.ebean.server.query.CQuery.readCollection(CQuery.java:659)<br/>	com.avaje.ebean.server.query.CQueryEngine.findMany(CQueryEngine.java:166)<br/>	com.avaje.ebean.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:88)<br/>	com.avaje.ebean.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:284)<br/>	com.avaje.ebean.server.core.DefaultServer.findList(DefaultServer.java:1340)<br/>	com.avaje.ebean.server.querydefn.DefaultOrmQuery.findList(DefaultOrmQuery.java:765)<br/>	tk.eabin.event.client.model.UserModel.loadItemsInternal(UserModel.java:42)</p><p><br/>the sql statement:</p><pre class="sql">select u.id c0, u.login c1, u.active c2, u.firstname c3, u.lastname c4, u.password c5, u.description c6, u.cdate c7, u.last_seen c8, u.email c9, u.home_address c10, u.jabber_id c11
+        , ug.id c12, ug.name c13, ug.description c14 
+from systemuser u
+left outer join user_group ugz_ on ugz_.user_id = u.id 
+left outer join usergroup ug on ug.id = ugz_.usergroup_id  
+where u.active=1 AND (u.id=3 OR ug.id IN (1,4,5)) 
+order by u.login , u.id, ug.name;</pre><p>at RsetDataReader:169<br/>i have pos==10 (so ++pos==11)<br/>which means ebean is trying to read column c10 as a Long.<br/>it seems it lost count somewhere?</p><p>regards,<br/>-erwin</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+09 Mar&nbsp;21:23
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Hmmm. I have just fixed a bug <a href="http://www.avaje.org/bugdetail-237.html">http://www.avaje.org/bugdetail-237.html</a></p><p>Is there any @Transient properties in use here?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+09 Mar&nbsp;23:25
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>yes, there is one @Transient in the systemuser class, and another java transient too. <br/>also, the method corresponding to the @Transient field is marked as @Transient.</p><p>will test with HEAD and report back.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Mar&nbsp;00:02
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>ugh, there is something wrong here. with rev. 770 i can't login to my application anymore. the first persist throws:</p><p>javax.persistence.PersistenceException: org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement UPDATE SYSTEMUSER SET  WHERE[*] ID=? ; expected identifier; SQL statement:<br/>update systemuser set  where id=? [42001-79]<br/>	at org.h2.message.Message.getSQLException(Message.java:103)<br/>	at org.h2.message.Message.getSQLException(Message.java:114)<br/>	at org.h2.message.Message.getSyntaxError(Message.java:139)<br/>	at org.h2.command.Parser.readColumnIdentifier(Parser.java:2480)<br/>	at org.h2.command.Parser.readTableColumn(Parser.java:604)<br/>	at org.h2.command.Parser.parseUpdate(Parser.java:658)<br/>	at org.h2.command.Parser.parsePrepared(Parser.java:412)<br/>	at org.h2.command.Parser.parse(Parser.java:288)<br/>	at org.h2.command.Parser.parse(Parser.java:260)<br/>	at org.h2.command.Parser.prepareCommand(Parser.java:232)<br/>	at org.h2.engine.Session.prepareLocal(Session.java:285)<br/>	at org.h2.server.TcpServerThread.process(TcpServerThread.java:211)<br/>	at org.h2.server.TcpServerThread.run(TcpServerThread.java:127)<br/>	at java.lang.Thread.run(Thread.java:619)</p><p>	at com.avaje.ebeaninternal.server.persist.dml.DmlBeanPersister.execute(DmlBeanPersister.java:108)<br/>	at com.avaje.ebeaninternal.server.persist.dml.DmlBeanPersister.update(DmlBeanPersister.java:84)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersistExecute.executeUpdateBean(DefaultPersistExecute.java:121)<br/>	at com.avaje.ebeaninternal.server.core.PersistRequestBean.executeNow(PersistRequestBean.java:390)<br/>	at com.avaje.ebeaninternal.server.core.PersistRequestBean.executeOrQueue(PersistRequestBean.java:416)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.update(DefaultPersister.java:383)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.saveEnhanced(DefaultPersister.java:303)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.saveRecurse(DefaultPersister.java:275)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.save(DefaultPersister.java:259)<br/>	at com.avaje.ebeaninternal.server.core.DefaultServer.save(DefaultServer.java:1448)<br/>	at com.avaje.ebeaninternal.server.core.DefaultServer.save(DefaultServer.java:1438)<br/>	at com.avaje.ebean.Ebean.save(Ebean.java:526)<br/>	at tk.eabin.util.db.EbeanUtil.save(EbeanUtil.java:18)<br/>	at tk.eabin.event.server.EventingerAuthenticator.authenticate(EventingerAuthenticator.java:24)<br/>	at tk.eabin.event.server.EventingerAuthenticator.authenticate(EventingerAuthenticator.java:16)<br/>	at tk.eabin.util.net.remote.server.Server.onAuth(Server.java:180)<br/>	at tk.eabin.util.net.remote.server.Server.access$300(Server.java:32)<br/>	at tk.eabin.util.net.remote.server.Server$1.work(Server.java:170)<br/>	at tk.eabin.util.net.SharedSocketMaster$WorkerCaller.run(SharedSocketMaster.java:232)<br/>	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)<br/>	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)<br/>	at java.lang.Thread.run(Thread.java:619)<br/>Caused by: org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement UPDATE SYSTEMUSER SET  WHERE[*] ID=? ; expected identifier; SQL statement:<br/>update systemuser set  where id=? [42001-79]<br/>	at org.h2.message.Message.getSQLException(Message.java:103)<br/>	at org.h2.message.Message.getSQLException(Message.java:114)<br/>	at org.h2.message.Message.getSyntaxError(Message.java:139)<br/>	at org.h2.command.Parser.readColumnIdentifier(Parser.java:2480)<br/>	at org.h2.command.Parser.readTableColumn(Parser.java:604)<br/>	at org.h2.command.Parser.parseUpdate(Parser.java:658)<br/>	at org.h2.command.Parser.parsePrepared(Parser.java:412)<br/>	at org.h2.command.Parser.parse(Parser.java:288)<br/>	at org.h2.command.Parser.parse(Parser.java:260)<br/>	at org.h2.command.Parser.prepareCommand(Parser.java:232)<br/>	at org.h2.engine.Session.prepareLocal(Session.java:285)<br/>	at org.h2.server.TcpServerThread.process(TcpServerThread.java:211)<br/>	at org.h2.server.TcpServerThread.run(TcpServerThread.java:127)<br/>	at java.lang.Thread.run(Thread.java:619)</p><p>	at org.h2.engine.SessionRemote.done(SessionRemote.java:407)<br/>	at org.h2.command.CommandRemote.prepare(CommandRemote.java:68)<br/>	at org.h2.command.CommandRemote.<init>(CommandRemote.java:47)<br/>	at org.h2.engine.SessionRemote.prepareCommand(SessionRemote.java:340)<br/>	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1063)<br/>	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:72)<br/>	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:240)<br/>	at com.avaje.ebeaninternal.server.lib.sql.PooledConnection.prepareStatement(PooledConnection.java:380)<br/>	at com.avaje.ebeaninternal.server.lib.sql.PooledConnection.prepareStatement(PooledConnection.java:350)<br/>	at com.avaje.ebeaninternal.server.persist.dml.DmlHandler.getPstmt(DmlHandler.java:285)<br/>	at com.avaje.ebeaninternal.server.persist.dml.UpdateHandler.bind(UpdateHandler.java:67)<br/>	at com.avaje.ebeaninternal.server.persist.dml.DmlBeanPersister.execute(DmlBeanPersister.java:97)<br/>	... 21 more</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Mar&nbsp;00:05
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>the value that should be updated is a custom ScalarType if this is any help. works fine on 2.4.0 though.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Mar&nbsp;09:56
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>The problem here is there is nothing in the set clause of the update statement.</p><p>Can you create a test case that reproduces the problem?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Mar&nbsp;12:11
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>it seems that the custom ScalarType is not recognized anymore. did you change anything in the way you search for custom ScalarTypes?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Mar&nbsp;12:23
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>ok, looks like a compile problem on my part....my custom type is not assignable to ScalarType.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Mar&nbsp;12:31
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>ok, so what's the difference between ebean and ebeaninternal?</p><p>from EbeanServerFactory:createServerFactory:</p><pre class="java">//		String d___ =  com.avaje.ebean.server.core.DefaultServerFactory.class.getName();
+		String dflt = "com.avaje.ebeaninternal.server.core.DefaultServerFactory";</pre>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Mar&nbsp;12:35
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>change the custom type to implement ebeaninternal ScalarType, and it seems to work.</p><p>however, the bad news is that the NumberFormatException is still present.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 Mar&nbsp;14:58
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>ouch. turns out i didn't implement loadIgnore() in my ScalarType. will think of a suitable punishment for myself now.</p><p>closed :)</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+11 Mar&nbsp;07:47
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Cool.</p><p>FYI: the com.avaje.ebeaninternal ... is there because I wanted to explicitly separate the internal implementation from the ebean api. </p><p>Previously we had used maven submodules and I really wanted to simplify the build/deploy.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+12 Mar&nbsp;16:35
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>ok, so if i have to subclass ebeaninternal...ScalarType, this is a bug, right?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+13 Mar&nbsp;22:41
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Well, I don't know about bug (seems a bit strong).</p><p>The preferred way would be to use </p><p>com.avaje.ebean.config.ScalarTypeConverter</p><p>or for compound types:</p><p>com.avaje.ebean.config.CompoundType</p><p>These where added in v2.3.0 for better support of immutable value objects.</p><p><a href="http://groups.google.com/group/ebean/browse_thread/thread/39cfec09bd577d33/95261208c2372546?lnk">http://groups.google.com/group/ebean/browse_thread/thread/39cfec09bd577d33/95261208c2372546?lnk</a>=gst&q=value+objects#95261208c2372546</p><p><br/>I could maybe look to move the ScalarType interfaces into the public side or spi area but I think people should probably be trying those other interfaces first as they are much simpler to implement.</p><p>Cheers, Rob.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="176">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

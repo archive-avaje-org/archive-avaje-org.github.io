@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>AutoFetch - automatic query tuning</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Automatic ORM query tuning in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/autofetch.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <span>What is AutoFetch</span>
+&raquo; <a href="autofetch_ebean.html">Using AutoFetch with Ebean</a>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main" >
+<h3>AutoFetch</h3>
+<ul>
+<li><a href="#kudos">Kudos to Ali Ibrahim</a></li>
+<li><a href="#what">What is AutoFetch?</a></li>
+<li><a href="#problem1">Problem 1 - Developers too busy to tune queries</a></li>
+<li><a href="#problem2">Problem 2 - DAO Pattern, Leaky Abstraction</a></li>
+</ul>
+</td>
+<td class="rhslinks">
+<p>
+<a href="http://www.cs.utexas.edu/~aibrahim/autofetch/">AutoFetch home page</a>
+<br><a href="autofetch_ebean.html">Using AutoFetch with Ebean</a>
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="#kudos"></a>Kudos to Ali Ibrahim</h4>
+Kudos goes to Ali from the University of Texas who came up with AutoFetch. Ali is working on a Hibernate 
+implementation of AutoFetch. 
+<p>
+<p>
+Visit Ali's <a href="http://www.cs.utexas.edu/~aibrahim/autofetch/">AutoFetch home page</a> here.
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="what"></a>What is AutoFetch?</h4>
+<p>
+In short, instead of manually specifying joins and properties to fetch on a ORM query
+AutoFetch can do this for you based on profiling past object graph usage.
+</p>
+<p>
+That is, ORM queries return object graphs. These object graphs are profiled collecting information such as the nodes and properties on those nodes that are actually used by the application. This information is then used to automatically tune future executions of the same query.
+</p>
+<p>
+Ali is working on a Hibernate implementation and I have built AutoFetch into Ebean 0.9.7. The code examples you see are Ebean specific but the idea <em>applies equally to all ORM's</em>.
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+<h4><a id="problem1"></a>Problem 1 - Developers too busy to tune queries</h4>
+<p>
+A developer can tune their application by controlling the query. Specifically by controlling
+the properties and joins that should be used in a query to get the data they need and no more.
+</p>
+<pre class="code">
+<span class="comment">// a tuned query</span>
+public Order findOrder(Integer id){
+  
+  Query&lt;Order&gt; query = Ebean.createQuery(Order.class);
+  query.setId(id);
+
+  <span class="comment">// we only want some of the properties of the order</span>
+  <span class="highlight">query.select("id, status, shippingDate");</span>
+
+  <span class="comment">// join to the customer but we only want their name</span>
+  <span class="highlight">query.join("customer","name");</span>
+
+  <span class="comment">// we do want all the properties on the order detail</span>
+  <span class="highlight">query.join("details");</span>
+
+  <span class="comment">// for each order detail get the product name and sku</span>
+  <span class="highlight">query.join("details.product", "name, sku");</span>
+
+  return query.findUnique();
+}
+</pre>
+<p>
+The above is a query that is tuned by using select() and join() to get all the information
+required in a single query but no more than that.
+</p>
+<p>
+A busy developer many not bother tuning the query at all. As a result they may feel the
+performance effects of a lot of "lazy loading" queries. In a more subtle fashion they may
+feel a performance hit from fetching all the properties of a bean when they really only
+needed a few properties (especially unnecessary clob fetching).
+</p>
+
+<p>
+Without some tuning the database queries can be significantly more expensive due to lots of lazy loading or fetching more data than is actually required. The problem for a developer looking to tune a query is that they need to know/determine/guess the data required by the application so that they can specify the appropriate select() and joins(). For a large application this can be a significant amount of work. 
+</p>
+<h5>Problem 1 - solution</h5>
+<p>
+AutoFetch will build the select() and join() parts of the query automatically for you.
+It will do this based on <em>profiled usage patterns</em> and will automatically <em>MAINTAIN</em> 
+itself if the usage patterns change (automatically add/remove properties and joins).
+</p>
+
+</td>
+<td class="rhs">
+<p>
+Better query performance with less work and less maintenance.
+</p>
+<p>
+With AutoFetch you may never need to tune a query.
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="problem2"></a>Problem 2 - DAO Pattern, Leaky Abstraction</h4>
+<p>
+There is a problem with the DAO Pattern that AutoFetch solves so let's look at an example.
+</p>
+<p>
+customerDao.findById(Integer id); A DAO Developer builds a customer find by id method and there are
+2 developers that want to use this method.
+</p>
+<p>
+Developer 1 really just needs the customers name and status.
+</p>
+<p>
+Developer 2 wants all the properties on the customer and the customer's shipping and billing address.
+</p>
+<p>
+In running the application it is decided there is a performance problem. The query executed is not
+suited for use in either of the two cases. The DAO Developer wants to tune the query to perform better 
+and so he decides to provide 2 methods tuned for use by each of the developers. 
+</p>
+<pre class="code">
+<span class="comment">// tuned for use by Developer 1</span>
+public Customer findByIdWithName(Integer id){
+  Query&lt;Customer&gt; query = Ebean.createQuery(Customer.class);
+  query.setId(id);
+  <span class="comment">// just select the customer id and name</span>
+  <span class="highlight">query.select("id,name");</span>
+  return query.findUnique();
+}
+</pre>
+
+<pre class="code">
+<span class="comment">// tuned for use by Developer 2</span>
+public Customer findByIdWithAddresses(Integer id){
+  Query&lt;Customer&gt; query = Ebean.createQuery(Customer.class);
+  query.setId(id);
+  <span class="comment">// fetch join the shipping and billing address</span>
+  <span class="highlight">query.join("shippingAddress");</span>
+  <span class="highlight">query.join("billingAddress");</span>
+  return query.findUnique();
+}
+</pre>
+<p>
+Now what happens if there are other use cases that use other completely different parts of a Customer?
+Should we continue adding a method for each situation? Leaky abstraction perhaps? Is the implementation
+detail of the customerDao leaking back up into the application code?
+</p>
+<p>
+This issue becomes more of a problem as the application gets larger and performance more critical.
+</p>
+
+<h5>Problem 2 - solution</h5>
+<p>
+With AutoFetch a single query can be tuned different according to the call stack that was used to call
+the query. For example it can tune the query for both use cases differently giving optimal query performance
+for both developer 1 and developer 2.
+</p>
+<p>
+&nbsp;
+</p>
+<p style="text-align:right">
+NEXT: <a href="autofetch_ebean.html">Using AutoFetch with Ebean</a>
+</p>
+</td>
+<td class="rhs">
+<p>
+The Call Stack is used to tune a single query for multiple uses.
+</p>
+<p>
+This fixes a leaky DAO pattern.
+</p>
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

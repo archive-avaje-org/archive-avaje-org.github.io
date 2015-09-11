@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: What annotations are not supported?</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="user2">
+<meta name="description" content="">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-4.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-4.html">Annotations and Xml mapping </a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-4.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by user2 </span>
+07 Nov&nbsp;14:56
+</div>
+What annotations are not supported?
+<div class="body">
+&nbsp
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+19 Nov&nbsp;04:06
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@SecondaryTable</p><p>This is not used by Ebean in that if you specify via @Column a different table than the base table then Ebean automatically handles the defining of a Secondary Table and its join information.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Nov&nbsp;04:07
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@UniqueConstraint</p><p>Used for DDL Generation. Ebean does not do this.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Nov&nbsp;04:08
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@AttributeOverride</p><p>This is currently not supported - and Enhancement request.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Nov&nbsp;04:08
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@AssociationOverride</p><p>This is currently not supported - and an Enhancement request.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Nov&nbsp;04:10
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@Enumerated</p><p>Currently not supported - an Enhancement request.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Nov&nbsp;04:12
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@PrimaryKeyJoinColumn(s)</p><p>Currently only supporting single table inheritance. This will be supported when the JOINED inheritance strategy is supported.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Nov&nbsp;04:16
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@SequenceGenerator, @TableGenerator, @GeneratedValue</p><p>Hmm, Ebean is a little different here in that you should only need to use @GeneratedValue to specify any IdGenerator such as TableGenerator or UUID. </p><p>Sequences are used automatically by Ebean when needed depending on the Database (as alternative to Identity/AutoIncrement). Ebean expects a Naming Convention of Sequences and uses that to handle sequences automatically.</p><p>I'm almost expecting this part of EJB3 to be cleaned up in the next version.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+16 Jan&nbsp;19:14
+</div>
+<span>by Alex</span>
+<div class="body">
+<p>What about things like @NamedQuery? I take it, since the JPA QL is not supported, this annotation is also off-limits?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+17 Jan&nbsp;09:22
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Yes, currently @NamedQuery is not supported. </p><p>I haven't thought about supporting it without JPA QL. It may be possible...</p><p>I guess the related question is... when (how badly) do people want JPA QL support.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+17 Jan&nbsp;14:13
+</div>
+<span>by Alex</span>
+<div class="body">
+<p>I'd say, "badly enough" to make it one of the top priorities. Most ORM engines allow some sort of plain-text querying (as opposed to Criteria-based queries), and this makes it easy to write ORM-agnostic DAOs that could be reused while moving from one ORM solution to another. Criteria querying interfaces are not as portable, as they require some sort of ORM-neutral translation layer, while plain-text queries only need parameter binding facilities...</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;06:16
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Yup, OK. I'll have a look at it... I guess the things that will be most tricky are the group functions and subqueries. I'll have a dig around and do some thinking.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;14:23
+</div>
+<span>by Alex</span>
+<div class="body">
+<p>I'd say, stick with supporting the simple ones first - that is, those queries that return lists of entities, as pretty much every DAO I've seen so far includes some kind of "List getByQuery(String query, Object... params)" interface, that makes things really simple. Things like aggregates belong more to reports and native SQL, I'd agree with you here.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Jan&nbsp;14:24
+</div>
+<span>by Alex</span>
+<div class="body">
+<p>Also, what about the interceptor annotations - @PreInsert, @PreUpdate, and the like? Are they supported?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Jan&nbsp;08:04
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>The short answer is no - not yet.</p><p>Ebean has BeanController and BeanListener. BeanController matches the @Pre* @Post* of EntityListeners but to me there are issues with JPA EntityListeners.</p><p>In the past I have used BeanController @Pre* methods to enhance or override the IUD logic, and I have used the BeanListener to listen for cluster wide post commit events to maintain Lucene Indexes etc.</p><p>To me JPA EntityListeners are not designed for either of these tasks (although the examples suggest otherwise). So I wonder if people are aware of the issues involved.</p><p>I guess I could match JPA EntityListeners to BeanControllers but that assumes this is actually the behaviour people are wanting (which may be a reasonable assumption).</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Jan&nbsp;14:11
+</div>
+<span>by Alex</span>
+<div class="body">
+<p>Could you please elaborate a bit more on the issues with JPA listeners? We're currently using them for quite a bit of our logic (creation/modification audit; master-detail management for removed entities etc.), and it would help to be aware of any potential pitfalls...</p><p>Thanks,</p><p>Alex</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+21 Jan&nbsp;08:28
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Q: Do @Post* methods fire before commit or rollback?<br/>Q: If they fire before the transaction is committed or rolledback, and the transaction actually fails (and a rollback occurs) do you still get the event?<br/>Q: If you are running in a cluster with multiple servers does a @Post* method fire if the event occured on another server in the cluster?</p><p>Depending on your situation (and the answers to these questions) it either matters or not.</p><p>For me in using @Post* type methods (to maintain a Lucene Index for example) I specifically do not want to get notified of events that where rolled back (inserts that didn't actually happen). I want to know about inserts etc from other servers in the cluster.</p><p>The way I read the JPA spec it seems like the @Post* methods occur prior to commit or rollback. Note that @Pre* methods HAVE to occur prior to the commit, and this issue does not seem to be mentioned. </p><p>In regards to @Pre methods. The issue here is there seems no provision for actually overriding (or extending) the IUD logic. So for me, if your bean is based on say a file or a spreadsheet etc and you want to override the IUD and Find behaviour - I don't see Entity Listeners providing this type of functionality.</p><p>In your situations the JPA behaviour may be ok. The spec section 3.5 suggests portable apps should not make use of EntityManager or Query operations in Callback methods (which seems restrictive). I guess you are trying to use the same transaction for your audit master detail delete etc. (With Ebean I make the Transaction explicitly available).</p><p>All that said, I could be interpreting the spec wrong as there is no explicit mention of transactions (and especially rollbacks).</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+22 Mar&nbsp;20:16
+</div>
+<span>by Eabin</span>
+<div class="body">
+<p>@JoinColumn doesn't seem to work either. It does set the name param, but tries a dynamic match via the foreign keys anyways.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+20 May&nbsp;09:14
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>The @JoinColumn should work... sounds like a bug. Can you provide any more details?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+14 Jan&nbsp;09:55
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>@MappedSuperClass support is logged as a bug. I'm investigating adding support for that.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="4">
+<input type="hidden" name="f_topicid" value="4">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

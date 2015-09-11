@@ -1,0 +1,373 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Lazy loading in Ebean</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Code examples of Lazy loading in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/lazyexample.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <a href="lazy.html" title="Lazy Loading">Lazy Loading</a>
+&raquo; <span>Introduction</span>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+<p>
+<a href="lazy.html">Go here for Lazy Loading and Transaction Isolation</a>
+</p>
+<h3>Lazy Loading Introduction</h3>
+<p>
+Lazy Loading is when a Reference (also called Proxy) Bean or Collection is populated automatically by
+a query.
+</p>
+<p>
+For a List Set or Map lazy loading is provided by the matching BeanList BeanSet and BeanMap objects
+found in com.avaje.ebean.collection. These are wrappers around the underlying List Set or Maps.
+If a BeanList is a Reference/Proxy then its underlying list is null but it has a Find object that
+can be used to 'lazy load' the list.
+Any methods called on BeanList such as size() hashCode() iterator() get() etc will automatically 
+result in a query being executed fetching the underlying list. 
+</p>
+<p>
+For Lazy Loading on individual Entity Beans this is achieved by method interception (AOP). The
+appropriate 'getter' and 'setter' methods are intercepted and lazy loading is invoked as appropriate.
+</p>
+<h4>Get a Reference explicitly</h4>
+<pre>
+<code>
+// Get a reference(proxy) explicitly
+Bug bugRef = (Bug)Ebean.getReference(Bug.class, 1);
+
+// This does NOT invoke a lazy load as its the Id
+Integer bugId = bugRef.getId();
+
+
+// This WILL invoke the lazy load query loading the data 
+// into bugRef before returning the title
+String title = bugRef.getTitle();
+
+</code>
+</pre>
+
+</td>
+<td class="rhs">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<p>
+The way this works is that the appropriate 'getter' and 'setter' methods are intercepted.  
+The getTitle() method invokes the 'lazy loading query' and the data is loaded into the butRef instance
+before returning the title.
+</p>
+<p>
+Id and Transient properties do not invoke lazy loading.
+</p>
+<p>
+Before continuing I'd like to point out that these two methods below are exactly the same.
+The reason you would want to use the FindById object is that it gives you additional options for 
+the query including whether to use caching and what associations to include in the query.
+</p>
+<pre>
+<code>
+// Firstly note that these two queries are exactly the same
+
+// Query 1:
+Bug bug1 = (Bug)Ebean.find(Bug.class, 1);
+
+// Query 2:
+FindById find = new FindById(Bug.class, 1);
+Bug bug2 = (Bug)Ebean.find(find);
+
+</code>
+</pre>
+</td>
+<td class="rhs">
+&nbsp;
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+<h4>Get a Reference implicitly</h4>
+<p>
+Entity Beans returned by a query will have Reference/Proxy objects. 
+Note: From an Object graph perspective
+they are the 'leaves' of the tree.
+</p>
+
+<pre>
+<code>
+FindById find = new FindById(Bug.class, 1);
+	
+Bug bug = (Bug)Ebean.find(find);
+
+// user is a reference/proxy
+User user = bug.getUserLogged();
+
+// details is also a reference/proxy
+List details = bug.getDetails();
+
+// this invokes a query for the user
+String name = user.getName();
+
+// this invokes a query for the details
+int size = details.size();
+
+</code>
+</pre>
+<p>
+The resulting SQL from the above is three separate queries. The last two are the
+result of the lazy loading of userLogged and details.
+</p>
+<pre>
+<code>
+&lt;sql summary='[app.data.Bug]'&gt;
+SELECT b.id, b.body, b.cretime, b.duplicate_of, b.fixed_version, 
+       b.reported_version, b.resolution, b.title, b.updtime, 
+	   b.priority_code, b.product_id, b.status_code, b.type_code, 
+	   b.user_assigned_id, b.user_logged_id 
+FROM b_bug b 
+WHERE b.id = ? 
+&lt;/sql&gt;
+&lt;sql summary='[app.data.User]'&gt;
+SELECT u.id, u.cookie_login, u.cretime, u.email, u.error_count, 
+       u.last_login, u.name, u.pwd, u.reset_code, u.reset_time, 
+	   u.salt, u.updtime, u.status_code 
+FROM s_user u 
+WHERE u.id = ? 
+&lt;/sql&gt;
+&lt;sql summary='[app.data.BugDetail]'&gt;
+SELECT d.id, d.body, d.cretime, d.post_date, d.title, d.updtime,
+       d.bug_id, d.user_id 
+FROM b_bug_detail d 
+WHERE bug_id = ?
+&lt;/sql&gt;
+
+</code>
+</pre>
+<h4>setInclude()</h4>
+<p>
+If you knew that you where going to get the userLogged and details information then you
+would likely be better off including them in the original query. The next example uses
+the <em>find.setInclude()</em> method to specify that we want to also get that information.
+</p>
+<pre>
+<code>
+FindById find = new FindById(Bug.class, 1);
+<span>
+// also include these associations in the query
+find.setInclude("userLogged; details; ");
+</span>	
+Bug bug = (Bug)Ebean.find(find);
+
+// user is a reference/proxy
+User user = bug.getUserLogged();
+
+// details is also a reference/proxy
+List details = bug.getDetails();
+
+// this invokes a query for the user
+String name = user.getName();
+
+// this invokes a query for the details
+int size = details.size();
+
+</code>
+</pre>
+
+<p>
+The resulting SQL is:
+</p>
+<pre>
+<code>
+&lt;sql summary='[app.data.Bug, userLogged] +many[details]'&gt;
+SELECT b.id, b.body, b.cretime, b.duplicate_of, b.fixed_version,
+       b.reported_version, b.resolution, b.title, b.updtime, 
+	   b.priority_code, b.product_id, b.status_code, b.type_code,
+	   b.user_assigned_id
+        , cu.id, cu.cookie_login, cu.cretime, cu.email, cu.error_count,
+		cu.last_login, cu.name, cu.pwd, cu.reset_code, cu.reset_time,
+		cu.salt, cu.updtime
+        , ed.id, ed.body, ed.cretime, ed.post_date, ed.title, 
+		ed.updtime, ed.bug_id, ed.user_id 
+FROM b_bug b
+LEFT OUTER JOIN s_user cu ON b.user_logged_id = cu.id 
+LEFT OUTER JOIN b_bug_detail ed ON b.id = ed.bug_id  
+WHERE b.id = ? 
+&lt;/sql&gt;
+
+</code>
+</pre>
+<p>
+In general, if you know you are going to use the information then you should
+probably look to include it in the query.
+</p>
+<h4>Negative: including a OneToMany(or ManyToMany) repeats 'master'</h4>
+<p>
+In the example above we included the 'details' which is a OneToMany association.
+If you take the sql and execute it you will note that the bug and userLogged information
+(columns prefixed with b. and cu.) are repeated for each row in the 
+bug details (b_bug_detail) table.
+</p>
+<p>
+That is, for 'master detail' queries (where a associated OneToMany or ManyToMany is included
+in the query) the benefit of getting the 'details' in the same query as the 'master' needs
+to be balanced against the cost of 'master' columns being repeated.
+</p>
+<h4>Note: Only one OneToMany(or ManyToMany) can be included</h4>
+<p>
+Also note that only one OneToMany or ManyToMany association is allowed to be included in the
+query. The reason is that including more than one would result in a cartesian product and that
+is likely to be unwise due to cost.
+</p>
+<p>
+For the Bug entity bean it has two OneToMany associations in Details and Attachments. You could include
+the Details or the Attachments but not both in a single query.
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

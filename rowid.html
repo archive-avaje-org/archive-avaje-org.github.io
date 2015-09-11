@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Physical ROWID - Use in Java ORM</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="ROWID has real potential for use in ORM">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/rowid.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>ROWID</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+<h3>ROWID</h3>
+<ul>
+<li><a href="#oracle">Oracle ROWID - physical location in Database</a></li>
+<li><a href="#why">Why a Physical ROWID is interesting for ORM</a></li>
+<li><a href="#using">Using ROWID Transparently in Ebean</a></li>
+<li><a href="#jdbc4">JDBC4 RowId</a></li>
+<li><a href="#support">Which Databases have a Physical ROWID</a></li>
+</ul>
+
+<h4><a id="oracle"></a>Oracle ROWID - physical location in Database</h4>
+<p>
+If you are familiar with Oracle you will probably heard about its ROWID.
+Essentially it represents the physical location of a row in the database
+and can be used as faster option compared with the primary key.
+</p>
+<pre>
+<code>
+SQL> select rowid, id, title from f_topic where id = 1;
+
+ROWID                 ID  TITLE
+------------------------------------------------------------
+AAADW8AAEAAAAF3AAA    1   Why is it called Ebean?
+
+
+SQL> update f_topic set title='modified title'
+  3  where rowid = 'AAADW8AAEAAAAF3AAA';
+
+1 row updated.
+
+SQL> select rowid, id, title from f_topic where id = 1;
+
+ROWID                 ID  TITLE
+------------------------------------------------------------
+AAADW8AAEAAAAF3AAA    1   modified title
+
+</code>
+</pre>
+<p>
+At the <a href="http://asktom.oracle.com/pls/ask/f?p=4950:8:::::F4950_P8_DISPLAYID:14334466095043">ASK TOM website</a> there is a discussion on ROWID and when it can be used.
+</p>
+
+<h4><a id="why"></a>Why a Physical ROWID is interesting for ORM</h4>
+<p>
+In ORM we perform our updates and deletes using the Id property in the
+where clause. Now if we used Oracles ROWID (or equivalent) we would get a decent
+performance gain for these updates and deletes and that's pretty obvious.
+</p>
+<p>
+Additionally in ORM we have the potential to navigate Object graphs and by
+using lazy loading we are transparently fetching data from the database.
+</p>
+<p>
+If instead of using the Id we used the Physical ROWID this starts to sound
+close to OODBMS behaviour if you relate the Physical ROWID to a OODBMS pointer.
+</p>
+<p>
+For people who are looking to use ORM in fairly OODBMS fashion with lots of
+lazy loading this could be interesting.
+Specifically you could just walk the Object graph and the objects are 
+materialised out of the database transparently and quite efficiently.
+</p>
+
+<h4><a id="using"></a>Using ROWID Transparently in Ebean</h4>
+<p>
+With Ebean Lazy Loading occurs on demand (transparently) as you walk the
+object graph. The use of such ROWID's could be completely transparent 
+to the user of Ebean.
+</p>
+<p>
+In general if a database had ROWID support I would look to fetch it and store
+it on the EntityBeanIntercept. It is then available for updates and deletes
+without an issue.
+</p>
+<p>
+For using a ROWID for lazy loading of a bean there is an interesting issue.
+That is, that the ROWIDs you want (unlike the foreign keys) are actually on 
+another table and would potentially require a join to get them. If this is the
+case then you are matching up the cost of the additional join against the 
+performance benefit of using the ROWID to lazy load.
+</p>
+<p>
+Now if you have thoughts or ideas on this I'd love to hear about it but currently
+I'd guess and say the join overhead would be higher than the faster lazy loading.
+However, there may be a ways around that. 
+</p>
+<h4><a id="jdbc4"></a>JDBC4 RowId</h4>
+<p>
+In the JDBC4 specification rowId is potentially becoming part of the standard.
+However, it is unclear to me if JDBC4 rowId is going to be useful for what I
+want it for.
+</p>
+
+<h4><a id="support"></a>Which Databases have a Physical ROWID</h4>
+<p>
+As far as I'm aware only Oracle exposes a Physical ROWID. JDBC4 may well 
+have got me excited over nothing :(
+</p>
+<p>
+Thinking longer term, and considering using ORM/RDBMS in a more transparent
+OO fashion then I'd guess and say that more Databases will introduce something
+resembling a Physical ROWID. As they say, time will tell.
+</p>
+
+
+</td>
+<td class="rhslinks">
+
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+
+</td>
+<td class="rhs">
+</td>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

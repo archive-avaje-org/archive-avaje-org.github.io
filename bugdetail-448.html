@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: Hash values for QueryPlan collide</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="jcreason">
+<meta name="description" content="I m using Play 2 2 1 which includes ebeanorm 3 2 2 which I tested against and found what I believe this bug I am getting PersistenceExceptions thrown when creating a large set hundreds of similar queries in a row It seems to depend on the data I m passing in which unfortunately I cannot disclose The queries look very similar but have varying numbers of parameters in each section I traced this through the ebean source code which I repackaged and replaced the jar in my Play repo and it lead me to believe that the hashes were colliding I printed the computed hashes of each query and they did indeed match It seems that because they hash the same the same QueryPlan object it being used for both even though they have differing numbers of bound parameters Both below errors hash to the value 13369">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-448.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 448 : Hash values for QueryPlan collide
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 448 : Hash values for QueryPlan collide </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">jcreason</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">3.3.1</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">12/12/2013</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">12/12/2013</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>I'm using Play 2.2.1, which includes ebeanorm-3.2.2 which I tested against and found (what I believe) this bug.</p><p>I am getting PersistenceExceptions thrown when creating a large set (hundreds) of similar queries in a row.  It seems to depend on the data I'm passing in, which unfortunately, I cannot disclose.  The queries look very similar, but have varying numbers of parameters in each section.  I traced this through the ebean source code (which I repackaged and replaced the jar in my Play repo), and it lead me to believe that the hashes were colliding.  I printed the computed hashes of each query, and they did indeed match.  It seems that because they hash the same, the same QueryPlan object it being used for both, even though they have differing numbers of bound parameters.</p><p>Both below errors hash to the value: 1336939366</p><p>Before I knew all of this, I attempted to explain what I was seeing over on stackoverflow if you'd like to take a look at that as well.<br/><a href="http://stackoverflow.com/questions/20501591/ebean-dynamic-query-prepared-statements-mismatched-parameter-count-error">http://stackoverflow.com/questions/20501591/ebean-dynamic-query-prepared-statements-mismatched-parameter-count-error</a></p><p><br/>Here are the two stack traces:</p><p>play.api.Application$$anon$1: Execution exception[[PersistenceException: Query threw SQLException:No value specified for parameter 19 <br/>Bind values:[SENT,1290,8988,13032,13052,1290,96,99,100,101,102,103,104,105,106,107,108,222] <br/>Query was:<br/>select distinct t0.contact_id c0, t0.contact_uuid c1, t0.bounce c2 from contact t0 join email_record u1 on u1.contact_id = t0.contact_id  join contact_tag u2z_ on u2z_.contact_id = t0.contact_id  join tag u2 on u2.tag_id = u2z_.tag_id  where u1.status = ?  and t0.unit_id = ?  and u2.tag_id in (?,?)  and t0.unit_id in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )  and t0.campaign_id in (?,?,?,?,?,?,?,?,?,?,?,?)  </p><p>]]<br/>	at play.api.Application$class.handleError(Application.scala:293) ~[play_2.10.jar:2.2.1]<br/>	at play.api.DefaultApplication.handleError(Application.scala:399) [play_2.10.jar:2.2.1]<br/>	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$2$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:261) [play_2.10.jar:2.2.1]<br/>	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$2$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:261) [play_2.10.jar:2.2.1]<br/>	at scala.Option.map(Option.scala:145) [scala-library.jar:na]<br/>	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$2.applyOrElse(PlayDefaultUpstreamHandler.scala:261) [play_2.10.jar:2.2.1]<br/>Caused by: javax.persistence.PersistenceException: Query threw SQLException:No value specified for parameter 19 <br/>Bind values:[SENT,1290,8988,13032,13052,1290,96,99,100,101,102,103,104,105,106,107,108,222] <br/>Query was:<br/>select distinct t0.contact_id c0, t0.contact_uuid c1, t0.bounce c2 from contact t0 join email_record u1 on u1.contact_id = t0.contact_id  join contact_tag u2z_ on u2z_.contact_id = t0.contact_id  join tag u2 on u2.tag_id = u2z_.tag_id  where u1.status = ?  and t0.unit_id = ?  and u2.tag_id in (?,?)  and t0.unit_id in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )  and t0.campaign_id in (?,?,?,?,?,?,?,?,?,?,?,?)  </p><p><br/>	at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:798) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:775) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:205) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:81) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:265) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.core.DefaultServer.findList(DefaultServer.java:1469) ~[avaje-ebeanorm.jar:na]<br/>Caused by: java.sql.SQLException: No value specified for parameter 19<br/>	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1078) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:989) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:975) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:920) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.PreparedStatement.checkAllParametersSet(PreparedStatement.java:2612) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.PreparedStatement.fillSendPacket(PreparedStatement.java:2587) ~[mysql-connector-java-5.1.27.jar:na]</p><p><br/>And the second:</p><p>play.api.Application$$anon$1: Execution exception[[PersistenceException: Error with property[19] dt[4]data[1464][java.lang.Integer]]]<br/>	at play.api.Application$class.handleError(Application.scala:293) ~[play_2.10.jar:2.2.1]<br/>	at play.api.DefaultApplication.handleError(Application.scala:399) [play_2.10.jar:2.2.1]<br/>	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$2$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:261) [play_2.10.jar:2.2.1]<br/>	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$2$$anonfun$applyOrElse$3.apply(PlayDefaultUpstreamHandler.scala:261) [play_2.10.jar:2.2.1]<br/>	at scala.Option.map(Option.scala:145) [scala-library.jar:na]<br/>	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$2.applyOrElse(PlayDefaultUpstreamHandler.scala:261) [play_2.10.jar:2.2.1]<br/>Caused by: javax.persistence.PersistenceException: Error with property[19] dt[4]data[1464][java.lang.Integer]<br/>	at com.avaje.ebeaninternal.server.persist.Binder.bindSimpleData(Binder.java:327) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.persist.Binder.bindObject(Binder.java:216) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.persist.Binder.bindObject(Binder.java:173) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.query.CQueryPredicates.bind(CQueryPredicates.java:152) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.query.CQuery.prepareBindExecuteQuery(CQuery.java:382) ~[avaje-ebeanorm.jar:na]<br/>	at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:165) ~[avaje-ebeanorm.jar:na]<br/>Caused by: java.sql.SQLException: Parameter index out of range (19 > number of parameters, which is 18).<br/>	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1078) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:989) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:975) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:920) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.PreparedStatement.checkBounds(PreparedStatement.java:3814) ~[mysql-connector-java-5.1.27.jar:na]<br/>	at com.mysql.jdbc.PreparedStatement.setInternal(PreparedStatement.java:3796) ~[mysql-connector-java-5.1.27.jar:na]</p><p></p><p>This is affecting our production environment so we need a fix ASAP, so I'm going to attempt to fix this in the ebean source, and if I can, I'll try to submit a patch to this ticket.  However, I am very unfamiliar with this code, so if someone has the time I'd really appreciate the help.  </p><p>I can provide more data on request.</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+
+<input type="hidden" name="f_bugid" value="448">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-448.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="448">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

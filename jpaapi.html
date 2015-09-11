@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>JPA API versus Ebean - missing features in Java JPA API</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Interesting API ommissions from EBJ3's JPA specification">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/jpaapi.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <a href="jpa.html" title="JPA Architecture">JPA Architecture</a>
+&raquo; <span>JPA API Issues</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main" >
+<h3>JPA API Issues</h3>
+<p>
+There are several interesting ommissions from the JPA API that need to be explored. 
+</p>
+<ul>
+<li><a href="#batching">Batching Support</a></li>
+<li><a href="#caching">Caching</a></li>
+<li><a href="#listener">Entity Listeners</a></li>
+<li><a href="#raw">Raw JDBC - Access to java.sql.Connection</a></li>
+<li><a href="#iso">Transaction Isolation Level</a></li>
+<li><a href="#largequery">Large Query Support - Callback</a></li>
+</ul>
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="jpa.html" title="Architectural Issue of JPA">JPA Architecture</a></li>
+<li><a href="occ.html" title="Explanation of Optimistic Concurrency Checking">Optimistic Concurrency Checking</a></li>
+<li><a href="design.html" title="Design Philosophy behind Ebean">Design Philosophy</a></li>
+</ul>
+</div>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="batching"></a>Batching Support</h4>
+<p>
+Batching could be argued to exist in the JPA API in terms of flushing. That is, the mechanism of flushing
+in JPA is likely to involve transparent use of JDBC Statement Batching.
+</p>
+<p>
+However, Transparent Statement Batching may not always meet the needs of Developers. Specifically in the
+case where JDBC v3 getGeneratedKeys is not supported (e.g. Oracle9) then developers may wish more control
+and for example forgo getGeneratedKeys in the view that they will not be later updating the bean instances.
+</p>
+<p>
+That is, if you are going to insert lots of beans and not update them afterwards you may wish to explicitly
+choose NOT to get back the generated keys (involving another statement/query) in the knowledge you are not
+going to update the same bean later. In summary, bulk insert without getGeneratedKeys support.
+</p>
+<p>
+You may also wish to have explicit control over the size of the batch.
+</p>
+<p>
+You may also wish to turn off the cascading nature of Save and Delete for a batch execution process.
+Specifically you may wish to have exact control over the objects included in the save/delete and exclude
+any associated parent or child objects that may normally be included by a cascade. 
+</p>
+
+</td>
+<td class="rhs">
+<p>
+Explicit control over getGeneratedKeys, batch size and Cascading Save/Delete
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="caching"></a>Caching</h4>
+<p>
+Caching is an important aspect in that it can provide very significant performance improvements versus
+fetching data from the database. With JPA there is no explicit control over when to use caching, how
+to invalidate cached data and how this works in a clustered environment.
+</p>
+<p>
+To be fair this is a non-trivial design issue and it is possibly unfair to ask JPA to specify this.
+However this does leave open some tough questions for JPA implementations.
+</p>
+<p>
+To provide a flag to indicate explicitly you want to use a cache is fairly easy. The tough questions 
+revolve around how to invalidate the cache and how clustering effects the cache.
+</p>
+<p>
+<b>Q:</b> If an external program/Stored Procedure runs how do you notify the framework and how does it know which
+cached objects should be invalidated?
+</p>
+<p>
+<b>Q:</b> For a clustered environment how is the cache maintained. 
+More specifically after each commited transaction how much
+information is sent around the cluster in order to maintain the cache. For example, if every inserted updated
+or deleted bean is sent across the cluster then this could be a significant amount of data and become
+prohibative. 
+</p>
+
+<p>
+Ebean provides a simple mechanisim for explicitly invalidating the cache based on table names. This has the
+benefit of making it very easy to invalidate the appropriate objects after an external program/Stored Procedure
+is executed assuming you know the tables involved.
+</p>
+<p>
+This has the additional benefit of requiring only modified table information to be sent around the cluster 
+rather than the beans or even list of primary key values. This means that the cost of maintaining the
+cache in a clustered environment is very light.
+</p>
+<p>
+The downside of this approach is that cache invalidation may be more aggresive invalidating more objects out
+of the cache than strictly necessary. My opinion is that this downside is more than matched by the simplicity
+of use and light clustering cost.
+</p>
+
+</td>
+<td class="rhs">
+<p>
+Explicit and simple mechanisim to invalidate the cache.
+</p>
+<p>
+Low cost Cluster aware cache maintenance.
+</p>
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+<h4><a id="listener"></a>Entity Listeners</h4>
+<p>
+The JPA Entity Listeners give developers the ability to enhance the Insert Update and Delete 
+behaviour. However, they do not give developers the ability to <em>replace</em> the Insert Update Delete
+behaviour. For developers wishing to replace default behaviour with stored procedure calls 
+or writing to files etc they will have to look elsewhere.
+</p>
+<p>
+Ebean BeanController provides the ability to enhance or <em>replace</em> the Insert Update Delete
+behaviour.
+</p>
+<p>
+Ebean additionally provides a BeanListener mechanism for cluster wide listening to bean inserted updated and
+deleted events. With this mechanisim the developer controls what data is sent around the cluster for the 
+remote BeanListeners to recieve. BeanListeners are used by this website to generate cached content.
+There is no equivilent in JPA.
+</p>
+<p>
+BeanListener differs from BeanController in that it only recieves committed events, can recieve cluster
+wide events and runs in a separate background thread. See com.avaje.ebean.bean.BeanListener for details.
+</p>
+</td>
+<td class="rhs">
+<p>
+Ability to not only Enhance but <em>Replace</em> Insert Update Delete behaviour.
+</p>
+<p>
+Cluster wide Listening of Inserted Updated Deleted events with BeanListener.
+</p>
+</td>
+</tr>
+
+
+
+<tr>
+<td class="main">
+<h4><a id="raw"></a>Raw JDBC - Access to java.sql.Connection</h4>
+<p>
+With JPA there is no explicit access the the underlying java.sql.Connection. It could be argued that this
+is a good thing. However Ebean makes this available in that real world requirements may require this access. 
+Specifically I see it as benefical to easily get direct JDBC access for those that need it.
+</p>
+<p>
+For the use of Savepoints, advanced Clob and Blob manipulation, advanced stored procedures and a general requirement for direct JDBC access Ebean makes java.sql.Connection available from the Transaction object.
+</p>
+</td>
+<td class="rhs">
+<p>
+JDBC access for Savepoints, Clob/Blob manipulation, Advanced stored procedures
+</p>
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+<h4><a id="iso"></a>Transaction Isolation Level</h4>
+<p>
+JPA does not have support for creating a transaction with an explicit transaction isolation level.
+Interesting.
+</p>
+</td>
+<td class="rhs">
+<p>
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="largequery"></a>Large query support - Callback</h4>
+<p>
+You may wish to run a query that will have a lot of beans/rows and perform some process for each bean.
+For example, write the data to a XML/CSV file. In doing so you may not want to pull all the rows back
+into a List Set or Map but rather process each row via a callback mechanism.
+</p>
+<p>
+The reason for this is that the memory requirements for putting all the beans into a List before 
+processing them all can be very high if there are a very large number of beans.
+</p>
+<p>
+Refer to FindListener.
+</p>
+</td>
+<td class="rhs">
+<p>
+Query Callback mechanism (FindListener)
+</p>
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

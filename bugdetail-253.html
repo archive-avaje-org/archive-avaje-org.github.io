@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: NOT A BUG - Under the same number of JDBC and Ebean concurrent comparison</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="zhoupeng">
+<meta name="description" content=" Test Environment DataBase Oracle 10 2 The default parameter settings JDK 1 6 5 IDE IntelliJ IDEA9 0 Test Case use in the JDBC The Result is correct TestCase public class TestThread implements Runnable public TestThread for int i 0 i Thread th new Thread this th start public void run try long i Thread currentThread getId new Gxpt2 checkUserAndIp catch Exception e System out println e toString public static void main String args new TestThread The class Gxpt2 public class Gxpt2 private static final String url jdbc oracle thin 127 0 0 1 1521 LOCALDB private static final String oracleusername animation private static final String oraclepassword animation static try Class forName oracle jdbc driver OracleDriver catch ClassNotFoundException e e printStackTrace public boolean checkUserAndIp Stat">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-253.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 253 : NOT A BUG - Under the same number of JDBC and Ebean concurrent comparison
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 253 : NOT A BUG - Under the same number of JDBC and Ebean concurrent comparison </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">zhoupeng</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.6.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">18/03/2010</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">18/03/2010</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>>>>>>>>>>>>>>>Test Environment:</p><p>      DataBase: Oracle 10.2(The default parameter settings)     </p><p>      JDK: 1.6.5   </p><p>      IDE: IntelliJ IDEA9.0  </p><p>Test Case use in the JDBC, The Result is correct.</p><p>>>>>>>TestCase:</p><p>public class TestThread  implements Runnable {</p><p>    public TestThread(){<br/>        for(int i = 0;i<200;i++){<br/>            Thread th = new Thread(this);<br/>            th.start();<br/>        }<br/>    }<br/>    public void run() {</p><p>        try{<br/>            long i = Thread.currentThread().getId();<br/>            new Gxpt2().checkUserAndIp();<br/>        }catch(Exception e){<br/>            System.out.println(e.toString());<br/>        }<br/>    }</p><p>    public static void main(String[] args) {<br/>        new TestThread();</p><p>    }<br/>}</p><p>>>>>>>>>The class Gxpt2:</p><p>public class Gxpt2 {</p><p>    private static final String url = "jdbc:oracle:thin:@127.0.0.1:1521:LOCALDB";<br/>    private static final String oracleusername = "animation";<br/>    private static final String oraclepassword = "animation";</p><p>    static {<br/>        try {<br/>            Class.forName("oracle.jdbc.driver.OracleDriver");</p><p>        } catch (ClassNotFoundException e) {<br/>            e.printStackTrace();<br/>        }<br/>    }</p><p>    <br/>    public boolean checkUserAndIp() {</p><p>        Statement st = null;<br/>        ResultSet rs = null;<br/>        Connection con = null;<br/>        try {</p><p>            con = DriverManager.getConnection(url, oracleusername,<br/>                                              oraclepassword);<br/>            String sql = "select * from wf_processdefinition";<br/>            st = con.createStatement();<br/>            rs = st.executeQuery(sql);<br/>            while (rs.next()) {<br/>                System.out.println(rs.getString("wf_pd_name"));<br/>                <br/>            }<br/>            return false;<br/>        } catch (Exception e) {<br/>            e.printStackTrace();<br/>            return false;<br/>        } finally {<br/>            try {<br/>                rs.close();<br/>                st.close();<br/>                con.close();<br/>            } catch (SQLException ex) {<br/>                ex.printStackTrace();<br/>            }<br/>        }<br/>    }</p><p>}</p><p><br/>Test Case use in the Ebean,Abnormal results, exception is as follows����?</p><p>>>>>>>>>>>>TestCase:</p><p>public class TestThread  implements Runnable {</p><p>    public TestThread(){<br/>        for(int i = 0;i<200;i++){<br/>            Thread th = new Thread(this);<br/>            th.start();<br/>        }<br/>    }<br/>    public void run() {</p><p>        try{<br/>            long i = Thread.currentThread().getId();<br/>            Ebean.find(FlowData.class).where("wf_pd_name like '%%'").findList();<br/>        }catch(Exception e){<br/>            System.out.println(e.toString());<br/>        }<br/>    }</p><p>    public static void main(String[] args) {<br/>        new TestThread();</p><p>    }<br/>}</p><p></p><p>>>>>>>>>>>>Exception:</p><p>��������?��: DataSourcePool [ora] grow pool;  busy[126] size[126] max[1000]<br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'<br/></sql><br/>2010-3-18 17:42:22 com.avaje.ebean.server.lib.sql.DataSourcePool notifyDataSourceIsDown<br/>��������??: FATAL: DataSourcePool [ora] is down!!!<br/>2010-3-18 17:42:22 com.avaje.ebean.server.lib.sql.DataSourcePool reset<br/>��������?��: Reseting DataSourcePool [ora]<br/>2010-3-18 17:42:22 com.avaje.ebean.server.lib.sql.DataSourcePool reset<br/>��������?��: Busy Connections:<br/>name[ora.1] startTime[1268905334139] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.2] startTime[1268905334239] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.3] startTime[1268905334301] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.4] startTime[1268905334346] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.5] startTime[1268905334396] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.6] startTime[1268905334455] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.7] startTime[1268905334536] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.8] startTime[1268905334931] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.9] startTime[1268905334990] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.10] startTime[1268905335039] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.11] startTime[1268905335084] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.12] startTime[1268905335157] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.13] startTime[1268905335213] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.14] startTime[1268905335269] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.15] startTime[1268905335325] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.16] startTime[1268905335465] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.17] startTime[1268905335522] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.18] startTime[1268905335585] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.19] startTime[1268905335642] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.20] startTime[1268905335705] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.21] startTime[1268905335812] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.22] startTime[1268905335879] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.23] startTime[1268905335945] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.24] startTime[1268905335999] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.25] startTime[1268905336059] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.26] startTime[1268905336115] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.27] startTime[1268905336165] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.28] startTime[1268905336219] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.29] startTime[1268905336291] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.30] startTime[1268905336457] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.31] startTime[1268905336507] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.32] startTime[1268905336564] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.33] startTime[1268905336612] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.34] startTime[1268905336657] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.35] startTime[1268905336753] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.36] startTime[1268905336814] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.37] startTime[1268905336884] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.38] startTime[1268905336939] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.39] startTime[1268905337031] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.40] startTime[1268905337090] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.41] startTime[1268905337155] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.42] startTime[1268905337205] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.43] startTime[1268905337265] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.44] startTime[1268905337322] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.45] startTime[1268905337381] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.46] startTime[1268905337438] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.47] startTime[1268905337486] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.48] startTime[1268905337553] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.49] startTime[1268905337613] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.50] startTime[1268905337662] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.51] startTime[1268905337707] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.52] startTime[1268905337764] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.53] startTime[1268905337829] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.54] startTime[1268905338039] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.55] startTime[1268905338117] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.56] startTime[1268905338169] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.57] startTime[1268905338215] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.58] startTime[1268905338260] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.59] startTime[1268905338312] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.60] startTime[1268905338362] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.61] startTime[1268905338407] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.62] startTime[1268905338462] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.63] startTime[1268905338516] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.64] startTime[1268905338577] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.65] startTime[1268905338636] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.66] startTime[1268905338685] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.67] startTime[1268905338736] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.68] startTime[1268905338795] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.69] startTime[1268905338843] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.70] startTime[1268905338893] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.71] startTime[1268905338957] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.72] startTime[1268905339031] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.73] startTime[1268905339131] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.74] startTime[1268905339192] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.75] startTime[1268905339253] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.76] startTime[1268905339297] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.77] startTime[1268905339344] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.78] startTime[1268905339401] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.79] startTime[1268905339468] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.80] startTime[1268905339522] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.81] startTime[1268905339580] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.82] startTime[1268905339638] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.83] startTime[1268905339688] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.84] startTime[1268905339734] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.85] startTime[1268905339782] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.86] startTime[1268905339850] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.87] startTime[1268905339900] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.88] startTime[1268905339952] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.89] startTime[1268905340042] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.90] startTime[1268905340118] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.91] startTime[1268905340294] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.92] startTime[1268905340343] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.93] startTime[1268905340390] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.94] startTime[1268905340440] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.95] startTime[1268905340493] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.96] startTime[1268905340552] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.97] startTime[1268905340604] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.98] startTime[1268905340664] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.99] startTime[1268905340714] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.100] startTime[1268905340766] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.101] startTime[1268905340830] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.102] startTime[1268905340884] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.103] startTime[1268905340933] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.104] startTime[1268905340996] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.105] startTime[1268905341072] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.106] startTime[1268905341145] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.107] startTime[1268905341198] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.108] startTime[1268905341267] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.109] startTime[1268905341329] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.110] startTime[1268905341402] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.111] startTime[1268905341448] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.112] startTime[1268905341513] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.113] startTime[1268905341565] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.114] startTime[1268905341622] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.115] startTime[1268905341668] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.116] startTime[1268905341710] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.117] startTime[1268905341768] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.118] startTime[1268905341832] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.119] startTime[1268905341879] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.120] startTime[1268905341929] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.121] startTime[1268905341977] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.122] startTime[1268905342042] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.123] startTime[1268905342091] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.124] startTime[1268905342155] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.125] startTime[1268905342221] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.126] startTime[1268905342276] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]<br/>name[ora.127] startTime[1268905342362] stmt[select f.WF_PD_ID c0, f.WF_PD_NAME c1, f.WF_PD_CONTENT c2, f.WF_PD_DESCRIPTION c3, f.WF_PD_MOUDLENAME c4, f.WF_PD_CREATER c5, f.WF_PD_CREATEDATE c6 <br/>from WF_PROCESSDEFINITION f <br/>where wf_pd_name like '%%'] createdBy[null]</p><p>javax.persistence.PersistenceException: java.sql.SQLException: Listener refused the connection with the following error:<br/>ORA-12519, TNS:no appropriate service handler found<br/>The Connection descriptor used by the client was:<br/>127.0.0.1:1521:LOCALDB</p><p>javax.persistence.PersistenceException: java.sql.SQLException: Listener refused the connection with the following error:<br/>ORA-12519, TNS:no appropriate service handler found<br/>The Connection descriptor used by the client was:<br/>127.0.0.1:1521:LOCALDB</p><p>............................<br/>............................</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+18 Mar&nbsp;20:24
+</div>
+I don't understand
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Sorry, I do not understand what the problem is.</p><p>Can you explicitly state what you think the issue is.</p><p>Thanks, Rob.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+zhoupeng 
+19 Mar&nbsp;01:18
+</div>
+Description
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>The same test cases and the operating environment, Ebean run better than JDBC worse, while Ebean will appear before the said exception</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+19 Mar&nbsp;03:15
+</div>
+Sorry...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Sorry, I still do not understand.</p><p>Is this a performance issue?</p><p>Is this an issue related to the ORA-12519, TNS:no appropriate service handler found error?</p><p>Can you further explain what you think the problem / defect / bug is.</p><p>Thanks, Rob.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+19 Mar&nbsp;08:20
+</div>
+Hmmm...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Ok, I had another quick look at this code. The ORA-12519 occured and Ebean's connection pool could not grow (it had reached 126 connections).</p><p>So you have to find out if your Oracle instance can support 200 odd concurrent connections and try to determine the cause of the ORA-12519.</p><p>I don't think this is an Ebean issue.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+zhoupeng 
+19 Mar&nbsp;12:45
+</div>
+Please test as I use case
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>My question is, the same environment, why JDBC is not an error, but does not meet the demand is wrong Ebean</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+zhoupeng 
+19 Mar&nbsp;17:01
+</div>
+I felt, the connection did not immediately closed
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I felt, the connection did not immediately closed</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+20 Mar&nbsp;08:31
+</div>
+You have to discover the cause of the ORA-12519 to progress
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>> why JDBC is not an error</p><p>Ebean got an ORA-12519 so you have to find out why that occured. Then you may or many not know why it worked in the JDBC case.</p><p>> I felt, the connection did not immediately closed</p><p>With Ebean you are using a connection pool, so the connections do not close they go back into the pool.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+zhoupeng 
+22 Mar&nbsp;03:38
+</div>
+I feel this is a problem
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>orale configuration as I know, in the same database environment, JDBC no errors, Ebean wrong! I feel this is a problem, please follow the test cases to test in detail.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+zhoupeng 
+22 Mar&nbsp;03:40
+</div>
+Ebean very powerful, and hope that more and more powerful
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Ebean very powerful, and hope that more and more powerful</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+22 Mar&nbsp;08:06
+</div>
+Your JDBC code...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Your JDBC code is not doing the same thing though. It is closing the connections fully after the query has finished. This means the JDBC code is not going to have as many connections open to the database (assuming that is the cause of the ORA 12519 which you are not sure of).</p><p>You need to reproduce the ORA-12519 using JDBC code ... perhaps by leaving the connections open. If the error occured that would tell you the max connections your oracle server was allowing ... and that assumes that is the cause of the ORA 12519.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+31 Mar&nbsp;03:51
+</div>
+Have you given up?
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I'll close this as not a bug unless you can provide more information wrt the ORA 12519.</p><p>Thanks, Rob.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+06 Apr&nbsp;10:02
+</div>
+Ok, closing as NOT A BUG
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Ok, closing as NOT A BUG.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="253">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-253.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="253">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: expression "in query"</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="imario">
+<meta name="description" content="In my process of moving my application to avaje I now reached a point where I am a little bit lost I mainly use the Query API and need a feature which allows me to describe a select using where propertyName A in select propertyName B from itemTable where Something like Expr in String propertyName A Query query whould be great where query needs to have select propertyName B configured for sure I tried to dig into this but well facing some complicated data structures Is this doable ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-128.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by imario </span>
+17 Mar&nbsp;14:09
+</div>
+expression "in query"
+<div class="body">
+<p>In my process of moving my application to avaje I now reached a point where I am a little bit lost :-(</p><p>I mainly use the Query API and need a feature which allows me to describe a select using "where propertyName_A in (select propertyName_B from itemTable where ...)"</p><p>Something like "Expr.in(String propertyName_A, Query query)" whould be great, where "query" needs to have ".select(propertyName_B)" configured for sure.</p><p>I tried to dig into this, but, well, facing some complicated data structures ;-)</p><p>Is this doable?</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+17 Mar&nbsp;14:58
+</div>
+<span>by imario</span>
+<div class="body">
+<p>This is what I've found so fare ... it is close :-)</p><p>It works except for the fact that the generated select does not only contain those properties configured with .select() but also the id columns, which is clear for partial objects, but here I'd like to avoid this.</p><p>So the thing (or one of the things) is, to avoid rendering the id columns in the select and where clause.</p><p>BTW: This is something you do in Hibernate using Projections, probably such a API should be the way to go for Avaje too, but I just wanted to implement this very feature I need now.</p><p><br/>import com.avaje.ebean.expression.Expression;<br/>import com.avaje.ebean.expression.ExpressionRequest;<br/>import com.avaje.ebean.query.OrmQuery;<br/>import com.avaje.ebean.server.core.DefaultServer;<br/>import com.avaje.ebean.server.core.QueryRequest;<br/>import com.avaje.ebean.server.query.CQuery;<br/>import com.avaje.ebean.server.query.CQueryBuilder;</p><p>import java.util.List;</p><p>public class InQueryExpression implements Expression<br/>{<br/>    private final String propertyName;<br/>    private final OrmQuery query;</p><p>    private transient CQuery builtQuery;</p><p>    public InQueryExpression(String propertyName, OrmQuery query)<br/>    {<br/>        this.propertyName = propertyName;<br/>        this.query = query;<br/>    }</p><p>    public String getPropertyName()<br/>    {<br/>        return propertyName;<br/>    }</p><p>    public int queryPlanHash()<br/>    {<br/>        int hc = InQueryExpression.class.getName().hashCode();<br/>        hc = hc * 31 + propertyName.hashCode();<br/>        hc = hc * 31 + query.getQueryPlanHash();<br/>        return hc;<br/>    }</p><p>    public int queryBindHash()<br/>    {<br/>        return 0;<br/>    }</p><p>    public void addSql(ExpressionRequest request)<br/>    {<br/>        CQuery builtQuery = getBuiltQuery(request);</p><p>        request.append(" (");<br/>        request.append(propertyName);<br/>        request.append(") in (");<br/>        request.append(builtQuery.getGeneratedSql());<br/>        request.append(") ");<br/>    }</p><p>    private CQuery getBuiltQuery(ExpressionRequest request)<br/>    {<br/>        if (builtQuery == null)<br/>        {<br/>            DefaultServer defaultServer = (DefaultServer) request.getQueryRequest().getEbeanServer();<br/>            QueryRequest qr = defaultServer.createQueryRequest(query, request.getQueryRequest().getTransaction());<br/>            CQueryBuilder builder = new CQueryBuilder(defaultServer.getPlugin().getPluginCore());</p><p>            builtQuery = builder.buildQuery(qr, defaultServer.getPlugin().getDbConfig().getBinder());<br/>        }</p><p>        return builtQuery;<br/>    }</p><p>    public void addBindValues(ExpressionRequest request)<br/>    {<br/>        CQuery builtQuery = getBuiltQuery(request);<br/>        List<Object> bindParams = builtQuery.getPredicates().getWhereExprBindValues(); // TODO: changed Ebean API here two times<br/>        if (bindParams == null)<br/>        {<br/>            return;<br/>        }<br/>        <br/>        for (int i = 0; i<bindParams.size(); i++)<br/>        {<br/>            request.addBindValue(bindParams.get(i));<br/>        }<br/>    }<br/>}</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+17 Mar&nbsp;15:48
+</div>
+<span>by imario</span>
+<div class="body">
+<p>Ok, I managed to avoid rendering the id stuff too.</p><p>Please have a look at this patch if it makes you happy :-)</p><p></p><p>Index: ../ebean/src/com/avaje/ebean/server/query/CQueryPredicates.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/query/CQueryPredicates.java	(revision 171)<br/>+++ ../ebean/src/com/avaje/ebean/server/query/CQueryPredicates.java	Tue Mar 17 15:46:54 CET 2009<br/>@@ -479,4 +479,8 @@<br/> 			return logPred;<br/> 		}<br/> 	}<br/>+<br/>+    public ArrayList<Object> getWhereExprBindValues() {<br/>+        return whereExprBindValues;<br/>-}<br/>+    }<br/>+}<br/>Index: ../ebean/src/com/avaje/ebean/server/core/DefaultServer.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/core/DefaultServer.java	(revision 171)<br/>+++ ../ebean/src/com/avaje/ebean/server/core/DefaultServer.java	Tue Mar 17 16:44:49 CET 2009<br/>@@ -903,7 +902,7 @@<br/> 		return findId(query, t);<br/> 	}<br/> <br/>-	protected QueryRequest createQueryRequest(Query<?> q, Transaction t) {<br/>+	public QueryRequest createQueryRequest(Query<?> q, Transaction t) {<br/> <br/> 		OrmQuery<?> query = (OrmQuery<?>) q;<br/> 		BeanManager mgr = deploymentManager.getBeanManager(query.getBeanType());<br/>Index: ../ebean/src/com/avaje/ebean/server/query/SqlTreeBuilder.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/query/SqlTreeBuilder.java	(revision 171)<br/>+++ ../ebean/src/com/avaje/ebean/server/query/SqlTreeBuilder.java	Tue Mar 17 16:41:18 CET 2009<br/>@@ -203,7 +203,7 @@<br/> <br/> 		if (node.isRoot()) {<br/> 			buildExtraJoins(node, myList);<br/>-			return new SqlTreeNodeRoot(node, props, myList, query.getIncludeTableJoin());<br/>+			return new SqlTreeNodeRoot(node, props, myList, query.isReadId(), query.getIncludeTableJoin());<br/> <br/> 		} else if (node.isManyJoin()) {<br/> 			return new SqlTreeNodeManyRoot(node, props, myList);<br/>Index: ../ebean/src/com/avaje/ebean/Query.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/Query.java	(revision 171)<br/>+++ ../ebean/src/com/avaje/ebean/Query.java	Tue Mar 17 16:41:18 CET 2009<br/>@@ -395,7 +395,14 @@<br/> 	 */<br/> 	public Query<T> select(String fetchProperties);<br/> <br/>-	/**<br/>+    /**<br/>+     * read only those fields setup by {@link #select}<br/>+     */<br/>+    public void setReadId(boolean readSelectOnly);<br/>+<br/>+    public boolean isReadId();<br/>+<br/>+	/**<br/> 	 * Specify a property (associated bean) to join and <em>fetch</em> with<br/> 	 * its specific properties to include.<br/> 	 * <p><br/>Index: ../ebean/src/com/avaje/ebean/query/DefaultOrmQuery.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/query/DefaultOrmQuery.java	(revision 171)<br/>+++ ../ebean/src/com/avaje/ebean/query/DefaultOrmQuery.java	Tue Mar 17 16:41:36 CET 2009<br/>@@ -56,6 +56,8 @@<br/> 	 */<br/> 	OrmQueryDetail detail;<br/> <br/>+    boolean readId = true;<br/>+<br/> 	OrmQueryAttributes attributes;<br/> <br/> 	/**<br/>@@ -141,7 +143,7 @@<br/> 	<br/> 	TransactionContext transactionContext;<br/> <br/>-	public DefaultOrmQuery(Class<T> beanType, EbeanServer server) {<br/>+    public DefaultOrmQuery(Class<T> beanType, EbeanServer server) {<br/> 		this.beanType = beanType;<br/> 		this.server = server;<br/> 		this.detail = new OrmQueryDetail();<br/>@@ -738,4 +740,13 @@<br/> 		this.generatedSql = generatedSql;<br/> 	}<br/> <br/>+    public boolean isReadId()<br/>+    {<br/>+        return readId;<br/>-}<br/>+    }<br/>+<br/>+    public void setReadId(boolean readId)<br/>+    {<br/>+        this.readId = readId;<br/>+    }<br/>+}<br/>Index: ../ebean/src/com/avaje/ebean/server/query/CQuery.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/query/CQuery.java	(revision 171)<br/>+++ ../ebean/src/com/avaje/ebean/server/query/CQuery.java	Tue Mar 17 15:44:59 CET 2009<br/>@@ -714,4 +713,8 @@<br/> 	public JoinNode getCurrentJoinNode(){<br/> 		return currentJoinNode;<br/> 	}<br/>+<br/>+    public CQueryPredicates getPredicates() {<br/>+        return predicates;<br/>-}<br/>+    }<br/>+}<br/>Index: ../ebean/src/com/avaje/ebean/server/query/CQueryBuilder.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/query/CQueryBuilder.java	(revision 171)<br/>+++ ../ebean/src/com/avaje/ebean/server/query/CQueryBuilder.java	Tue Mar 17 16:41:18 CET 2009<br/>@@ -239,7 +239,7 @@<br/> 			hasWhere = true;<br/> 		}<br/> 		<br/>-		if (request.isFindById() || query.getId() != null){<br/>+		if (query.isReadId() && (request.isFindById() || query.getId() != null)){<br/> 			if (hasWhere){<br/> 				sb.append(" and ");<br/> 			} else {</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+17 Mar&nbsp;21:09
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Hmmm... the intention was to use a "raw" expression for this...</p><p>Is there a reason why the "raw" expression does not work for you?</p><p>query.where().raw("propertyName_A in (select propertyName_B from itemTable where ...)");</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Mar&nbsp;07:02
+</div>
+<span>by imario</span>
+<div class="body">
+<p>I use the Query API whenever possible (not to say, I use it always), I don't like to use string operations to build a sql statement ...<br/>In very rare cases I use NamedQueries, these are complicated but static sql statements.</p><p>With the Query API I often build the where clause dynamically. e.g. a various number of "or"s depending on the number of tokens passed in with a "search string".</p><p>So do I with the "in" use-case where the sub-select has a dynamic where clause. Sure, I can do this by building the sql string myself, but it just seems not right, given that the Query API provides a way for building "normal" queries.<br/>And it looks so much nicer to create two query objects and then just tie them together.</p><p>If you don't want to add the InQueryExpression to Avaje it would be nice if you could open up the api at least to get in touch with the generated query and the binding values.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Mar&nbsp;12:25
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Thats fair enough... I'll have a more indepth look later but it does look pretty neat.</p><p>I didn't understand what the "readId" meant? (but its late)</p><p>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Mar&nbsp;14:03
+</div>
+<span>by imario</span>
+<div class="body">
+<p>Normally each and every query has the key-fields genereated in the select clause and the where clause.</p><p>For the select, generated for the "in" use-case, these fields are not required (and results in an wrongly generated sql).<br/>I introduced the "readId" boolean to control if the generated sql should contain key fields.</p><p>With readId=false and select("property") configuread, only this single property appears in the sql select clause and no key fields are generated in the where clause.</p><p>Ciao,<br/>Mario</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+18 Mar&nbsp;20:20
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Yes, of course... we want to exlude the id (that otherwise gets automatically added to the query). </p><p>Hmmm, the version column may also get automatically added... I need to check that.</p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Mar&nbsp;12:08
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Logged as Enhancement <a href="http://www.avaje.org/bugdetail-92.html">http://www.avaje.org/bugdetail-92.html</a></p><p>I have got the code into HEAD.</p><p>There where a couple of tweaks... I could get around putting readId on the Query... and instead identified the query as being a "subquery" as opposed to a findUnique, findList, findSet or findMap.</p><p>So yeah, check it out and see if it does the business.</p><p>... and thats for the code too - great stuff/cool enhancement.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Mar&nbsp;12:09
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Thanks that is!!!  (rather than "thats")</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+20 Mar&nbsp;09:31
+</div>
+<span>by imario</span>
+<div class="body">
+<p>I've updated to Avaje HEAD and it looks very good.<br/>Thanks for applying it so fast!</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="128">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>ORM Lazy loading in Ebean, how it compares with Java JPA</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="How Lazy loading works in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/lazy.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="doc.html" title="Documentation">Documentation</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Lazy Loading</span>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+
+<h3>Lazy Loading</h3>
+<p>
+Lazy Loading will automatically create a separate Transaction to perform the query.
+</p>
+<p>
+I realise that this approach is different from that of Hibernate, and likely
+to be different from JPA vendors.
+</p>
+<p>
+In this regard it is worth describing how Transaction Isolation and Transaction Demarcation 
+effect lazy loading and the issue of "Read Consistency".
+</p>
+
+<h4>Introduction to Lazy Loading</h4>
+<p>
+<a href="lazyexample.html">Go here for some Lazy Loading code examples.</a>
+</p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="occ.html" title="Explanation of Optimistic Concurrency Checking">Optimistic Concurrency Checking</a></li>
+<li><a href="transiso.html">Transaction Isolation</a></li>
+<li><a href="design.html" title="How Lazy Loading works">Lazy Loading</a></li>
+<li><a href="equals.html" >equals and hashcode</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<td class="main">
+
+<h3>Lazy Loading and Transaction Isolation</h3>
+
+
+<h4>ANSI Isolation Levels - DBMS Vendors don't 100% agree</h4>
+<p>
+Before we get into this we need to note there is some debate over relating
+ANSI isolation levels with databases that support multi-level concurrency control (MCC).
+</p>
+<p>
+<p> Quoting from wikipedia:
+<a href="http://en.wikipedia.org/wiki/Snapshot_isolation">http://en.wikipedia.org/wiki/Snapshot_isolation</a>
+</p>
+<p>
+"Unfortunately, the ANSI SQL-92 standard was written with a lock-based
+database in mind, and hence is rather vague when applied to MCC systems.
+Berenson et al. wrote a paper in 1995 [3] critiquing the SQL standard, and
+cited snapshot isolation as an example of an isolation level that did not
+exhibit the standard anomalies described in the ANSI SQL-92 standard, yet
+still had anomalous behaviour when compared with serializable transactions."
+</p>
+<p>
+Basically ANSI Isolation levels are not the be all and end all for some DBMS Vendors.
+ANSI SQL 1999 doesn't mention Lost Updates, Read Consistency or Snapshot Isolation for example.
+</p>
+</td>
+<td class="rhs">
+<p>
+<h4>Summary</h4>
+At READ_COMMITTED Isolation level you will lazy load the "Most Recent" data rather than "Read Consistent" data wrt the original query.
+</p>
+<p>
+Transaction demarcation has no effect on the lazy loading queries at READ_COMMITTED Isolation level.
+</p>
+</td>
+</tr>
+<tr>
+<td class="main">
+
+<h4>Read Consistency</h4>
+<p>
+With the SERIALIZABLE scenarios below we are effectively talking about
+"Transaction Level Read Consistency" in Oracle terminology. I'll omit the
+issue of "Statement Level Read Consistency" for the moment.
+Note: MS SqlServer 2005 has a READ_COMMITTED_SNAPSHOT option that if turned on
+supports "Statement Level Read Consistency". I am not sure about other databases.
+</p>
+<h4>Can you predict the result?</h4>
+<p>
+Rather than attempt to explain the how Transaction Isolation levels and Transaction Demarcation
+effect Lazy Loading I have gone for a little test. Below is some code which can be run with
+4 different scenarios and I want you to try and predict the results.
+</p>
+<p>
+The four scenarios are:
+<ul>
+<li>READ_COMMITED Isolation Level and No setInclude()<li>
+<li>SERIALIZABLE Isolation Level and No setInclude()<li>
+<li>READ_COMMITED Isolation Level and setInclude("userLogged; status");<li>
+<li>SERIALIZABLE Isolation Level andsetInclude("userLogged; status");<li>
+</ul>
+</p>
+<h4>Overview of the Code</h4>
+<p>
+The query will fetch bug1 and potentially lazy load the userLogged (getting the name) and the status code (getting the title).
+</p>
+<p>
+At various times (time0 through to time4) the user name and status code title are updated
+by other separate transactions simulating another user changing the data.
+</p>
+<p>
+Your task is to determine what the value of the userLogged name and status code title
+is going to be for each of the four scenarios. For example: Is the result of Scenario 1 this?<br>
+<em>loggedBy: [Name at time 1] statusTitle: [Title @time 1]</em>
+</p>
+
+<h4>Notes</h4>
+<p>
+If setInclude("userLogged; status"); is used on the FindById then the query will include
+joins to the user table and the bug status code table. Both userLogged and the status object 
+are fully populated (Not a reference) and no lazy loading actually occurs.
+</p>
+<p>
+When setInclude() is not used <code>String loggedBy = bug.getUserLogged().getName();</code> will
+lazy load the userLogged object. This will result in a query that occurs BEFORE the commit.
+</p>
+<p>
+When setInclude() is not used <code>String statusTitle = bug.getStatus().getTitle();</code> will
+lazy load the status object. This will result in a query that occurs AFTER the commit.
+</p>
+
+<h4>The Code - set for scenario one</h4>
+<p>
+The code is set up to run in the first scenario at READ_COMMITTED Isolation level without
+the userLogged or status included by setInclude(). That is, my configured default Isolation level
+is set to READ_COMMITTED.
+</p>
+<p>
+This code will run fine on Oracle but on my MySql the SERIALIZABLE scenarios will not work with
+a "Lock wait timeout exceeded;" exception. MySql implicitly changes the 
+SELECT's with LOCK IN SHARE MODE. I have not yet figured out if I can run a
+similar test in MySql for the SERIALIZABLE scenarios.
+</p>
+<pre>
+<code>
+package unitext.ex;
+
+import app.data.Bug;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.EbeanServer;
+import com.avaje.ebean.FindById;
+import com.avaje.ebean.Transaction;
+import com.avaje.ebean.UpdateSql;
+
+public class ExOne {
+
+	public static void main(String[] args) {
+	
+		FindById find = new FindById(Bug.class, bugId);
+		<span>//find.setInclude("userLogged; status");</span>
+
+		setUserAndStatus(5); // time0
+		<span>Ebean.beginTransaction(); // READ_COMMITED
+		//Ebean.beginTransaction(Transaction.SERIALIZABLE);</span>
+		try {
+			
+			setUserAndStatus(1); // time1
+			Bug bug = (Bug)Ebean.find(find);
+			
+			setUserAndStatus(2); // time2
+			String loggedBy = bug.getUserLogged().getName();
+		
+			setUserAndStatus(3); // time3
+			Ebean.commitTransaction();
+
+			setUserAndStatus(4); // time4
+			String statusTitle = bug.getStatus().getTitle();
+			
+			System.out.println("-------------------------");
+			System.out.println("loggedBy:    ["+loggedBy+"] ");
+			System.out.println("statusTitle: ["+statusTitle+"] ");
+
+		} finally {
+			Ebean.endTransaction();
+			
+		}
+	}
+
+	/**
+	 * Hardcoded: Looking at bug1.
+	 */
+	private static Integer bugId = new Integer(1);
+	
+	/**
+	 * Hardcoded: I know the userLoggedId for bug1 is 1.
+	 */
+	private static Integer userId = new Integer(1);
+
+	/**
+	 * Hardcoded: I know the status code for bug1 is TEST.
+	 */
+	private static String statusCode = "TEST";
+
+	private static String dmlStatus 
+		= "update b_bug_status set title = :title where code = :code";
+
+	private static String dmlUser 
+		= "update s_user set name = :userName where id = :userId";
+
+	private static UpdateSql updateUserName = new UpdateSql(dmlUser);
+
+	private static UpdateSql updateStatusCode = new UpdateSql(dmlStatus);
+
+	/**
+	 * Simulate another user with a separate transaction updating the
+	 * user name and status title.
+	 */
+	private static void setUserAndStatus(Integer time) {
+		
+		String userName = "Name at time "+time;
+		updateUserName.setParameter("userName", userName);
+		updateUserName.setParameter("userId", userId);
+
+
+		String statusTitle = "Title @time "+time;
+		updateStatusCode.setParameter("title", statusTitle);
+		updateStatusCode.setParameter("code", statusCode);
+
+		EbeanServer server = Ebean.getServer(null);
+		// create a Transaction outside of the ThreadLocal
+		// rather than actually have a second Thread
+		Transaction externalTransaction = server.createTransaction();
+		try {
+			int rc1 = server.execute(updateUserName, externalTransaction);
+			int rc2 = server.execute(updateStatusCode, externalTransaction);
+			if (rc1 != 1 || rc2 != 1){
+				String error = "Expecting to update 1 row? "+rc1+" "+rc2;
+				throw new RuntimeException(error);
+			}
+			externalTransaction.commit();
+			
+		} finally {
+			externalTransaction.end();
+		}
+
+		String m = "Update set UserName["+userName+"] "
+			     +" statusTitle["+statusTitle+"] at time ["+time+"]";
+		System.err.println(m);
+	}
+	
+}
+
+</code>
+</pre>
+<p>
+I realise the code above is a bit crap and a very artifical test but I am hoping that
+it is reasonably transparent. The logs in the results may help if it is not clear what
+is going on.
+</p>
+<p>
+<a href="lazyresult.html">See the results for each scenario</a>
+</p>
+
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

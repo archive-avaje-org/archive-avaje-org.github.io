@@ -1,0 +1,330 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Queries in Ebean</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Queries in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/ebean/introquery_rawsql.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/ebean/introduction.html">Ebean</a>
+&raquo; <a href="/ebean/documentation.html">Docs</a>
+&raquo; <span>Queries</span>
+</div>
+
+
+
+
+
+<div class="columnlayout">
+
+<h3>Queries in Ebean</h3>
+<ul>
+<li><a href="introquery.html">Basics</a></li>
+<li><a href="introquery_join.html">Fetch (paths)</a></li>
+<li><a href="introquery_joinquery.html">Query Joins</a></li>
+<li><a href="introquery_partialobject.html">Partial Objects</a></li>
+<li><a href="introquery_autofetch.html">Autofetch - Automatic query tuning</a></li>
+<li><a href="introquery_future.html">Asynchrous Query execution</a></li>
+<li><a href="introquery_paginglist.html">PagingList</a></li>
+<li><a href="introquery_rawsql.html">RawSql</a></li>
+</ul>
+
+<h4>Using RawSql</h4>
+<div class="col70">
+<p>
+You can specify the exact SQL to use and have that mapped into Objects.
+You may want to do this so use aggregate functions like sum() max() etc
+or in cases where you just need exact control over the SQL.
+</p>
+<p>
+You can programmatically use raw SQL like the following examples or put the
+Raw SQL and column mappings into ebean-orm.xml file and reference them
+as 'named queries' - see ebeanServer.createNamedQuery().
+</p>
+<p>
+If you let Ebean 'parse' the raw SQL then Ebean can add expressions to the
+WHERE and HAVING clauses as well as set the ORDER BY and LIMIT OFFSET clauses.
+</p>
+</div>
+<div class="example">example</div>
+
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+        // Use raw SQL with an aggregate function
+
+        String sql 
+            = " select order_id, o.status, c.id, c.name, sum(d.order_qty*d.unit_price) as totalAmount"
+            + " from o_order o" 
+            + " join o_customer c on c.id = o.kcustomer_id "
+            + " join o_order_detail d on d.order_id = o.id "
+            + " group by order_id, o.status ";
+        
+        RawSql rawSql = 
+            RawSqlBuilder
+                // let ebean parse the SQL so that it can
+                // add expressions to the WHERE and HAVING 
+                // clauses
+                .parse(sql)
+                // map resultSet columns to bean properties
+                .columnMapping("order_id",  "order.id")
+                .columnMapping("o.status",  "order.status")
+                .columnMapping("c.id",      "order.customer.id")
+                .columnMapping("c.name",    "order.customer.name")
+                .create();
+
+        
+        Query&lt;OrderAggregate&gt; query = Ebean.find(OrderAggregate.class);
+            query.setRawSql(rawSql)        
+            // add expressions to the WHERE and HAVING clauses
+            .where().gt("order.id", 0)
+            .having().gt("totalAmount", 20);
+        
+        List&lt;OrderAggregate&gt; list = query.findList();
+
+</pre>
+</div>
+
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<p>
+This example uses FetchConfig to fetch other parts of the object graph.
+After the raw SQL query is executed Ebean uses 'query joins' to fetch
+some order and customer properties.
+</p>
+</div>
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+        // You can also use FetchConfig to get Ebean to
+        // fetch additional parts of the object graph
+        // after the Raw SQL query is executed.
+
+        String sql 
+            = " select order_id, sum(d.order_qty*d.unit_price) as totalAmount "
+            + " from o_order_detail d" 
+            + " group by order_id ";
+        
+        RawSql rawSql = 
+            RawSqlBuilder
+                .parse(sql)
+                .columnMapping("order_id",  "order.id")
+                .create();
+
+        
+        Query&lt;OrderAggregate&gt; query = Ebean.find(OrderAggregate.class);
+        query.setRawSql(rawSql)       
+            // get ebean to fetch parts of the order and customer 
+            // after the raw SQL query is executed
+            .fetch("order", "status,orderDate",new FetchConfig().query())
+            .fetch("order.customer", "name")
+            .where().gt("order.id", 0)
+            .having().gt("totalAmount", 20)
+            .order().desc("totalAmount")
+            .setMaxRows(10);
+
+
+</pre>
+</div>
+
+
+
+<div class="colend"></div>
+
+<div class="col70">
+<p>&nbsp;</p>
+<p>
+This is the OrderAggregate bean used in the examples above.
+</p>
+</div>
+
+<div class="col70">
+
+<pre class="java:nogutter:nocontrols">
+
+package com.avaje.tests.model.basic;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
+import com.avaje.ebean.annotation.Sql;
+
+/**
+ * An example of an Aggregate object.
+ * 
+ * Note the &#064;Sql indicates to Ebean that this bean is not based on a table but
+ * instead uses RawSql.
+ * 
+ */
+&#064;Entity
+&#064;Sql
+public class OrderAggregate {
+
+    &#064;OneToOne
+    Order order;
+
+    Double totalAmount;
+
+    Double totalItems;
+
+    public String toString() {
+        return order.getId() + " totalAmount:" + totalAmount + " totalItems:" + totalItems;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public Double getTotalItems() {
+        return totalItems;
+    }
+
+    public void setTotalItems(Double totalItems) {
+        this.totalItems = totalItems;
+    }
+}
+</pre>
+</div>
+<div class="colend"></div>
+
+
+<div class="col70 colnext">
+<a class="h3" href="/ebean/introduction.html">Back: to Ebean Introduction</a>
+</div>
+<div class="colend"></div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

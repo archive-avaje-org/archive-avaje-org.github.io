@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>ORM Type Inheritance - JPA Inheritance and SQL3 Table Inheritance</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="SQL3 Type Inheritance for inheritance in ORM">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/typeinheritance.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Type Inheritance</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+<h3>Type Inheritance</h3>
+<ul>
+<li><a href="#ugly">Is Inheritance ORM's Ugly Duckling?</a></li>
+<li><a href="#sql3">SQL3 Type Inheritance</a></li>
+<li><a href="#postgres">Table Inheritance & Postgres</a></li>
+<li><a href="#virtuoso">Virtuoso Table Inheritance</a></li>
+
+
+</ul>
+
+<h4><a id="ugly"></a>Is Inheritance ORM's Ugly Duckling?</h4>
+<p>
+With JPA there are 3 strategies for implementing Inheritance. These 3 strategies may
+work out to be very good for most simple inheritance requirements. They work against
+plain Relational Databases (as opposed to ones with Object Relational features) and
+with simple Inheritance Hierarchies should work reasonably well. 
+</p>
+<p>
+What probably needs to be looked at is that if you are using a SQL3 database 
+(or Postgres) then you have the option of putting the inheritance in the database right now
+using SQL3 Type Inheritance. This will need extra work to support this.
+</p>
+<p>
+I would think that over time as more support of SQL3 (Postgres Table Inheritance) is
+available people we get benefits from having the inheritance handled by the Database.
+</p>
+<p>
+The downsides of missing not null constraints and using joins and unions are fairly manageable
+for small hierarchies but as a hierarchy gets bigger these downsides will be more significant. 
+</p>
+
+
+<h4><a id="sql3"></a>SQL3 Type Inheritance</h4>
+<pre>
+<code>
+  CREATE TABLE person (
+    id INTEGER,
+    name VARCHAR(20),
+    sex VARCHAR(1),
+	age INTEGER); 
+
+  CREATE TABLE employee UNDER person (
+    salary FLOAT); 
+
+  CREATE TABLE customer UNDER person (
+    account INTEGER);
+</code>
+</pre>
+<p>
+Now Type Inheritance covers more than just Table Inheritance but I think its fair to
+say there may well be benefits in using DDL like the above so that Inheritance is 
+handled natively by the database (where possible).
+</p>
+<p>
+If anyone out there using Type Inheritance I'd like here about it.
+</p>
+
+<h4><a id="postgres"></a>Table Inheritance & Postgres</h4>
+<pre>
+<code>
+CREATE TABLE cities (
+  id              int,
+  name            text,
+  population      float,
+  altitude        int 
+);
+
+CREATE TABLE capitals (
+  state           char(2)
+) INHERITS (cities);
+</code>
+</pre>
+<p>
+If you are using <a href="http://www.postgresql.org/docs/8.1/static/ddl-inherit.html">Postgres then you can use the CREATE TABLE INHERITS syntax</a> to do what looks to me the same job.
+</p>
+<p>
+The documentation suggests there is some difference to the SQL3 specification so I'd be 
+interested to know the Postgres side of this story if anyone knows.
+</p>
+<p>
+Again, if anyone has used this feature in Postgres I'd be interested to here about it.
+</p>
+
+
+<h4><a id="virtuoso"></a><a href="http://virtuoso.openlinksw.com/wiki/main/">Virtuoso Table Inheritance</a></h4>
+<p>
+It looks to me that <a href="http://virtuoso.openlinksw.com/wiki/main/">Virtuoso</a> supports Table Inheritance with the UNDER Clause for defining subbtables.
+I have not had time to test out this database but I'd be very interested to here about it. 
+</p>
+<p>
+As a throw away comment this database looks to have gone open source in April 2006 and its 
+feature set is really quite amazing. Is this the best keep secret in the Industry?
+</p>
+</td>
+<td class="rhslinks">
+
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+
+</td>
+<td class="rhs">
+</td>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

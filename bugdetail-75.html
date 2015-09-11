@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: autoFetch builds different queryHashCode between runs</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="imario">
+<meta name="description" content="autofetch builds different queryHashCodes between successive runs of your application 1 avaje builds hash codes using xyz class hashCode which does NOT results into the same hashCode between application starts It seems the hashCode of a class is stable only within the same instance of a JVM I propose to fix this using xyz class getName hashCode 2 In SimpleExpression there is an enum which behaves like a class thush hashCode can t be called there too proposal enum name hashCode Here is a patch which solves that Index ebean src com avaje ebean expression IdExpression java ebean src com avaje ebean expression IdExpression java revision 141 ebean src com avaje ebean expression IdExpression java Sun Feb 22 11 37 22 CET 2009 42 7 42 7 public int queryPlanHash this number is unique for a given be">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-75.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 75 : autoFetch builds different queryHashCode between runs
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 75 : autoFetch builds different queryHashCode between runs </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">imario</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">1.1.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">22/02/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">22/02/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>autofetch builds different queryHashCodes between successive runs of your application.</p><p>1) avaje builds hash-codes using xyz.class.hashCode() which does NOT results into the same hashCode() between application starts. It seems the hashCode of a class is stable only within the same instance of a JVM.</p><p>I propose to fix this using xyz.class.getName().hashCode()</p><p>2) In SimpleExpression there is an enum which behaves like a class, thush hashCode() can't be called there too. proposal: enum.name().hashCode()</p><p><br/>Here is a patch which solves that:</p><p>Index: ../ebean/src/com/avaje/ebean/expression/IdExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/IdExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/IdExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -42,7 +42,7 @@<br/> 	public int queryPlanHash() {<br/> 		// this number is unique for a given bean type<br/> 		// which is all that is required<br/>-		return IdExpression.class.hashCode();<br/>+		return IdExpression.class.getName().hashCode();<br/> 	}<br/> <br/> 	public int queryBindHash() {<br/>Index: ../ebean/src/com/avaje/ebean/server/transaction/TableModInfo.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/transaction/TableModInfo.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/server/transaction/TableModInfo.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -76,7 +76,7 @@<br/>     }<br/> <br/>     public int hashCode() {<br/>-        int hc = TableModInfo.class.hashCode();<br/>+        int hc = TableModInfo.class.getName().hashCode();<br/>         hc = hc*31 + tableName.hashCode();<br/>         return hc;<br/>     }<br/>Index: ../ebean/src/com/avaje/ebean/expression/LogicExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/LogicExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/LogicExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -61,7 +61,7 @@<br/> 	 * Based on the joinType plus the two expressions.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = LogicExpression.class.hashCode() + joinType.hashCode();<br/>+		int hc = LogicExpression.class.getName().hashCode() + joinType.hashCode();<br/> 		hc = hc * 31 + expOne.queryPlanHash();<br/> 		hc = hc * 31 + expTwo.queryPlanHash();<br/> 		return hc;<br/>Index: ../ebean/src/com/avaje/ebean/util/DefaultExpressionList.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/util/DefaultExpressionList.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/util/DefaultExpressionList.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -1,11 +1,5 @@<br/> package com.avaje.ebean.util;<br/> <br/>-import java.util.ArrayList;<br/>-import java.util.Collection;<br/>-import java.util.List;<br/>-import java.util.Map;<br/>-import java.util.Set;<br/>-<br/> import com.avaje.ebean.Query;<br/> import com.avaje.ebean.QueryListener;<br/> import com.avaje.ebean.expression.Expr;<br/>@@ -15,6 +9,12 @@<br/> import com.avaje.ebean.expression.InternalExpressionList;<br/> import com.avaje.ebean.expression.Junction;<br/> <br/>+import java.util.ArrayList;<br/>+import java.util.Collection;<br/>+import java.util.List;<br/>+import java.util.Map;<br/>+import java.util.Set;<br/>+<br/> /**<br/>  * Default implementation of ExpressionList.<br/>  */<br/>@@ -125,7 +125,7 @@<br/> 	 * Calculate a hash based on the expressions but excluding the actual bind values.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hash = DefaultExpressionList.class.hashCode();<br/>+		int hash = DefaultExpressionList.class.getName().hashCode();<br/> 		for (int i = 0, size=list.size(); i < size; i++) {<br/> 			Expression expression = list.get(i);<br/> 			hash = hash*31 + expression.queryPlanHash();<br/>@@ -137,7 +137,7 @@<br/> 	 * Calculate a hash based on the expressions.<br/> 	 */<br/> 	public int queryBindHash() {<br/>-		int hash = DefaultExpressionList.class.hashCode();<br/>+		int hash = DefaultExpressionList.class.getName().hashCode();<br/> 		for (int i = 0, size=list.size(); i < size; i++) {<br/> 			Expression expression = list.get(i);<br/> 			hash = hash*31 + expression.queryBindHash();<br/>Index: ../ebean/src/com/avaje/ebean/server/net/Endpoint.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/net/Endpoint.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/server/net/Endpoint.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -81,7 +81,7 @@<br/>     }<br/>     <br/>     public int hashCode() {<br/>-        int hc = Endpoint.class.hashCode();<br/>+        int hc = Endpoint.class.getName().hashCode();<br/>         hc = 31*hc + fullName.hashCode();<br/>         return hc;<br/>     }<br/>Index: ../ebean/src/com/avaje/ebean/expression/AllEqualsExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/AllEqualsExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/AllEqualsExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -74,7 +74,7 @@<br/> 	 * </p><br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = AllEqualsExpression.class.hashCode();<br/>+		int hc = AllEqualsExpression.class.getName().hashCode();<br/> 		Set<Entry<String, Object>> entries = propMap.entrySet();<br/> 		Iterator<Entry<String, Object>> it = entries.iterator();<br/> <br/>Index: ../ebean/src/com/avaje/ebean/query/DefaultOrmQuery.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/query/DefaultOrmQuery.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/query/DefaultOrmQuery.java	Sun Feb 22 11:38:27 CET 2009<br/>@@ -1,12 +1,5 @@<br/> package com.avaje.ebean.query;<br/> <br/>-import java.util.ArrayList;<br/>-import java.util.List;<br/>-import java.util.Map;<br/>-import java.util.Set;<br/>-<br/>-import javax.persistence.PersistenceException;<br/>-<br/> import com.avaje.ebean.EbeanServer;<br/> import com.avaje.ebean.Query;<br/> import com.avaje.ebean.QueryListener;<br/>@@ -25,6 +18,12 @@<br/> import com.avaje.ebean.util.BindParams;<br/> import com.avaje.ebean.util.DefaultExpressionList;<br/> <br/>+import javax.persistence.PersistenceException;<br/>+import java.util.ArrayList;<br/>+import java.util.List;<br/>+import java.util.Map;<br/>+import java.util.Set;<br/>+<br/> /**<br/>  * Default implementation of an Object Relational query.<br/>  */<br/>@@ -317,7 +316,7 @@<br/> 	}<br/> <br/> 	public int hashCode() {<br/>-		int hc = Query.class.hashCode();<br/>+		int hc = Query.class.getName().hashCode();<br/> 		hc = hc * 31 + getQueryHash();<br/> 		return hc;<br/> 	}<br/>Index: ../ebean/src/com/avaje/ebean/expression/NotExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/NotExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/NotExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -31,7 +31,7 @@<br/> 	 * Based on the expression.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = NotExpression.class.hashCode();<br/>+		int hc = NotExpression.class.getName().hashCode();<br/> 		hc = hc * 31 + exp.queryPlanHash();<br/> 		return hc;<br/> 	}<br/>Index: ../ebean/src/com/avaje/ebean/expression/CaseInsensitiveEqualExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/CaseInsensitiveEqualExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/CaseInsensitiveEqualExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -31,7 +31,7 @@<br/> 	 * Based on the propertyName.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = CaseInsensitiveEqualExpression.class.hashCode();<br/>+		int hc = CaseInsensitiveEqualExpression.class.getName().hashCode();<br/> 		hc = hc * 31 + propertyName.hashCode();<br/> 		return hc;<br/> 	}<br/>Index: ../ebean/src/com/avaje/ebean/expression/LikeExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/LikeExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/LikeExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -44,7 +44,7 @@<br/> 	 * Based on caseInsensitive and the property name.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = LikeExpression.class.hashCode();<br/>+		int hc = LikeExpression.class.getName().hashCode();<br/> 		hc = hc * 31 + (caseInsensitive ? 0 : 1);<br/> 		hc = hc * 31 + propertyName.hashCode();<br/> 		return hc;<br/>Index: ../ebean/src/com/avaje/ebean/expression/NullExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/NullExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/NullExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -39,7 +39,7 @@<br/> 	 * Based on notNull flag and the propertyName.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = NullExpression.class.hashCode();<br/>+		int hc = NullExpression.class.getName().hashCode();<br/> 		hc = hc * 31 + (notNull ? 1 : 0);<br/> 		hc = hc * 31 + propertyName.hashCode();<br/> 		return hc;<br/>Index: ../ebean/src/com/avaje/ebean/expression/SimpleExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/SimpleExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/SimpleExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -66,9 +66,9 @@<br/> 	 * Based on the type and propertyName.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = SimpleExpression.class.hashCode();<br/>+		int hc = SimpleExpression.class.getName().hashCode();<br/> 		hc = hc * 31 + propertyName.hashCode();<br/>-		hc = hc * 31 + type.hashCode();<br/>+		hc = hc * 31 + type.name().hashCode();<br/> 		return hc;<br/> 	}<br/> <br/>Index: ../ebean/src/com/avaje/ebean/expression/RawExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/RawExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/RawExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -34,7 +34,7 @@<br/> 	 * Based on the sql.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = RawExpression.class.hashCode();<br/>+		int hc = RawExpression.class.getName().hashCode();<br/> 		hc = hc * 31 + sql.hashCode();<br/> 		return hc;<br/> 	}<br/>Index: ../ebean/src/com/avaje/ebean/expression/BetweenExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/BetweenExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/BetweenExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -37,7 +37,7 @@<br/> 	 * Based on the property name.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = BetweenExpression.class.hashCode();<br/>+		int hc = BetweenExpression.class.getName().hashCode();<br/> 		hc = hc * 31 + propertyName.hashCode();<br/> 		return hc;<br/> 	}<br/>Index: ../ebean/src/com/avaje/ebean/expression/InExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/InExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/InExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -45,7 +45,7 @@<br/> 	 * Based on the number of values in the in clause.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		return InExpression.class.hashCode() + 31 * values.length;<br/>+		return InExpression.class.getName().hashCode() + 31 * values.length;<br/> 	}<br/> <br/> 	public int queryBindHash() {<br/>Index: ../ebean/src/com/avaje/ebean/expression/JunctionExpression.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/expression/JunctionExpression.java	(revision 141)<br/>+++ ../ebean/src/com/avaje/ebean/expression/JunctionExpression.java	Sun Feb 22 11:37:22 CET 2009<br/>@@ -72,7 +72,7 @@<br/> 	 * Based on Junction type and all the expression contained.<br/> 	 */<br/> 	public int queryPlanHash() {<br/>-		int hc = JunctionExpression.class.hashCode();<br/>+		int hc = JunctionExpression.class.getName().hashCode();<br/> 		for (int i = 0; i < list.size(); i++) {<br/> 			hc = hc * 31 + joinType.hashCode();<br/> 			hc = hc * 31 + list.get(i).queryPlanHash();<br/>@@ -82,7 +82,7 @@<br/> 	}<br/> <br/> 	public int queryBindHash() {<br/>-		int hc = JunctionExpression.class.hashCode();<br/>+		int hc = JunctionExpression.class.getName().hashCode();<br/> 		for (int i = 0; i < list.size(); i++) {<br/> 			hc = hc * 31 + list.get(i).queryBindHash();<br/> 		}</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+23 Feb&nbsp;03:39
+</div>
+Yes, I buy that...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Yes I follow that and the fix(s) look correct.</p><p>Thanks, Rob.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+24 Feb&nbsp;10:17
+</div>
+Committed changes
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I have committed the changes into HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="75">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-75.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="75">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

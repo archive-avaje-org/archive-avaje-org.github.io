@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Query joins</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Queries in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/ebean/introquery_join.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/ebean/introduction.html">Ebean</a>
+&raquo; <a href="/ebean/documentation.html">Docs</a>
+&raquo; <a href="/ebean/introquery.html">Queries</a>
+&raquo; <span>Joins</span>
+</div>
+
+
+
+
+
+<div class="columnlayout">
+
+<h3>Queries in Ebean</h3>
+<ul>
+<li><a href="introquery.html">Basics</a></li>
+<li><a href="introquery_join.html">Fetch (paths)</a></li>
+<li><a href="introquery_joinquery.html">Query Joins</a></li>
+<li><a href="introquery_partialobject.html">Partial Objects</a></li>
+<li><a href="introquery_autofetch.html">Autofetch - Automatic query tuning</a></li>
+<li><a href="introquery_future.html">Asynchrous Query execution</a></li>
+<li><a href="introquery_paginglist.html">PagingList</a></li>
+<li><a href="introquery_rawsql.html">RawSql</a></li>
+</ul>
+
+<h4>Joins</h4>
+
+
+<div class="col70">
+<p>
+You can use fetch() to explicitly state which additional paths you want to fetch.
+You would do this to reduce "lazy loading" of those beans later.
+</p>
+</div>
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+// fetch orders and also fetch the order details
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.fetch("details")
+		.findList();
+</pre>
+</div>
+<div class="col70">
+<p>
+... results in the <em>"left outer join or_order_detail"</em> and related d.* columns
+being included in the query (so they won't be lazy loaded later).
+</p>
+</div>
+
+<div class="col70">
+<pre class="sql:nogutter:nocontrols">
+&lt;sql summary='[app.data.test.Order] +many[details]'&gt;
+select o.id, o.order_date, o.ship_date, o.cretime, o.updtime, o.status_code, o.customer_id
+        , d.id, d.order_qty, d.ship_qty, d.cretime, d.updtime, d.order_id, d.product_id 
+from or_order o
+left outer join or_order_detail d on o.id = d.order_id  
+order by o.id
+&lt;sql&gt;
+</pre>
+</div>
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<p>
+An example with a few more paths fetched. Note that Ebean determines the type of SQL join for
+you based on the cardinality and optionality of the relationship.
+</p>
+
+</div>
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.fetch("details")
+		.fetch("details.product")
+		.fetch("customer")
+		.fetch("customer.billingAddress")
+		.fetch("customer.shippingAddress")
+		.findList();
+</pre>
+</div>
+
+<div class="col70">
+<pre class="sql:nogutter:nocontrols">
+&lt;sql summary='[app.data.test.Order, customer, -
+--                  customer.billingAddress, customer.shippingAddress] -
+--				+many[details, details.product]'&gt;
+
+select o.id, o.order_date, o.ship_date, o.cretime, o.updtime, o.status_code
+        , c.id, c.name, c.cretime, c.updtime, c.status_code
+        , cb.id, cb.line_1, cb.line_2, cb.city, cb.region, cb.cretime, cb.updtime, cb.country_code
+        , ca.id, ca.line_1, ca.line_2, ca.city, ca.region, ca.cretime, ca.updtime, ca.country_code
+        , d.id, d.order_qty, d.ship_qty, d.cretime, d.updtime, d.order_id
+        , dp.id, dp.sku, dp.name, dp.cretime, dp.updtime 
+from or_order o
+join or_customer c on o.customer_id = c.id 
+left outer join or_address cb on c.billing_address_id = cb.id 
+left outer join or_address ca on c.shipping_address_id = ca.id 
+left outer join or_order_detail d on o.id = d.order_id 
+left outer join or_product dp on d.product_id = dp.id  
+order by o.id
+&lt;sql&gt;
+</pre>
+</div>
+
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<p>
+Ebean will automatically add SQL joins if they are required for the 
+where clause or order by clause (and the matching joins are not 
+explicitly included).
+</p>
+
+</div>
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.where().ilike("customer.name", "rob%")
+		.findList();
+</pre>
+</div>
+<div class="col70">
+<p>
+... in the sql below, the join to or_customer is automatically added to support the where clause.
+</p>
+</div>
+<div class="col70">
+<pre class="sql:nogutter:nocontrols">
+&lt;sql summary='[app.data.test.Order]'&gt;
+select o.id, o.order_date, o.ship_date, o.cretime, o.updtime, o.status_code, o.customer_id 
+from or_order o
+join or_customer c on o.customer_id = c.id  
+where lower(c.name) like ? 
+&lt;sql&gt;
+</pre>
+</div>
+
+<div class="colend"></div>
+
+<div class="colend"></div>
+<div class="col70 colnext">
+<a class="h3" href="/ebean/introquery_joinquery.html">Next: Query Joins</a>
+</div>
+<div class="colend"></div>
+
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

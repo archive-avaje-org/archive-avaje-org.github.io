@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: Delete on bean with ManyToMany ... and no casade.REMOVE should not delete from intersection table</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="Hello I have Users Roles and a many to many between them userroles table Users have validRoles and Roles have validUsers Neither has CascadeType specified To my surprise when I delete a Role it deletes from userroles as well The database has cascade no action on userroles roleid and userroles userid Why are records in userroles being deleted Thanks Daryl ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-221.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 221 : Delete on bean with ManyToMany ... and no casade.REMOVE should not delete from intersection table
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 221 : Delete on bean with ManyToMany ... and no casade.REMOVE should not delete from intersection table </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Rob</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.4.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">22/02/2010</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">22/02/2010</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>Hello,</p><p>I have Users, Roles and a many-to-many between them (userroles table).</p><p>Users have validRoles and Roles have validUsers. Neither has<br/>CascadeType specified. To my surprise, when I delete a Role, it<br/>deletes from userroles as well. The database has cascade "no action"<br/>on userroles.roleid and userroles.userid.</p><p>Why are records in userroles being deleted?</p><p>Thanks.</p><p>/Daryl</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+22 Feb&nbsp;09:18
+</div>
+rob comments...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Yes, sorry I was not clear.</p><p>I believe we should change this behavior (and treat this as a bug). </p><p>For we did that I wanted to check the JPA 2 spec to see if there was anything we missed wrt the behavior with and without the cascade.REMOVE. It appears nothing around this area has changed in JPA2. The important things to note for users... is that they are going to get different behavior around ManyToMany deletes (with and without cascade.REMOVE) with different vendors which is a shame (and potentially a bit dangerous when you swap vendors).</p><p><br/>Behaviour without cascade.REMOVE<br/>-----------------------------------------------------<br/>The current behavior does delete the intersection rows whether you like it or not.</p><p>As Daryl has pointed out -  this means we can't handle the cases where you want the delete to not cascade but instead to fail when there are rows in the intersection table (sol).</p><p>In changing the behavior we also need to supply a new method deleteManyToManyAssociations(...) so that users can easily explicitly do the deletion from the intersection table if that is the behavior they need. This also is nice as it compliments our saveManyToManyAssociations() method. NB: You can also use cascade REMOVE (or cascade ALL) but then you are relying on vendor (Ebean) specific behavior (and you may not like that or at least need to note it).</p><p><br/>Behavior with cascade.REMOVE  (should not change)<br/>---------------------------------------------------------------------------------<br/>Users should note that with cascade.REMOVE or cascade.ALL on a ManyToMany ... they are going to get different behavior from different vendors. I think Ebean should follow its current behavior which effectively means the intersection rows get deleted but the other associated beans DO NOT get deleted.</p><p>I believe this makes sense (not to casade the delete across to the associated beans) as ManyToMany typically represents an ASSIGNMENT between two entities with independent life cycles. If users want to delete the beans on the other side of the ManyToMany they can do this easily anyway with Ebean (delete can take an iterator).</p><p>(We need to justify our behavior as its up to the vendor what they do here)</p><p></p><p>So hopefully that is a bit clearer ... all comments welcome... and if we don't get any arguments against we will log a bug and change the behaviour (to not delete from the intersection automatically) and add the deleteManyToManyAssociations(...) method.</p><p>... and thanks to Daryl for highlighting this issue !!!</p><p><br/>Cheers, Rob.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+22 Feb&nbsp;09:19
+</div>
+Daryl vote
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>> Behavior with cascade.REMOVE  (should not change)<br/>> --------------------------------------------------------------------------- ------<br/>> Users should note that with cascade.REMOVE or cascade.ALL on a ManyToMany<br/>> ... they are going to get different behavior from different vendors. I think<br/>> Ebean should follow its current behavior which effectively means the<br/>> intersection rows get deleted but the other associated beans *DO NOT* get<br/>> deleted.</p><p>+1 for me as I agree.</p><p>/Daryl</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+22 Feb&nbsp;09:28
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in HEAD ... added</p><pre class="java">/**
+     * Delete the associations (from the intersection table) of a ManyToMany
+     * given the owner bean and the propertyName of the ManyToMany collection.
+     * &lt;p&gt;
+     * This returns the number of associations deleted.
+     * &lt;/p&gt;
+     */
+    public int deleteManyToManyAssociations(Object ownerBean, String propertyName) {</pre>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="221">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-221.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="221">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

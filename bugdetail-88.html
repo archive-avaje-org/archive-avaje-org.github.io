@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: missing table alias with embedded key</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="imario">
+<meta name="description" content="I have an entity A which has an embedded key and a n 1 association B Both entity have some key columns with the same name As soon as autoFetch optimizes it is not an autoFetch problem the query by making the association eager fetched the column names are no longer unique and the generated idBindSql in IdBinderEmbedded is missing the table alias which creates an invalid sql then I am not sure if my patch here is a hack at least it tries to get the dbAlias from somewhere in case the deploy itself does not define one and then when building the idBindSql one is available to prefix the column Index ebean src com avaje ebean server deploy BeanProperty java ebean src com avaje ebean server deploy BeanProperty java revision 168 ebean src com avaje ebean server deploy BeanProperty java Fri Mar 13 1">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-88.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 88 : missing table alias with embedded key
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 88 : missing table alias with embedded key </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">imario</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">1.1.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">13/03/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">13/03/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>I have an entity (A) which has an embedded key and a n:1 association (B).<br/>Both entity have some key columns with the same name.</p><p>As soon as autoFetch optimizes (it is not an autoFetch problem) the query by making the association eager fetched the column names are no longer unique, and the generated idBindSql in IdBinderEmbedded is missing the table alias - which creates an invalid sql then.</p><p>I am not sure if my patch here is a hack, at least it tries to get the dbAlias from "somewhere" in case the deploy itself does not define one, and then, when building the idBindSql one is available to prefix the column.<br/> </p><p>Index: ../ebean/src/com/avaje/ebean/server/deploy/BeanProperty.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/deploy/BeanProperty.java	(revision 168)<br/>+++ ../ebean/src/com/avaje/ebean/server/deploy/BeanProperty.java	Fri Mar 13 10:47:45 CET 2009<br/>@@ -248,7 +247,12 @@<br/> <br/> 		this.dbColumn = deploy.getDbColumn();<br/> 		this.dbFullName = deploy.getDbFullName();<br/>+        if (deploy.getDbTableAlias() == null) {<br/>+            this.dbTableAlias = descriptor.getBaseTableAlias();<br/>+        }<br/>+        else {<br/>-		this.dbTableAlias = deploy.getDbTableAlias();<br/>+    		this.dbTableAlias = deploy.getDbTableAlias();<br/>+        }<br/> 		this.sqlFormulaJoin = deploy.getSqlFormulaJoin();<br/> 		this.sqlFormulaSelect = deploy.getSqlFormulaSelect();<br/> 		this.formula = sqlFormulaSelect != null;<br/>Index: ../ebean/src/com/avaje/ebean/server/deploy/id/IdBinderEmbedded.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/deploy/id/IdBinderEmbedded.java	(revision 168)<br/>+++ ../ebean/src/com/avaje/ebean/server/deploy/id/IdBinderEmbedded.java	Fri Mar 13 10:40:01 CET 2009<br/>@@ -133,6 +133,9 @@<br/> 			if (i > 0) {<br/> 				sb.append(" AND ");<br/> 			}<br/>+<br/>+            sb.append(embIdProperty.getDbTableAlias());<br/>+            sb.append(".");<br/> 			sb.append(props[i].getDbFullName());<br/> 			sb.append(" = ? ");<br/> 		}</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+13 Mar&nbsp;10:49
+</div>
+Reproduced
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I think I have reproduced the problem.</p><p>T0DetailId id = new T0DetailId(3,4);<br/>		<br/>T0Detail detail <br/>   = Ebean.find(T0Detail.class)<br/>     .join("master").setId(id).findUnique();</p><p>generates sql with no table alias on the embedded id columns... and you get a sql error "Ambiguous column name d1_id ..."</p><p>where d1_id = ?  AND d2_id = ?</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+13 Mar&nbsp;11:02
+</div>
+The full sql was...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p><sql summary='[test.ebean.model.relationship.T0Detail, master]'><br/>select d.d1_id, d.d2_id, d.detail<br/>        , m.d1_id, m.name <br/>from t0_detail d<br/>left outer join t0_master m on d.m_id = m.d1_id <br/>where d1Id = ?  AND d2Id = ?  <br/></sql></p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+13 Mar&nbsp;11:12
+</div>
+I follow ...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Yes, I understand your fix. I'm pretty happy that it is not a hack... in that the table alias is not set on Embedded beans, so the IF check in BeanProperty is detecting that case... and getting the 'base table alias'.</p><p>I'll ponder a bit more but it looks good to me.</p><p>Thanks, Rob.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+13 Mar&nbsp;11:35
+</div>
+additional thoughts about the fix
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>The thing which makes me not that happy is in IdBinderEmbedded.java where I add the table alias, but the javadoc states that getDbFullName() already delivers the full name - with alias.</p><p>The other solution I had in mind was to make dbTableAlias non-final and set it in the "second pass" once the table knows its alias.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+15 Mar&nbsp;02:13
+</div>
+Yes - a better fix
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Yes, I think a better fix is (in BeanPropertyAssocOne) to use:</p><p>BeanEmbeddedMeta overrideMeta = BeanEmbeddedMetaFactory.create(owner, deploy, descriptor);<br/>embeddedProps = overrideMeta.getProperties();</p><p><br/>... it was being used for Embedded beans but not EmbeddedId beans... so I have made the change that it is used for ALL Embedded beans (aka also used for EmbeddedId).</p><p>What the BeanEmbeddedMetaFactory does is effectly set the table alias on the properties (returning them via overrideMeta.getProperties();)</p><p>That means the getDbFullName() is correct again.</p><p>I'm committing up this fix into HEAD along with some other changes (improved error messages and conditionally using the column alias on imported concatinated keys).</p><p>Fixed in HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="88">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-88.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="88">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

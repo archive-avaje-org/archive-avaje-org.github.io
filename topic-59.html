@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: NPE when using transient Lists</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Eabin">
+<meta name="description" content="Hey Rob i just tested 0 9 6 but it throws a NPE Caused by javax persistence PersistenceException Can not find descriptor null for tk eabin event Event doParticipants at com avaje ebean server deploy BeanDescriptorFactory getTargetDescriptor BeanDescriptorFactory java 247 at com avaje ebean server deploy BeanDescriptorFactory checkMappedBy BeanDescriptorFactory java 408 at com avaje ebean server deploy BeanDescriptorFactory checkMappedBy BeanDescriptorFactory java 233 at com avaje ebean server deploy BeanDescriptorFactory deriveCircularInfo BeanDescriptorFactory java 216 at com avaje ebean server deploy BeanDescriptorFactory createDescriptor BeanDescriptorFactory java 196 at com avaje ebean server deploy BeanDescriptorCacheFactory deployBeanDescriptors BeanDescriptorCacheFactory java 212 at">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-59.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Eabin </span>
+26 Mar&nbsp;00:21
+</div>
+NPE when using transient Lists
+<div class="body">
+<p>Hey Rob,</p><p>i just tested 0.9.6, but it throws a NPE:<br/>Caused by: javax.persistence.PersistenceException: Can not find descriptor [null] for tk.eabin.event.Event.doParticipants<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorFactory.getTargetDescriptor(BeanDescriptorFactory.java:247)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorFactory.checkMappedBy(BeanDescriptorFactory.java:408)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorFactory.checkMappedBy(BeanDescriptorFactory.java:233)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorFactory.deriveCircularInfo(BeanDescriptorFactory.java:216)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorFactory.createDescriptor(BeanDescriptorFactory.java:196)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorCacheFactory.deployBeanDescriptors(BeanDescriptorCacheFactory.java:212)<br/>	at com.avaje.ebean.server.deploy.BeanDescriptorCacheFactory.initialiseAll(BeanDescriptorCacheFactory.java:121)<br/>	at com.avaje.ebean.server.deploy.DeploymentManager.&lt;init&gt;(DeploymentManager.java:89)<br/>	at com.avaje.ebean.server.plugin.PluginCore.&lt;init&gt;(PluginCore.java:35)<br/>	at com.avaje.ebean.server.plugin.PluginFactory.createPluginCore(PluginFactory.java:72)<br/>	at com.avaje.ebean.server.plugin.PluginFactory.create(PluginFactory.java:55)<br/>	at com.avaje.ebean.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:112)<br/>	at com.avaje.ebean.server.core.DefaultServerFactory.createServer(DefaultServerFactory.java:1)<br/>	at com.avaje.ebean.Ebean$ServerManager.getWithCreate(Ebean.java:213)<br/>	at com.avaje.ebean.Ebean$ServerManager.get(Ebean.java:200)<br/>	at com.avaje.ebean.Ebean$ServerManager.access$1(Ebean.java:190)<br/>	at com.avaje.ebean.Ebean.&lt;clinit&gt;(Ebean.java:116)<br/>	... 55 more</p><p><br/>the object in question does have a List of objects of another Entity, and a getter for that list - but the List is @Transient:</p><p>public class Event implements EditableObject {<br/>    @Id<br/>    private Long id;<br/>    @Column(name="startdate")<br/>    private UnixTimestamp startDate;<br/>    @Column(name="enddate")<br/>    private UnixTimestamp endDate;<br/>    @Column(name="cdate")<br/>    private UnixTimestamp creationDate;<br/>    @ManyToOne<br/>    @JoinColumn(name="creator_id")<br/>    private User creator;<br/>    @Column(name="minpeople")<br/>    private int minPeople = 1;<br/>    private String comment;<br/>    @ManyToOne<br/>    @JoinColumn(name="category_id")<br/>    private Category category;<br/>    @ManyToOne<br/>    @JoinColumn(name="location_id")<br/>    private Location location;<br/>    private boolean canceled = false;<br/>    private String reason;<br/>    private boolean deleted = false;<br/>    @OneToMany<br/>    @OrderBy("cdate")<br/>    private List&lt;Comment&gt; comments;<br/>    @Transient<br/>    private List&lt;Participant&gt; doParticipants;<br/>    @Transient<br/>    private List&lt;Participant&gt; nonParticipants;<br/>    @Transient<br/>    private List&lt;Participant&gt; maybeParticipants;<br/>    @OneToMany<br/>    private Set&lt;Participant&gt; participants;</p><p>    @Transient<br/>    private boolean selected;</p><p>    private transient final static Calendar calendar = Calendar.getInstance();<br/>.<br/>.<br/>.<br/>    public List&lt;Participant&gt; getDoParticipants() {<br/>        splitParticipants();<br/>        return doParticipants;<br/>    }</p><p><br/>--------------------------------------------------------------------</p><p>is this a regression? it worked fine with 0.9.3.</p><p>as always: thanks for your work,<br/>regards, eabin<br/>    </p><p>btw: i like the new login form. it actually works :)</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+26 Mar&nbsp;07:01
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>I'll have a look.  Yeah, actually being able to log in - not a bad feature :)</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+26 Mar&nbsp;07:35
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Yes its a regression :(  Basically since 0.9.5 I have kept the transient properties because they where useful for SqlSelect. However, in doing so some code that previously assumed properties where all non-transient is broken.  Hence your stack trace.</p><p>I'll build a fixed version.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+26 Mar&nbsp;08:08
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Logged bug <a href="http://www.avaje.org/bugdetail-44.html">http://www.avaje.org/bugdetail-44.html</a></p><p>Uploaded 0.9.6a which includes a fix for this bug and 2 others. This should be downloadable from sourceforge soon (needs to propergate around the sourceforge download sites).</p><p>Try that version and let me know. I did reproduce and it fixed the issue on my setup so I'm expecting that to fix it.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+27 Mar&nbsp;00:42
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>testing the website... had a glitch which stopped it working.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="59">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

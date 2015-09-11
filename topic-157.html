@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: all-delete-orphan</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="johan">
+<meta name="description" content="Does ebean has anything comparable to Hibernate s cascade option all delete orphan http docs jboss org hibernate core 3 3 reference en html example parentchild html example parentchild cascades ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-157.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-5.html">Features missing or wanted</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-5.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by johan </span>
+10 Oct&nbsp;20:41
+</div>
+all-delete-orphan
+<div class="body">
+<p>Does ebean has anything comparable to Hibernate's cascade option "all-delete-orphan"? <a href="http://docs.jboss.org/hibernate/core/3.3/reference/en/html/example-parentchild.html">http://docs.jboss.org/hibernate/core/3.3/reference/en/html/example-parentchild.html</a>#example-parentchild-cascades</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+12 Oct&nbsp;12:17
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>>> <br/>In our case, a Child cannot exist without its parent. So if we remove a Child from the collection, we do want it to be deleted.<br/><<</p><p>Assuming it's a OneToMany and not a ManyToMany. Then removing a child element from a list/set will not invoke a delete. That is, Ebean does not listen for additions/deletions from OneToMany's (but it does for ManyToMany in order to maintain the intersection table).</p><p>In Ebean you would just remove it from the list/set and delete it yourself via Ebean.delete(removedChild);</p><p>Does that make sense?  <br/>Does that answer your question? </p><p>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+12 Oct&nbsp;15:02
+</div>
+<span>by johan</span>
+<div class="body">
+<p>So Ebean does not support that for one-to-many releations. I found it quite convenient in Hibernate that e.g. if I have an Order I can remove a Line Item from it and then just save the order to have the item removed from the DB. In EMF (Eclipse Modeling Framework) they use the term containment for such releations, i.e. for object graphs where one object (child) is contained by another one (parent) removing the child from the parent and persisting the object graph will remove the child from the underlying data storage.</p><p>EclipseLink introduced a custom annotation called @PrivateOwned that does this as well. In OpenJPA it is @ElementDependent.</p><p>Any chance to have such a behaviour implemented in a future release of Ebean?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+13 Oct&nbsp;07:09
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Yes, I think it could be quite useful so yes I think we can certainly look to add this feature.</p><p>I'm not 100% clear on the behaviour though so if you want to define/clarify the behaviour that would be great.  Specifically in relation to the standard JPA cascade=CascadeType.ALL etc.</p><p>My thoughts is that you typically would want to use it with a CascadeType.ALL.</p><p>@OneToMany(cascade=CascadeType.ALL)<br/>@DeleteOrphan<br/>List<SomeDetail> details;</p><p>... and what this means is that any element removed from the list is going to be deleted when you save the bean.</p><p>If this is the correct/desired behaviour... then technically I think Ebean would only need to listen for removals (it doesn't need to listen for additions as they are saved via the existing CascadeType.ALL behaviour.</p><p>I assume that a clear() ... would have the effect of deleting all the elements in the list?  What if the list has not been loaded yet?</p><p>Anyway, if that sounds about right ... I don't that would be too hard to implement. Just need to split the "modify listening" behaviour into "modify listen additions" and "modify listen removals"... as we only need to listen and register the removals.</p><p>How does that sound?</p><p>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+13 Oct&nbsp;11:47
+</div>
+<span>by johan</span>
+<div class="body">
+<p>sounds good!</p><p>I think @DeleteOrphans would usually be used with CascadeType.ALL<br/>But of course it might also be used without another cascade action, e.g. in conjunction with REMOVE: when the parent is removed, remove all items in the association. Additionally, when an item is removed from the association remove the item too.</p><p>Regarding the name I think best practice for annotations is to use a passive, describing wording, therefore I'd prefer @PrivateOwned over @DeleteOrphans</p><p>When clear() is called and the list has not yet been loaded I would still expect that all formerly referenced objects get removed from the database.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+28 Oct&nbsp;07:52
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Logged as Enhancement: <a href="http://www.avaje.org/bugdetail-168.html">http://www.avaje.org/bugdetail-168.html</a></p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+29 Oct&nbsp;16:44
+</div>
+<span>by johan</span>
+<div class="body">
+<p>Nice. </p><p>This is actually the only issue that prevents me from switching to ebean. I am eagerly waiting for the resolution :-)</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+04 Nov&nbsp;09:29
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Fixed in HEAD.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="5">
+<input type="hidden" name="f_topicid" value="157">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

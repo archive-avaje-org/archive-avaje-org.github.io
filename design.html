@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Design Philosophy</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="The Design Philosophy of Ebean. OODBMS versus ORM / RDBMS">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/design.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Design Philosophy</span>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+<h3>Design Philosophy</h3>
+
+<ul>
+<li><a href="#jd">Getting the Job done</a></li>
+<li><a href="#oo">OODBMS versus ORM / RDBMS</a></li>
+<li><a href="#re">ORM is good but Relational is sometimes Better!</a></li>
+<li><a href="#eb">Ebean's Relational features</a></li>
+</ul>
+
+<p>
+&nbsp;
+</p>
+
+<h4><a id="jd"></a>Getting the Job done</h4>
+<p>
+A simple and robust persistence layer that gets the job done.
+Ebean is not trying to take a 'purist' or moral 'high ground' but it is trying to 
+keep things as simple and as clear for the developers who use it.
+</p>
+<table>
+<tr>
+<td>Simple</td>
+<td>Avoid complexity where possible</td>
+</tr>
+<tr>
+<td>Easy to use</td>
+<td>Don't make users jump through hoops</td>
+</tr>
+<tr>
+<td>Easy to understand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td>Transparent behaviour as much as possible</td>
+</tr>
+<tr>
+<td>Real World</td>
+<td>Features that get the job done (not purist)</td>
+</tr>
+<tr>
+<td>JPA</td>
+<td>Match and relate to JPA as much as possible</td>
+</tr>
+<tr>
+<td>ORM and Relational</td>
+<td>Provide Relational features along with ORM</td>
+</tr>
+</table>
+
+
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="jpa.html">JPA Architecture issue</a></li>
+<li><a href="jpaapi.html">JPA API issues</a></li>
+<li><a href="occ.html" title="Explanation of Optimistic Concurrency Checking">Optimistic Concurrency Checking</a></li>
+<li><a href="limitation.html" title="Limitations of Ebean">Limitations of Ebean</a></li>
+</ul>
+</div>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+<h4><a id="oo"></a>OODBMS versus ORM / RDBMS</h4>
+<p>
+In choosing an ORM you have likely chosen an RDBMS over an OODBMS (or already have an RDBMS).
+If you have not had time to investigate this decision you perhaps could spend some time on this.
+</p>
+<p>
+There is a view by some (CJ Date included) that the only thing OO brings to the Relational model 
+is Type Inheritance. There is also the debate about what functions should
+be handled by "Data Management Systems" versus "Application Code".
+</p>
+
+</td>
+<td class="rhs">
+<p>
+"the only thing OO brings to the Relational model 
+is Type Inheritance" - Do you agree?
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+<p>
+<em><a href="typeinheritance.html">&laquo; ORM's "Ugly Duckling" - Inheritance &raquo;</a></em>
+</p>
+<p>
+I think it is fair to say that the "Ugly Duckling" of ORM is the way Inheritance is implemented.
+Specifically the DB Design and SQL used in handling inheritance could be considered a bit
+ugly and convoluted. From a RDBMS perspective the SQL and Design required could sometimes 
+be described as a little 'forced'.
+</p>
+<p>
+As RDBMS vendors include <a href="typeinheritance.html">SQL3 Type Inheritance (Oracle, Virtuoso, Postgres)</a> then this "Ugly Duckling" 
+should disappear as the SQL and Design for handling Inheritance would become more 'natural' 
+to the DBMS and not 'forced'. 
+</p>
+<p>
+There is the potential for ORM and RDBMS to provide the best of both worlds. The benefits of
+Relational Database Management Systems with a natural approach for Object Orientated Development.
+</p>
+
+</td>
+<td class="rhs">
+<p>
+ORM's "Ugly Duckling" is how handling Inheritance sometimes looks 'forced'.
+</p>
+<p>
+Which RDBMS vendors include Type Inheritance?
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+<h4><a id="re"></a>ORM is good but Relational is sometimes Better!</h4>
+<p>
+Don't get me wrong - ORM is great - but I believe it is a trap to think ORM is always the best solution.
+Specifically for ad hoc queries and
+updates and deletes in a stateless environment Relational approaches can be simpler to use and
+more efficient.
+</p>
+<p>
+I have seen a number of ORM Vendor code examples where an Object is fetched back from the database
+just so that it can be updated or deleted. In doing so there is an additional query against the
+database and the code bypassed any Optimistic Concurrency Checking. This would be fine for an
+enterprise with a very small 'e' - but I'd suggest its a pretty poor approach.
+</p>
+</td>
+<td class="rhs">
+<p>
+Relational approaches can be simpler for
+Ad hoc queries and updates in a stateless environment
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<p>
+For stateless web applications you may not have all the information required for a bean. The bean
+may have 20 properties and you only have 5 of those coming back from the HTML FORM. You also
+do not have the original bean for either updating or deleting. In this case you will likely find
+a more relational approach easier and more efficient.
+</p>
+<p>
+Refer: <a href="ormupdate.html">ORM Updates and Deletes in a Stateless environment</a>
+</p>
+
+<p><em>EJB QL for Reporting or Ad Hoc?</em></p>
+<p>
+Many queries in a system are for Reporting or Ad Hoc in nature. The results of these queries 
+are often read only and not intended for updating. Often I think these types of queries are better
+left as naturally relational rather than forcing them into say EJB QL and specific Objects.
+<em>Ebean does not currently support EJB QL so perhaps this is blatant bias :)</em>
+</p>
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+<h4><a id="eb"></a>Ebean's Relational features</h4>
+<p>
+The goal of Ebean is not to hide the Relational Database. More than that the goal of Ebean is to
+promote the use of Relational features when they make most sense. 
+The use of UpdateSql, CallableSql, FindByNative and MapBeans will <em>sometimes</em>
+provide a simpler and more efficient solution that an ORM/Bean solution. 
+</p>
+<p>
+It is the intention for Ebean to provide both ORM and Relational features in the one persistence
+layer. This gives the developers the ability to choose the approach that best solves their 
+needs. Whats more these features are all designed to work together in the same transaction. 
+</p>
+<p>
+Whether you use these features is up to you but hopefully you find them a useful way to get
+the job done in a simple and transparent fashion.
+</p>
+</td>
+<td class="rhs">
+<p>
+Ebean is designed to provide both ORM and Relational features.
+</p>
+<p>
+Developers can then pick the best approach depending on the situation 
+(and even use both in the same transaction)
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<p>
+&nbsp;
+</p>
+<p style="text-align:right;">
+<a href="limitation.html">Next: Limitations of Ebean</a>
+</p>
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

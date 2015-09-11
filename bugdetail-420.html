@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: SQLException with CascadeType.REMOVE</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Mikael">
+<meta name="description" content="See discussion about this bug here https groups google com forum fromgroups pli 1 topic ebean K4xZZFvYoMk I ve got a problem deleting a parent object using CascadeType REMOVE The parent and the child objects are of the same type ResourceFile I m running Ebean 2 7 3 with Play Framework 2 0 2 The class Entity Table name ResourceFile public class ResourceFile extends private static final long serialVersionUID 1L ManyToOne fetch FetchType LAZY optional true JoinColumn name parentResourceFileId nullable true private ResourceFile parent OneToMany cascade CascadeType REMOVE fetch FetchType LAZY mappedBy parent orphanRemoval true private Set alternatives new HashSet public ResourceFile getParent return parent public void setParent ResourceFile parent this parent parent public Set getAlternatives r">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-420.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 420 : SQLException with CascadeType.REMOVE
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 420 : SQLException with CascadeType.REMOVE </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Mikael</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">3.x</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">30/08/2012</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">30/08/2012</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>See discussion about this bug here:<br/><a href="https://groups.google.com/forum/?fromgroups">https://groups.google.com/forum/?fromgroups</a>=&pli=1#!topic/ebean/K4xZZFvYoMk</p><p>I've got a problem deleting a "parent object" using CascadeType.REMOVE.<br/>The parent and the child objects are of the same type (ResourceFile).<br/>I'm running Ebean 2.7.3 with Play Framework 2.0.2.</p><p>The class:</p><p>@Entity<br/>@Table(name = "ResourceFile")<br/>public class ResourceFile extends ... {<br/>  private static final long serialVersionUID = 1L;</p><p>  @ManyToOne(fetch = FetchType.LAZY, optional = true)<br/>  @JoinColumn(name = "parentResourceFileId", nullable = true)<br/>  private ResourceFile parent;</p><p>  ...</p><p>  @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY,<br/>      mappedBy = "parent", orphanRemoval = true)<br/>  private Set<ResourceFile> alternatives = new HashSet<>();</p><p>  ...</p><p>  public ResourceFile getParent() {<br/>    return parent;<br/>  }</p><p>  public void setParent(ResourceFile parent) {<br/>    this.parent = parent;<br/>  }</p><p>  public Set<ResourceFile> getAlternatives() {<br/>    return alternatives;<br/>  }</p><p>  public void setAlternatives(Set<ResourceFile> alternatives) {<br/>    this.alternatives = alternatives;<br/>  }<br/>}</p><p>A Maven project for the test case can be downloaded here:<br/><a href="http://test.incompleteopus.net/ebean-bug-cascade-remove.zip">http://test.incompleteopus.net/ebean-bug-cascade-remove.zip</a></p><p>In the test case I create one parent object and two children. Then I try to delete the parent object, which should delete the child objects as well due to CascadeType.REMOVE.</p><p>I was using Ebean 2.7.3 in my Play Framework-based project, but I confirmed the same error using the standalone test case in 2.7.7.</p><p>Here's the transaction log for the error:</p><p>txn[1003], 21:20:40.166, insert into ResourceFile (id, name, parentResourceFileId) values (?,?,?) <br/>txn[1003], 21:20:40.168, Binding Insert [ResourceFile]  set[id=01080031-e3ed-463f-9f7d-3d9759b1a13e, name=parentFile1, parentResourceFileId=null, ] <br/>txn[1003], 21:20:40.169, Inserted [ResourceFile] [01080031-e3ed-463f-9f7d-3d9759b1a13e] <br/>txn[1004], 21:20:40.176, insert into ResourceFile (id, name, parentResourceFileId) values (?,?,?) <br/>txn[1004], 21:20:40.176, Binding Insert [ResourceFile]  set[id=bc494540-5caf-4c83-9425-19bee351b84a, name=childFile1, parentResourceFileId=01080031-e3ed-463f-9f7d-3d9759b1a13e, ] <br/>txn[1004], 21:20:40.176, Inserted [ResourceFile] [bc494540-5caf-4c83-9425-19bee351b84a] <br/>txn[1005], 21:20:40.177, insert into ResourceFile (id, name, parentResourceFileId) values (?,?,?) <br/>txn[1005], 21:20:40.177, Binding Insert [ResourceFile]  set[id=0cd05a7c-9f54-45b4-9013-ddc5baf9f2a3, name=childFile2, parentResourceFileId=01080031-e3ed-463f-9f7d-3d9759b1a13e, ] <br/>txn[1005], 21:20:40.177, Inserted [ResourceFile] [0cd05a7c-9f54-45b4-9013-ddc5baf9f2a3] <br/>txn[1006], 21:20:40.242, select t0.id c0  from ResourceFile t0  where parentResourceFileId=?  <br/>txn[1006], 21:20:40.246, FindIds exeMicros[3807] rows[2] type[ResourceFile] predicates[parentResourceFileId=? ] bind[01080031-e3ed-463f-9f7d-3d9759b1a13e, ] <br/>txn[1006], 21:20:40.262, select t0.id c0  from ResourceFile t0  where (parentResourceFileId) in (?,?)  <br/>txn[1006], 21:20:40.264, FindIds exeMicros[2052] rows[0] type[ResourceFile] predicates[(parentResourceFileId) in (?,?) ] bind[bc494540-5caf-4c83-9425-19bee351b84a, 0cd05a7c-9f54-45b4-9013-ddc5baf9f2a3, ] <br/>txn[1006], 21:20:40.265, select t0.id c0  from ResourceFile t0  where (parentResourceFileId) in (?)  <br/>txn[1006], 21:20:40.280, ERROR executing query:   bindLog[] error[Parameter "#1" is not set; SQL statement:\n select t0.id c0 \n from ResourceFile t0 \n where (parentResourceFileId) in (?)  [90012-168]] <br/>txn[1006], 21:20:40.293, Rollback </p><p>Here's the stack trace:</p><p>Query threw SQLException:No value specified for parameter 1 <br/>[error] Bind values:[] <br/>[error] Query was:<br/>[error] select t0.id c0 <br/>[error] from ResourceFile t0 <br/>[error] where (parentResourceFileId) in (?)  <br/>[error] <br/>[error]     at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:849)<br/>[error]     at com.avaje.ebeaninternal.server.query.CQueryEngine.findIds(CQueryEngine.java:100)<br/>[error]     at com.avaje.ebeaninternal.server.query.DefaultOrmQueryEngine.findIds(DefaultOrmQueryEngine.java:63)<br/>[error]     at com.avaje.ebeaninternal.server.core.OrmQueryRequest.findIds(OrmQueryRequest.java:318)<br/>[error]     at com.avaje.ebeaninternal.server.core.DefaultServer.findIdsWithCopy(DefaultServer.java:1330)<br/>[error]     at com.avaje.ebeaninternal.server.core.DefaultServer.findIds(DefaultServer.java:1322)<br/>[error]     at com.avaje.ebeaninternal.server.deploy.BeanPropertyAssocMany.findIdsByParentIdList(BeanPropertyAssocMany.java:283)<br/>[error]     at com.avaje.ebeaninternal.server.deploy.BeanPropertyAssocMany.findIdsByParentId(BeanPropertyAssocMany.java:240)<br/>[error]     at com.avaje.ebeaninternal.server.persist.DefaultPersister.delete(DefaultPersister.java:574)<br/>[error]     at com.avaje.ebeaninternal.server.persist.DefaultPersister.delete(DefaultPersister.java:575)<br/>[error]     at com.avaje.ebeaninternal.server.persist.DefaultPersister.deleteManyDetails(DefaultPersister.java:1189)<br/>[error]     at com.avaje.ebeaninternal.server.persist.DefaultPersister.deleteAssocMany(DefaultPersister.java:1156)<br/>[error]     at com.avaje.ebeaninternal.server.persist.DefaultPersister.delete(DefaultPersister.java:643)<br/>[error]     at com.avaje.ebeaninternal.server.persist.DefaultPersister.delete(DefaultPersister.java:464)<br/>[error]     at com.avaje.ebeaninternal.server.core.DefaultServer.delete(DefaultServer.java:1831)<br/>[error]     at com.avaje.ebeaninternal.server.core.DefaultServer.delete(DefaultServer.java:1821)<br/>[error]     at com.avaje.ebean.Ebean.delete(Ebean.java:678)<br/>[error]     at play.db.ebean.Model.delete(Model.java:142)<br/>[error]     ...<br/>[error] Caused by: java.sql.SQLException: No value specified for parameter 1<br/>[error]     at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)<br/>[error]     at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:987)<br/>[error]     at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:982)<br/>[error]     at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:927)<br/>[error]     at com.mysql.jdbc.PreparedStatement.checkAllParametersSet(PreparedStatement.java:2595)<br/>[error]     at com.mysql.jdbc.PreparedStatement.fillSendPacket(PreparedStatement.java:2571)<br/>[error]     at com.mysql.jdbc.PreparedStatement.fillSendPacket(PreparedStatement.java:2497)<br/>[error]     at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2251)<br/>[error]     at com.jolbox.bonecp.PreparedStatementHandle.executeQuery(PreparedStatementHandle.java:172)<br/>[error]     at com.avaje.ebeaninternal.server.query.CQueryFetchIds.findIds(CQueryFetchIds.java:187)<br/>[error]     at com.avaje.ebeaninternal.server.query.CQueryEngine.findIds(CQueryEngine.java:85)<br/>[error]     ... 88 more</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Daniel 
+25 Nov&nbsp;02:48
+</div>
+Any updates?
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I've seen this discussed in various places online and was just wondering if there's any news on this?</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Lev 
+29 Nov&nbsp;14:26
+</div>
+Same here
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>We're facing the same issue. <br/>This is serious problem in case of single table inheritance as well.<br/>Please fix this bug as soon as possible.<br/>Thanks.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="420">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-420.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="420">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

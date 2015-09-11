@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Explanation of Optimistic Concurrency Checking - Locking, used in JPA Ebean Java persistence</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="An explanation of how Optimistic Concurrency Checking is performed">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/occ.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Optimistic Concurrency Checking</span>
+</div>
+
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+<h3>Optimistic Concurrency Checking</h3>
+<p>
+Optimistic Concurrency Checking is also referred to as Optimistic Locking and Optimistic Concurrency 
+Control. Note that in the EJB3 JPA spec the term used is Optimistic Locking but it means the same thing.
+</p>
+<p>
+The point of Optimistic Concurrency Checking is to prevent "Lost Updates". A lost update is where 
+two users update the same data with one of the updates overwriting the other. The effect is as if
+one of the updates never occured at all - it was lost.
+</p>
+<p>
+The benefit of Optimistic Concurrency Checking over Pessimistic Locking is that Optimistic Concurrency
+Checking does not require Database locks. Pessimistic Locking will use Database locks and this 
+generally will reduce the concurrency the database can support. 
+</p>
+
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="occcode.html" title="Code Simulating OldValues creation">Code example to explain OldValues in Ebean</a></li>
+<li><a href="jpa.html" title="Issue with JPA Architecture">JPA Architecure issue</a></li>
+<li><a href="jpaapi.html" title="API Issues with JPA">JPA API issues</a></li>
+<li><a href="design.html" title="Design Philosophy behind Ebean">Design Philosophy</a></li>
+<li><a href="transiso.html">Transaction Isolation</a></li>
+<li><a href="lazy.html">Lazy Loading</a></li>
+<li><a href="equals.html" >equals and hashcode</a></li>
+</ul>
+</div>
+</td>
+
+</tr>
+
+<tr>
+<td class="main">
+<h4>Only works in READ_COMMITTED Transaction Isolation</h4>
+<p>
+It is important to note that Optimistic Concurrency Checking only works in READ_COMMITED Transaction
+Isolation Level. Specifically, at higher Isolation levels such as SERIALIZABLE the UPDATE or DELETE
+will see the database as at the Transaction start time. In the time gap between Transaction 
+start time and the UPDATE/DELETE statement there could be commited changes that will be lost (Lost Updates).
+</p>
+<p>
+It is expected for both EJB3 JPA (Section 3.4) and Ebean that you will mostly run in READ_COMMITTED 
+Isolation level due to this. That is, Ebean uses READ_COMMITTED as the default Transaction Isolation
+Level on its connection pools. 
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4>2 Options - Version and ALL </h4>
+
+<p>
+There are 2 options generally used for performing Optimistic Concurrency 
+Checking with a database. 
+</p>
+<ul>
+<li>Version Column</li>
+<li>All Columns</li>
+</ul>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="version"></a>Version Column</h4>
+<p>
+In this case there is a column on the table that is nominated as the "Version" column.
+This matches the JPA @Version annotation. This is typically either a Counter, a Timestamp
+or a DBMS specific column such as Oracle "ora_rowscn" or MSSQLServer "RowVersion/Timestamp".
+</p>
+<p>
+In performing the Optimistic Concurrency checking with a Version Column the UPDATE or DELETE
+statement has a WHERE clause that will include the primary key and the Version Column.
+</p>
+
+<pre>
+<code>
+update b_product set name='Apple', sort_order=4, updtime=<span>*NOW*</span> 
+where id=1 and updtime=<span>*PREVIOUS updtime*</span> 
+
+</code>
+</pre>
+
+<p>
+The number of rows this effected is checked and if this was 0 then a OptimisticLockException 
+is thrown. It is implied that the value of updtime has been changed by someone else since we fetched the
+data.
+</p>
+<p>
+If the number of rows effected was 1 then the update was deemed successful.
+</p>
+<p>
+Note: Because the primary key is part of the WHERE clause we should safely expect either 0 or 1 rows updated.
+It is assumed the primary key does not change.
+</p>
+<p>
+Note: Users are not allowed to change the values of Version columns themselves.
+</p>
+</td>
+<td class="rhs">
+<p>
+Primary Key and Version Column in the WHERE Clause
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4><a id="all"></a>All Column</h4>
+<p>
+In ALL Column mode the WHERE clause includes the Primary Key and All the columns.
+The values bound in the WHERE clause are the 'Old values' or 'Original values' and
+the values bound in the SET are the 'New values'.
+</p>
+<p>
+In this example the value of name and sort_order was originally 'Banana' and '3' and
+these where changed to 'Apple' and '4'.
+</p>
+<pre>
+<code>
+update b_product set name='Apple', sort_order=4      //<span>New values</span> 
+where id=1 and name='Banana' and sort_order=3    //<span>Old values</span> 
+
+</code>
+</pre>
+<p>
+The number of rows this effected is checked and if this was 0 then a OptimisticLockException 
+is thrown. In this example this would imply someone has changed the name and or sort_order for
+this row.
+</p>
+<p>
+Note that Ebean does not include Clob or Blob columns in ALL Column mode as this could be 
+potentially very expensive.
+</p>
+<h4><a href="occcode.html" title="Code Simulating OldValues creation">NOTE: Code Simulating OldValues in Ebean</a></h4>
+<p>
+I have someCode that simulates how OldValues works in Ebean in the hope it sheds some light on this subject.
+</p>
+</td>
+<td class="rhs">
+<p>
+Primary Key and 'Old values' of each column bound in WHERE   
+</p>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4>NOTE: int rows = PreparedStatement.executeUpdate()</h4>
+<p>
+We know the number of rows updated deleted by the value returned by PreparedStatement.executeUpdate().
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4>NOTE: Hashing as another option</h4>
+<p>
+I also believe there is a way of using a Hash function and Stored Procedures to perform 
+Optimistic Concurrency Checking.
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+<h4>Where are the 'Old Values' kept?</h4>
+<p>
+<em>Ebean:</em>
+</p>
+<p>
+With Ebean the 'Old Values' are kept with the bean itself. The beans returned from a query
+are actually Byte Code Generated Subclasses. The 'setter' methods are intercepted to detect
+when a bean is being changed and when this occurs the current values are stored as 'Old Values'.
+</p>
+<p>
+When the bean is saved and this becomes a UPDATE statement with ALL column concurrency 
+the bean has the 'New/Current values' plus it also has its 'Old/Original values'.  
+Technically the 'Old Values' is kept in the com.avaje.ebean.bean.EntityBeanIntercept object.
+</p>
+<p>
+<a href="occcode.html" title="Code Simulating OldValues creation">Here is some Code Simulating OldValues in Ebean</a>
+</p>
+<p>
+<em>JPA:</em>
+</p>
+<p>
+With JPA it is implied that the 'Old Values' are kept/held by EntityManager. This results in the
+requirement for Session Management of EntityManager (Extended Persistence Context) so that the
+'Old Values' are available for Optimistic Concurrency Checking. 
+<a href="jpa.html">Refer to EJB Architecture</a>
+</p>
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Getting Started</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Getting started with Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/getstarted.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="configure.html">Configure</a>
+&raquo; <span>Getting Started</span>
+</div>
+
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+
+<h3>Getting Started</h3>
+<p>
+At this point you should have gone through README.1.txt (Configure) and
+have sucessfully run your main() class and seen something like...
+</p>
+<pre>
+<code>
+ INFO: Ebean Version[0.9.0-061028] Java Version[1.5.0_03]
+ INFO: DataSourcePool [ora10] autoCommit[false] transIsolation[READ_COMMITTED] min[1] max[25]
+ INFO: DataSourcePool [ora10] grow pool;  busy[0] size[0] max[25]
+ INFO: IoRepository initialised dirs[C:/devjava/project/appzsite/webapp/WEB-INF/data] zips[]
+ INFO: Plugin[][com.avaje.ebean.server.plugin.Oracle10Plugin]
+DONE
+ INFO: Stopping []
+ INFO: ThreadPool [TransactionManager] Shutting down; threadCount[1] busyCount[0]
+ INFO: DataSourcePool [ora10] shutdown
+ INFO: Closing Connection[ora10.1] psReuse[0] psCreate[0] psSize[0]
+</code>
+</pre>
+
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="configure.html">Configure</a></li>
+<li><span>Getting Started</span></li>
+<li><a href="plugin.html">Database Plugin Configuration</a></li>
+<li><a href="servletcontainer.html">Configure to run in a Servlet Container</a></li>
+<li><a href="codegen.html">Code Generator</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<td class="main">
+
+<h3>Next Steps</h3>
+
+<h4><a href="plugin.html">1. If you are using BasePlugin refer to baseplugin_readme.txt</a></h4>
+<p>
+In the example above the Oracle10Plugin is being used. Ebean tries to detect the 
+specific database based on the jdbc driver. If it can not, then the BasePlugin will
+be used instead and you may need to configure it for the specific database.
+</p>
+
+<h4><a href="servletcontainer.html">2. Servlet Container</a></h4>
+<p>
+If you are using Ebean in a Servlet Container refer to webapp_readme.txt
+I recommend playing around with Ebean in just a normal application first.
+</p>
+
+<h4>3. Database Dictionary</h4>
+<p>   
+Ebean makes significant use of the Database Meta data. This can normally be
+very slow with some databases. Ebean speeds this up by serializing the
+Database Meta data in a file. 
+</p>
+<p>
+If you change your schema you should delete this file forcing Ebean to rebuild it.
+</p>
+<p>
+You will see INFO: DictionaryInfo deserialized from file...  on startup when the 
+Database Meta data is being read from the file.  Also note that this file grows
+as more Meta Data is needed automatically. Aka it generally does not read your 
+entire database meta data but automatically gets more when it needs it. 
+</p>   
+<pre>
+<code>
+INFO: DictionaryInfo deserialized from file -
+[C:/devjava/project/appzsite/webapp/WEB-INF/data\primarydatabase.dictionary]
+</code>
+</pre>
+
+<h4>4. Log Files</h4>
+<p>
+Ebean will create transaction log files as well as the general avajeXXX.log.
+The transaction logs can contain all the SQL, binding and summary information
+and you can control this with system.properties.
+</p>
+<p>
+The transaction logs will be a good place to look to see what Ebean is doing.
+</p>
+<p>
+Implicit transactions are ones without any explicit beginTransaction() commitTransaction().
+</p>
+<pre>
+<code>
+   // Example: Implicit Transaction
+   Ebean.find(Topic.class, 1);
+
+   // Example: Explicit Transaction
+   Ebean.beginTransaction();
+   try {
+	Ebean.find(Topic.class,1);
+	Ebean.commitTransaction();
+   } finally {
+	Ebean.endTransaction();
+   }
+</code>
+</pre>
+<p>
+Implicit transactions by default go into a shared log file as there is generally 
+only one find/save/delete statement. 
+</p>
+<p>
+Explicit transactions by default go into their own separate file as generally 
+there will be many statements and generally you wish to see them together and 
+without all the other transactions intermingled.
+</p>
+<p>
+Initially this may be confusing and you can change the configuration so that all
+the statements go into a single file.
+</p>
+<p>
+To do this change system.properties...
+ebean.transactionlogging.share=2
+</p>
+
+<h4>5. Crack on: <a href="codegen.html">perhaps try the Code Generator</a></h4>
+<p>
+You can start creating your own annotated Entity Beans or use the Code Generator
+to build them from your database schema. codegenerator_readme.txt
+</p>
+<p>
+Without any Annotated Entity Beans you can still use FindByNative, UpdateSql, 
+CallableSql and also MapBeans.
+</p>   
+You can run a query or an update using MapBeans like the ones below.
+In this example there is a table in my database called "b_bug".
+</p>
+<pre>
+<code>
+package test;
+
+import java.util.List;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.FindByPredicates;
+import com.avaje.ebean.MapBean;
+
+public class TestQuery {
+
+	public static void main(String[] args) {
+		
+		FindByPredicates find = new FindByPredicates();
+		find.setTableName("b_bug");
+		
+		List list = Ebean.findList(find);
+		for (int i = 0; i < list.size(); i++) {
+			MapBean mp = (MapBean)list.get(i);
+			System.out.println(mp);
+		}
+	}
+}
+</code>
+</pre>
+<p>
+Update using a MapBean
+</p>
+<pre>
+<code>
+package test;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.FindById;
+import com.avaje.ebean.MapBean;
+
+public class TestUpdate {
+
+	public static void main(String[] args) {
+		
+		FindById find = new FindById();
+		find.setTableName("b_bug");
+		find.setId(1);
+		
+		MapBean mb = (MapBean)Ebean.find(find);
+		mb.set("priority_code", "LOW");
+		
+		Ebean.save(mb);
+	}
+}
+</code>
+</pre>
+
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

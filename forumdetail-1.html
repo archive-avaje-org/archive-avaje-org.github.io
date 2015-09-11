@@ -1,0 +1,504 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Forum: General Issues</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+div.forum {
+	border:2px solid #ccc;
+	margin-bottom:20px;
+}
+div.headerNewTopic {
+	float:right;
+}
+div.header {
+	padding:3px 7px;
+	font-size:105%; font-weight:bold;
+	background: #ddd;color:#25345f; color:#eee;
+}
+td.indent {width:2em;}
+td.lastposted {width:10em;}
+td.postcount {text-align: center;	width:10em;}
+</style>
+
+
+</head>
+
+<body>
+<form action='/forumdetail-1.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forums</a> &raquo; General Issues
+</div>
+
+<div class="pageactions">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+</div>
+
+<div class="forum">
+<div class="header">
+<a href="forumdetail-1.html" title="View all Topics in this forum"><img src="/image/forum.gif"> General Issues</a>
+</div>
+<div id="hot1">
+<table>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-225.html" title="View this Topic"><img src="/image/forumtopic.gif"> Cannot query data in uppercase column names?</a></td>
+<td class="lastposted">21:59&nbsp;&nbsp;&nbsp;23 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-223.html" title="View this Topic"><img src="/image/forumtopic.gif"> How to convert  List  to an object of type com.avaje.ebean.PagingList</a></td>
+<td class="lastposted">13:16&nbsp;&nbsp;&nbsp;07 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-222.html" title="View this Topic"><img src="/image/forumtopic.gif"> Copy an Entity</a></td>
+<td class="lastposted">07:30&nbsp;&nbsp;&nbsp;03 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-220.html" title="View this Topic"><img src="/image/forumtopic.gif"> Is this product still being developed and supported?</a></td>
+<td class="lastposted">05:17&nbsp;&nbsp;&nbsp;09 Nov</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-217.html" title="View this Topic"><img src="/image/forumtopic.gif"> TimeToLive cache configuration</a></td>
+<td class="lastposted">02:36&nbsp;&nbsp;&nbsp;05 Aug</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-216.html" title="View this Topic"><img src="/image/forumtopic.gif"> Eager loaded byte array.</a></td>
+<td class="lastposted">18:20&nbsp;&nbsp;&nbsp;29 Jul</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-215.html" title="View this Topic"><img src="/image/forumtopic.gif"> which topic are you using</a></td>
+<td class="lastposted">04:13&nbsp;&nbsp;&nbsp;18 Jul</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-214.html" title="View this Topic"><img src="/image/forumtopic.gif"> OneToMany with second condition</a></td>
+<td class="lastposted">22:37&nbsp;&nbsp;&nbsp;22 May</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-213.html" title="View this Topic"><img src="/image/forumtopic.gif"> New Gorm-like API for EBean</a></td>
+<td class="lastposted">12:01&nbsp;&nbsp;&nbsp;22 Apr</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-211.html" title="View this Topic"><img src="/image/forumtopic.gif"> embedded id class can't find <>init() method</a></td>
+<td class="lastposted">10:59&nbsp;&nbsp;&nbsp;18 Feb</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-208.html" title="View this Topic"><img src="/image/forumtopic.gif"> Derived primary key</a></td>
+<td class="lastposted">23:44&nbsp;&nbsp;&nbsp;23 Oct</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-137.html" title="View this Topic"><img src="/image/forumtopic.gif"> Scala support - pointers, suggestions welcome</a></td>
+<td class="lastposted">13:23&nbsp;&nbsp;&nbsp;19 Oct</td>
+<td class="postcount">7 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-207.html" title="View this Topic"><img src="/image/forumtopic.gif"> Ask about performance</a></td>
+<td class="lastposted">03:46&nbsp;&nbsp;&nbsp;30 Aug</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-186.html" title="View this Topic"><img src="/image/forumtopic.gif"> This forum will be closed - moving to Google Group</a></td>
+<td class="lastposted">03:46&nbsp;&nbsp;&nbsp;12 Jun</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-205.html" title="View this Topic"><img src="/image/forumtopic.gif"> lib jar not found from Maven pom</a></td>
+<td class="lastposted">09:47&nbsp;&nbsp;&nbsp;28 May</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-204.html" title="View this Topic"><img src="/image/forumtopic.gif"> FindByPredicates class not found !</a></td>
+<td class="lastposted">09:45&nbsp;&nbsp;&nbsp;28 May</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-202.html" title="View this Topic"><img src="/image/forumtopic.gif"> need fast help... please</a></td>
+<td class="lastposted">04:15&nbsp;&nbsp;&nbsp;10 May</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-200.html" title="View this Topic"><img src="/image/forumtopic.gif"> polymorphic association</a></td>
+<td class="lastposted">22:59&nbsp;&nbsp;&nbsp;28 Mar</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-199.html" title="View this Topic"><img src="/image/forumtopic.gif"> Persistence Context</a></td>
+<td class="lastposted">20:44&nbsp;&nbsp;&nbsp;08 Dec</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-193.html" title="View this Topic"><img src="/image/forumtopic.gif"> ManyToMany causes error on second save</a></td>
+<td class="lastposted">11:21&nbsp;&nbsp;&nbsp;14 Jun</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-191.html" title="View this Topic"><img src="/image/forumtopic.gif"> Ebean show me error when deploy in tomcat server</a></td>
+<td class="lastposted">11:20&nbsp;&nbsp;&nbsp;14 Jun</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-189.html" title="View this Topic"><img src="/image/forumtopic.gif"> Give a list of databases that ebean supports</a></td>
+<td class="lastposted">11:20&nbsp;&nbsp;&nbsp;14 Jun</td>
+<td class="postcount">3 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-192.html" title="View this Topic"><img src="/image/forumtopic.gif"> Parametrized type in super class generates error during mapping</a></td>
+<td class="lastposted">13:21&nbsp;&nbsp;&nbsp;08 Apr</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-190.html" title="View this Topic"><img src="/image/forumtopic.gif"> avaje code gen : is it still available ?</a></td>
+<td class="lastposted">06:49&nbsp;&nbsp;&nbsp;10 Dec</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-184.html" title="View this Topic"><img src="/image/forumtopic.gif"> Google Group is preferred</a></td>
+<td class="lastposted">06:47&nbsp;&nbsp;&nbsp;10 Dec</td>
+<td class="postcount">3 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-188.html" title="View this Topic"><img src="/image/forumtopic.gif"> No Mgr found</a></td>
+<td class="lastposted">18:10&nbsp;&nbsp;&nbsp;11 Oct</td>
+<td class="postcount">4 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-187.html" title="View this Topic"><img src="/image/forumtopic.gif"> Jaxrs Timestamp json problem</a></td>
+<td class="lastposted">22:59&nbsp;&nbsp;&nbsp;27 Aug</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-182.html" title="View this Topic"><img src="/image/forumtopic.gif"> Jndi configuration</a></td>
+<td class="lastposted">04:49&nbsp;&nbsp;&nbsp;17 May</td>
+<td class="postcount">10 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-185.html" title="View this Topic"><img src="/image/forumtopic.gif"> v2.6.0 Released</a></td>
+<td class="lastposted">21:53&nbsp;&nbsp;&nbsp;10 May</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-183.html" title="View this Topic"><img src="/image/forumtopic.gif"> Error loading autofetch</a></td>
+<td class="lastposted">05:56&nbsp;&nbsp;&nbsp;04 May</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-178.html" title="View this Topic"><img src="/image/forumtopic.gif"> IllegalArgumentException: No enum const class</a></td>
+<td class="lastposted">22:47&nbsp;&nbsp;&nbsp;03 May</td>
+<td class="postcount">5 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-179.html" title="View this Topic"><img src="/image/forumtopic.gif"> NASTY BUG ALERT: .... partial object losing changes with setter on non-loaded property </a></td>
+<td class="lastposted">20:21&nbsp;&nbsp;&nbsp;25 Mar</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-176.html" title="View this Topic"><img src="/image/forumtopic.gif"> NumberFormatException</a></td>
+<td class="lastposted">22:41&nbsp;&nbsp;&nbsp;13 Mar</td>
+<td class="postcount">13 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-172.html" title="View this Topic"><img src="/image/forumtopic.gif"> [Feature req.] Automatically add empty sets instead of null</a></td>
+<td class="lastposted">22:23&nbsp;&nbsp;&nbsp;05 Mar</td>
+<td class="postcount">3 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-171.html" title="View this Topic"><img src="/image/forumtopic.gif"> Released v2.4.0</a></td>
+<td class="lastposted">20:50&nbsp;&nbsp;&nbsp;03 Mar</td>
+<td class="postcount">35 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-170.html" title="View this Topic"><img src="/image/forumtopic.gif"> Moving over to the Google Group</a></td>
+<td class="lastposted">20:01&nbsp;&nbsp;&nbsp;22 Feb</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-169.html" title="View this Topic"><img src="/image/forumtopic.gif"> Transaction log won't shut up</a></td>
+<td class="lastposted">13:32&nbsp;&nbsp;&nbsp;22 Feb</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-168.html" title="View this Topic"><img src="/image/forumtopic.gif"> Disconnect-reconnect</a></td>
+<td class="lastposted">22:51&nbsp;&nbsp;&nbsp;21 Feb</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-166.html" title="View this Topic"><img src="/image/forumtopic.gif"> Questions about spring configuration</a></td>
+<td class="lastposted">10:38&nbsp;&nbsp;&nbsp;11 Feb</td>
+<td class="postcount">7 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-167.html" title="View this Topic"><img src="/image/forumtopic.gif"> Ebean and application redeploy bug?</a></td>
+<td class="lastposted">10:25&nbsp;&nbsp;&nbsp;11 Feb</td>
+<td class="postcount">1 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-165.html" title="View this Topic"><img src="/image/forumtopic.gif"> Building from source - assembly modules</a></td>
+<td class="lastposted">02:12&nbsp;&nbsp;&nbsp;03 Feb</td>
+<td class="postcount">4 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-163.html" title="View this Topic"><img src="/image/forumtopic.gif"> PK save problems, some sentences</a></td>
+<td class="lastposted">08:24&nbsp;&nbsp;&nbsp;20 Jan</td>
+<td class="postcount">26 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-161.html" title="View this Topic"><img src="/image/forumtopic.gif"> DDL generation</a></td>
+<td class="lastposted">10:57&nbsp;&nbsp;&nbsp;13 Jan</td>
+<td class="postcount">9 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-164.html" title="View this Topic"><img src="/image/forumtopic.gif"> Best way to map field  to Entity from another table?</a></td>
+<td class="lastposted">11:47&nbsp;&nbsp;&nbsp;11 Jan</td>
+<td class="postcount">3 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-162.html" title="View this Topic"><img src="/image/forumtopic.gif"> Released v2.3.0</a></td>
+<td class="lastposted">10:34&nbsp;&nbsp;&nbsp;17 Dec</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-158.html" title="View this Topic"><img src="/image/forumtopic.gif"> Simple trivial unidirectional mapping is not working</a></td>
+<td class="lastposted">01:32&nbsp;&nbsp;&nbsp;16 Dec</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-155.html" title="View this Topic"><img src="/image/forumtopic.gif"> Release v2.1.0</a></td>
+<td class="lastposted">11:02&nbsp;&nbsp;&nbsp;15 Sep</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-154.html" title="View this Topic"><img src="/image/forumtopic.gif"> FutureList , PagingList etc</a></td>
+<td class="lastposted">21:54&nbsp;&nbsp;&nbsp;19 Aug</td>
+<td class="postcount">2 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-153.html" title="View this Topic"><img src="/image/forumtopic.gif"> Version 2.0.2 Relased (bug fixes) and Spring Module</a></td>
+<td class="lastposted">11:32&nbsp;&nbsp;&nbsp;10 Aug</td>
+<td class="postcount">0 posts</td>
+</tr>
+<tr>
+<td class="indent">&nbsp;</td>
+<td><a href="topic-152.html" title="View this Topic"><img src="/image/forumtopic.gif"> Sorry, it's me.</a></td>
+<td class="lastposted">13:16&nbsp;&nbsp;&nbsp;21 Jul</td>
+<td class="postcount">0 posts</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

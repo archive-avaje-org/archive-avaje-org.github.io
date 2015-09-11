@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: Oracle column alias missing with 1.1.0</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Claudio">
+<meta name="description" content="Hi Rob I am migrating an Oracle based project from 1 0 3 to 1 1 0 and found a problem the query with 1 0 3 was select from select row number over order by p data erogazione desc as rn p id c0 p data erogazione c1 t id c2 t descrizione c3 b id c4 b cognome c5 b nome c6 from CISE PRESTAZIONE p join CISE TIPO PRESTAZIONE t on p ID TIPO t ID join PERSONE b on p ID BENEFICIARIO b ID order by p data erogazione desc where rn with 1 1 0 the query has no column alias select from select row number over order by p data erogazione desc as rn p id p data erogazione t id t descrizione b id b cognome b nome from CISE PRESTAZIONE p join CISE TIPO PRESTAZIONE t on p ID TIPO t ID join PERSONE b on p ID BENEFICIARIO b ID order by p data erogazione desc where rn The log INFO Ebean Version 1 1 0 090330 Java Ve">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-144.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-2.html">Database specific</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-2.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Claudio </span>
+06 May&nbsp;11:12
+</div>
+Oracle column alias missing with 1.1.0
+<div class="body">
+<p>Hi Rob, I am migrating an Oracle based project from 1.0.3 to 1.1.0 and found a problem:</p><p>the query with 1.0.3 was:</p><p>select * from (<br/>select row_number() over (order by p.data_erogazione desc) as rn, p.id c0, p.data_erogazione c1<br/>        , t.id c2, t.descrizione c3<br/>        , b.id c4, b.cognome c5, b.nome c6 <br/>from CISE_PRESTAZIONE p<br/>join CISE_TIPO_PRESTAZIONE t on p.ID_TIPO = t.ID <br/>join PERSONE b on p.ID_BENEFICIARIO = b.ID  <br/>order by p.data_erogazione desc<br/>)  where  rn <= 101</p><p></p><p>with 1.1.0 the query has no column alias:</p><p>select * from (<br/>select row_number() over (order by p.data_erogazione desc) as rn, p.id, p.data_erogazione<br/>        , t.id, t.descrizione<br/>        , b.id, b.cognome, b.nome <br/>from CISE_PRESTAZIONE p<br/>join CISE_TIPO_PRESTAZIONE t on p.ID_TIPO = t.ID <br/>join PERSONE b on p.ID_BENEFICIARIO = b.ID  <br/>order by p.data_erogazione desc<br/>)  where  rn <= 101</p><p><br/>The log:</p><p>INFO: Ebean Version[1.1.0-090330] Java Version[1.6.0_10]<br/>...<br/>...<br/>Exception in thread "AWT-EventQueue-0" javax.persistence.PersistenceException: Query threw SQLException:ORA-00918: column ambiguously defined<br/> Query was:<br/>select * from (<br/>select row_number() over (order by p.data_erogazione desc) as rn, p.id, p.data_erogazione<br/>        , t.id, t.descrizione<br/>        , b.id, b.cognome, b.nome <br/>from CISE_PRESTAZIONE p<br/>join CISE_TIPO_PRESTAZIONE t on p.ID_TIPO = t.ID <br/>join PERSONE b on p.ID_BENEFICIARIO = b.ID  <br/>order by p.data_erogazione desc<br/>)  where  rn <= 101</p><p><br/>	at com.avaje.ebean.server.query.CQueryEngine.findMany(CQueryEngine.java:110)<br/>	at com.avaje.ebean.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:93)<br/>	at com.avaje.ebean.server.core.QueryRequest.findList(QueryRequest.java:207)<br/>	at com.avaje.ebean.server.core.DefaultServer.findList(DefaultServer.java:1022)<br/>	at com.avaje.ebean.query.DefaultOrmQuery.findList(DefaultOrmQuery.java:490)<br/>	at verificheise.EbeanPersistenceDelegate.select(EbeanPersistenceDelegate.java:33)<br/>	at it.fc.cesena.comune.datacontrols.datasource.AbstractDatasource.load(AbstractDatasource.java:414)<br/>	at verificheise.forms.Prestazioni.init(Prestazioni.java:229)<br/>	at verificheise.SmartPanel.setVisible(SmartPanel.java:31)<br/>	at javax.swing.JTabbedPane.fireStateChanged(JTabbedPane.java:378)<br/>	at javax.swing.JTabbedPane$ModelListener.stateChanged(JTabbedPane.java:253)<br/>	at javax.swing.DefaultSingleSelectionModel.fireStateChanged(DefaultSingleSelectionModel.java:116)<br/>	at javax.swing.DefaultSingleSelectionModel.setSelectedIndex(DefaultSingleSelectionModel.java:50)<br/>	at javax.swing.JTabbedPane.setSelectedIndexImpl(JTabbedPane.java:599)<br/>	at javax.swing.JTabbedPane.setSelectedIndex(JTabbedPane.java:574)<br/>	at org.jvnet.substance.SubstanceTabbedPaneUI$MouseRolloverHandler.mousePressed(SubstanceTabbedPaneUI.java:468)<br/>	at java.awt.AWTEventMulticaster.mousePressed(AWTEventMulticaster.java:262)<br/>	at java.awt.AWTEventMulticaster.mousePressed(AWTEventMulticaster.java:262)<br/>	at java.awt.Component.processMouseEvent(Component.java:6131)<br/>	at javax.swing.JComponent.processMouseEvent(JComponent.java:3265)<br/>	at java.awt.Component.processEvent(Component.java:5899)<br/>	at java.awt.Container.processEvent(Container.java:2023)<br/>	at java.awt.Component.dispatchEventImpl(Component.java:4501)<br/>	at java.awt.Container.dispatchEventImpl(Container.java:2081)<br/>	at java.awt.Component.dispatchEvent(Component.java:4331)<br/>	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4301)<br/>	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:3962)<br/>	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:3895)<br/>	at java.awt.Container.dispatchEventImpl(Container.java:2067)<br/>	at java.awt.Window.dispatchEventImpl(Window.java:2458)<br/>	at java.awt.Component.dispatchEvent(Component.java:4331)<br/>	at java.awt.EventQueue.dispatchEvent(EventQueue.java:599)<br/>	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:269)<br/>	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:184)<br/>	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:174)<br/>	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:169)<br/>	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:161)<br/>	at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)<br/>Caused by: java.sql.SQLException: ORA-00918: column ambiguously defined</p><p>	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:125)<br/>	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:305)<br/>	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:272)<br/>	at oracle.jdbc.driver.T4C8Oall.receive(T4C8Oall.java:626)<br/>	at oracle.jdbc.driver.T4CPreparedStatement.doOall8(T4CPreparedStatement.java:182)<br/>	at oracle.jdbc.driver.T4CPreparedStatement.execute_for_describe(T4CPreparedStatement.java:500)<br/>	at oracle.jdbc.driver.OracleStatement.execute_maybe_describe(OracleStatement.java:942)<br/>	at oracle.jdbc.driver.T4CPreparedStatement.execute_maybe_describe(T4CPreparedStatement.java:532)<br/>	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1037)<br/>	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:2916)<br/>	at oracle.jdbc.driver.OraclePreparedStatement.executeQuery(OraclePreparedStatement.java:2957)<br/>	at com.avaje.ebean.server.lib.sql.ExtendedPreparedStatement.executeQuery(ExtendedPreparedStatement.java:146)<br/>	at com.avaje.ebean.server.query.CQuery.prepareBindExecuteQuery(CQuery.java:332)<br/>	at com.avaje.ebean.server.query.CQueryEngine.findMany(CQueryEngine.java:87)<br/>	... 37 more</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+07 May&nbsp;10:09
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Put ebean.columnAliasPrefix in your ebean.properties file and that will add a column alias to every column.</p><p>## in ebean.properties<br/>ebean.columnAliasPrefix=as c_</p><p><br/>You can refer to this bug.<br/><a href="http://www.avaje.org/bugdetail-67.html">http://www.avaje.org/bugdetail-67.html</a></p><p>Basically I decided to make the default to only add column alias for embedded beans thinking that that was the only time when a column could be referenced twice in the sql.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+07 May&nbsp;10:18
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Do you know specifically which column in the SQL oracle is complaining about?</p><p>I can't see which one it is by looking at the SQL.</p><p>The main reason I don't want to by default turn on the column alias (unless I have to) is because if I take the sql and put it into a query tool it typically will then display headings of c1, c2, c3 etc... which is not as useful as seeing id, name, description etc.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+07 May&nbsp;10:32
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ok, looks like the issue is with the outer select .... select * from (</p><p>Where it looks like the p.id, t.id and b.id will end up with the same name as far as Oracle is concerned (hence the 0RA-918).  That is, if you take of the max 100 rows and only get the inner SQL with the row_number function then you should not see the ORA-918.  </p><p>Note: This is not a solution but hopefully an explanation of why the error occurs.</p><p>Hmmm.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+07 May&nbsp;11:01
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>SQL> ;<br/>  1  select * from (<br/>  2  select a.id, b.id<br/>  3  from my_p a<br/>  4  join my_person b on b.id = a.id<br/>  5* )<br/>SQL> /<br/>select * from (<br/>       *<br/>ERROR at line 1:<br/>ORA-00918: column ambiguously defined</p><p>Yup, the problem is with the select * from ( ....</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+07 May&nbsp;13:38
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Logged bug <a href="http://www.avaje.org/bugdetail-111.html">http://www.avaje.org/bugdetail-111.html</a></p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+07 May&nbsp;13:54
+</div>
+<span>by Claudio</span>
+<div class="body">
+<p>Thanks Rob,</p><p>I had to set ebean.alwaysUseColumnAlias to true to make it work.  <br/>ebean.columnAliasPrefix=as c_ is the default so I dont'need to set it.</p><p>Am I correct?</p><p>Claudio</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+08 May&nbsp;01:42
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Yes, you are correct.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="2">
+<input type="hidden" name="f_topicid" value="144">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

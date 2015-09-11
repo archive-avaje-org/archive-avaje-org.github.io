@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Partial Object Queries</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Partial Objects Queries in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/ebean/introquery_partialobject.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/ebean/introduction.html">Ebean</a>
+&raquo; <a href="/ebean/documentation.html">Docs</a>
+&raquo; <a href="/ebean/introquery.html">Queries</a>
+&raquo; <span>Partial Objects</span>
+</div>
+
+
+
+
+
+<div class="columnlayout">
+
+<h3>Queries in Ebean</h3>
+<ul>
+<li><a href="introquery.html">Basics</a></li>
+<li><a href="introquery_join.html">Fetch (paths)</a></li>
+<li><a href="introquery_joinquery.html">Query Joins</a></li>
+<li><a href="introquery_partialobject.html">Partial Objects</a></li>
+<li><a href="introquery_autofetch.html">Autofetch - Automatic Query tuning</a></li>
+<li><a href="introquery_future.html">Asynchrous Query execution</a></li>
+<li><a href="introquery_paginglist.html">PagingList</a></li>
+<li><a href="introquery_rawsql.html">RawSql</a></li>
+</ul>
+
+<h4>Partial Objects</h4>
+
+
+<div class="col70">
+<p>
+Using select() and fetch() you can specify only the properties you wish to fetch.
+</p>
+<p>
+This can be a very significant performance benefit by only fetching the
+properties you need. If the properties are in DB indexes then the DB 
+doesn't have to read Index Blocks. This is also a
+design benefit in that it removes the "fixed" design constraints of using
+secondary table properties.
+</p>
+<p>
+Note that Autofetch can use profiling to specify the properties to select rather
+than you manually doing so (which saves you the work).
+</p>
+</div>
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+// a partial object query
+// ... only fetch the order id, orderDate and shipDate
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.select("orderDate, shipDate")
+		.findList();
+</pre>
+</div>
+<div class="col30">
+<p>
+Note: the <em>Id</em> property is always fetched even if you do not explicitly include
+it in the list of properties you want to fetch
+</p>
+</div>
+<div class="col70">
+<pre class="sql:nogutter:nocontrols">
+&lt;sql summary='[app.data.test.Order]'&gt;
+select o.id, o.order_date, o.ship_date 
+from or_order o
+&lt;sql&gt;
+</pre>
+</div>
+
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<p>
+*ANY* node of the object graph can be a partial object. In this case
+both the order and the customer are partially populated.
+</p>
+</div>
+
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+// a partial object query
+// ... only fetch the order id, orderDate and shipDate
+// ... only fetch the name of the customer
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.select("orderDate, shipDate")
+		.fetch("customer","name")
+		.findList();
+</pre>
+</div>
+<div class="col70">
+<pre class="sql:nogutter:nocontrols">
+&lt;sql summary='[app.data.test.Order, customer]'&gt;
+select o.id, o.order_date, o.ship_date
+        , c.id, c.name 
+from or_order o
+join or_customer c on o.customer_id = c.id 
+&lt;sql&gt;
+</pre>
+</div>
+
+<div class="colend"></div>
+
+<div class="example">example</div>
+
+<div class="col70">
+<p>
+With this example note that the Product associated with each order detail
+is partially populated (fetching the product id, sku and name).
+</p>
+<p>
+... again, *ANY* node in the object graph can be partially populated no matter
+how deep it is in the object graph. 
+</p>
+</div>
+<div class="col70">
+<pre class="java:nogutter:nocontrols">
+// a mix of partial objects and fully populated objects
+List&lt;Order&gt; orders = 
+	Ebean.find(Order.class)
+		.select("orderDate, shipDate")  // partial
+		.fetch("customer","name")  // partial
+		.fetch("customer.shippingAddress") 
+		.fetch("details")                  
+		.fetch("details.product","sku,name") // partial
+		.findList();
+</pre>
+</div>
+
+<div class="col70">
+<pre class="sql:nogutter:nocontrols">
+&lt;sql summary='[app.data.test.Order, customer, customer.shippingAddress]
+--               +many[details, details.product]'&gt;
+select o.id, o.order_date, o.ship_date
+        , c.id, c.name
+        , ca.id, ca.line_1, ca.line_2, ca.city, ca.region, ca.cretime, ca.updtime, ca.country_code
+        , d.id, d.order_qty, d.ship_qty, d.cretime, d.updtime, d.order_id
+        , dp.id, dp.sku, dp.name 
+from or_order o
+join or_customer c on o.customer_id = c.id 
+left outer join or_address ca on c.shipping_address_id = ca.id 
+left outer join or_order_detail d on o.id = d.order_id 
+left outer join or_product dp on d.product_id = dp.id  
+order by o.id
+&lt;sql&gt;
+</pre>
+</div>
+
+<div class="colend"></div>
+<div class="col70 colnext">
+<a class="h3" href="/ebean/introquery_autofetch.html">Next: Autofetch - Automatic Query tuning</a>
+</div>
+<div class="colend"></div>
+
+
+
+
+<div class="colend"></div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

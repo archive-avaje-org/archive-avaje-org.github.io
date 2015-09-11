@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Ebean encryption support</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+<style>
+div.page h3 {
+  margin-top:40px;
+  margin-bottom:20;
+}
+</style>
+
+
+</head>
+
+<body>
+<form action='/ebean/encryption.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="/">ebean</a>
+&raquo; <a href="/ebean/documentation.html">docs</a>
+&raquo; <span>encryption support</span>
+</div>
+
+
+
+
+<div class="page">
+
+
+<h3>Transparent Encryption with Ebean</h3>
+<p>
+Ebean v2.4 adds support for automatic Encryption/Decryption of properties.
+The result is that without changing your application code some of your
+properties on your entities can stored in encrypted form in the DB.
+</p>
+
+<h3>DB Encryption and "Java client Encryption"</h3>
+<ul>
+
+<li>The encryption can be performed by Database functions or on the Java side (Java client encryption).</li>
+<li>    
+Properties that are encrypted using Database functions can be used in Query WHERE clauses.
+</li>    
+<li>
+Properties that are encrypted using "Java client Encryption" can NOT be used in Query WHERE clauses.
+</li>
+</ul>
+
+<h3>DB Encryption of String and "Date" types</h3>
+<p>
+Currently DB Encryption for H2, Postgres, MySql and Oracle can be used on String types and "Date" types (java.sql.Date, Joda DateMidnight, Joda LocalDate).
+</p>
+<p>
+Any type not supported by DB Encryption functions uses "Java client Encryption".
+</p>
+
+
+<h3>DB Encryption Functions</h3>
+<p>
+The default DB encryption decryption functions used are:
+</p>
+
+<ul>
+<li>
+ H2:  ENCRYPT() and DECRYPT() with 'AES' option</li>
+<li>MySql: AES_ENCRYPT() and AES_DECRYPT()</li>
+<li>Postgres: requires pgcryto and uses PGP_SYM_ENCRYPT() and PGP_SYN_DECRYPT()</li>
+<li>Oracle: requires dbms_crypto and uses custom functions for encryption and decryption</li>
+</ul>
+
+
+
+<h3>Encryptor (Java client encryption implementation)</h3>
+<p>
+When Java client encryption occurs the "Encryptor" interface is used. By default Ebean has a AES 128 bit based implementation but you can also configure Ebean to use your own implementation if you wish.
+</p>
+
+
+<h3>EncryptKeyManager</h3>
+<p>
+Whenever a property is encrypted or decrypted a "Key" must be used. Ebean will internally ask the EncryptKeyManager for a key given the table and column name.
+</p>
+<p>
+You must supply an implementation of the EncryptKeyManager.
+</p>
+
+
+<h3>Deployment: @Encrypted and EncryptDeployManager</h3>
+<p>
+You can mark a property to be Encrypted programmatically via EncryptDeployManager, or put the @Encrypted annotation on the bean property or a combination of the two.
+</p>
+<p>
+By default a property will use DB encryption if it is supported (based on its type - String or 'Dates' basically). If you want to ensure a property uses Java encryption you can specify dbEncryption=false on the annotation or EncryptDeploy. You may want to do this so that the CPU cycles for encryption/decryption occur on the Java process rather than the DB process.
+</p>
+<p>
+
+Your application code does not change
+That's it.  Your code to query, insert, update and delete etc does not change and Ebean automatically does the encryption/decryption behind the scenes.
+</p>
+<pre class="java">
+
+// Use @Encrypted annotation to mark the encrypted properties
+
+...
+@Entity
+@Table(name="pm_patient")
+public class Patient {
+    
+    @Id
+    Integer id;
+    
+    @Encrypted
+    String name;
+   
+    // use client side encryption (not db functions) 
+    @Lob
+    @Encrypted(dbEncryption=false)
+    String description;
+    
+    @Encrypted
+    Date dob;
+    ...
+
+</pre>
+
+<h3>Limitations</h3>
+<ul>
+<li>
+Properties using Java client encryption can NOT be used in WHERE clauses
+</li>
+<li>
+Only DB Encryption support built in for H2, Postgres, MySql and Oracle.
+</li>
+<li>
+You can not use Encryption with positioned (1,2,3...) parameters. You must 
+use named parameters or the criteria api to define queries.
+</li>
+</ul>
+
+
+<h3>Examples:</h3>
+<pre class="java">
+
+List&lt;Patient&gt; list  =
+    Ebean.find(Patient.class)
+        .select("id, name")
+        .where().eq("name", "Rob")
+        .findList();
+</pre>
+<p>
+Results in the following SQL:
+</p>
+<pre class="java">
+&lt;sql summary='Patient' &gt;
+select e.id as c0, pgp_sym_decrypt(e.name,?) as c1
+from pm_patient e
+where pgp_sym_decrypt(e.description,?) = ?
+&lt;sql&gt;
+</pre>
+
+
+<h3>Configuraton:</h3>
+<p>
+You can specify the EncryptKeyManager implementation in the ebean.properties
+file like below:
+</p>
+
+<pre class="property">
+
+# ebean.properties - specify the Key Manager
+ebean.encryptKeyManager=com.avaje.tests.basic.encrypt.BasicEncyptKeyManager
+</pre>
+<p>
+Or if you are programmatically configuring an EbeanServer using ServerConfig,
+set the EncryptKeyManager.
+
+</p>
+<pre class="java">
+
+// programmatically configure an EbeanServer
+// with an EncryptKeyManager
+
+ServerConfig config = ServerConfig();
+...
+EncryptKeyManager keyManager = ...;
+config.setEncryptKeyManager(encyptKeyManager());
+...
+EbeanServer server = EbeanServerFactory.create(config);
+</pre>
+
+<h3>A EncryptKeyManager:</h3>
+
+<pre class="java">
+package com.avaje.tests.basic.encrypt;
+
+import com.avaje.ebean.config.EncryptKey;
+import com.avaje.ebean.config.EncryptKeyManager;
+
+public class BasicEncyptKeyManager implements EncryptKeyManager {
+
+    /**
+     * Initialise the key manager.
+     */
+    public void initialise() {
+        // can load keys or initialise source resources ... 
+    }
+
+    public EncryptKey getEncryptKey(String tableName, String columnName) {
+       
+        // get the key for the given table and column
+        String keyValue = ...;
+        return new BasicEncryptKey(keyValue);
+    }
+
+}
+</pre>
+
+<h3>Internals</h3>
+<p>
+What Ebean is doing internally is detecting when an encrypted
+property is being used. Internally it will call the EncryptKeyManager
+with the table and column of the property to get the encryption key.
+This key is then added as a bind variable to the prepared statement.
+</p>
+<p>
+As the key is added as a bind variable into the statement you can
+not use encryption with 'ordered' parameters because it can effectively
+change the position of other parameters. You can use 'named' 
+parameters or the criteria api for building queries - but you can't
+use positioned (1,2,3,4..) parameters.
+</p>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

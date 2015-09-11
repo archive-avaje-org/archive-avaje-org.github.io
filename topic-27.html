@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: Schema generation vs DB Design/Generation tools</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="From Christian Looks like Ebean can t generate the database schema from the pojos and their mapping I d really like that feature It allows you to move forward at faster You are quite right Christian Ebean doesn t currently generate the database schema It is probably worth noting that I ll need a bit more proding to get motivated to do this in that I m currently not a big fan of this approach generating DDL from annotated Entity Beans Perhaps you can change my mind The reason I m not a fan is several fold I personally want to use the same development techniques for all apps big and small I don t think generating DDL from annotated beans will work well for big projects DDL specific to Databases such as Oracle DB2 Tablespaces etc How to ensure consistent DB types precision size I LIKE Entity ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-27.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-5.html">Features missing or wanted</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-5.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Rob </span>
+14 May&nbsp;08:17
+</div>
+Schema generation vs DB Design/Generation tools
+<div class="body">
+<p>From Christian... </p><p>Looks like Ebean can't generate the database schema from the pojos and their mapping?<br/>I'd really like that feature - It allows you to move forward at faster </p><p><br/>You are quite right Christian, Ebean doesn't currently generate the database schema. It is probably worth noting that I'll need a bit more 'proding' to get motivated to do this, in that I'm currently not a big fan of this approach (generating DDL from annotated Entity Beans). Perhaps you can change my mind?</p><p>The reason I'm not a fan is several fold:<br/>- I personally want to use the same development techniques for all apps (big and small)<br/>- I don't think generating DDL from annotated beans will work well for big projects<br/>- DDL specific to Databases such as Oracle/DB2 (Tablespaces etc) <br/>- How to ensure consistent DB types (precision/size)<br/>- I LIKE Entity Relationship/Database Design Tools (I personally choose to use Case Studio)<br/>  They provide great features (sub models, DB specific DDL, versions, diagrams, quality DDL generation, documentation)    </p><p>Its interesting that you note the reason for generating DDL from Entity beans as development speed.  Thats fair enough, but I'd be interested to know how you created the Entity Beans in the first place (specifically did you generate them from a UML Design tool)? </p><p>For me, development speed is important (along with good supporting documentation). The way I get fast development is to<br/>- Design DB Schema using Case Studio<br/>- Maintain a Excel spreadsheet of seed data<br/>- Generate the DDL<br/>- Generate the Entity Beans <br/>- Generate the seed SQL script (to pre-populate the DB with seed and test data)</p><p>PS: I'm a *BIG* fan of maintaining the seed data in an Excel spreadsheet for speeding up development. Having used this, I can't imagine developing a DB schema without such a mechanism (and its dead simple, check out the code in the code generator).</p><p>I have this scripted with batch files, so its quick to change the DB design and regenerate everything. This technique does have its downsides...<br/>- Entity Beans ORM mapping does not always map 1-1 from DB Schema (Composite types such as Embedded beans etc)<br/>- Not perfect round tripping (re-generating an existing bean with comments and extra methods etc)</p><p>Personally I'd prefer to have an integrated JPA/DB Design tool that supported both the DB and ORM specific issues. That would be the ideal - perhaps one of the JPA vendors already has one underway?</p><p> <br/>Anyway, I'm still interested to here what you and others have to say on this subject. Perhaps it also greatly depends quite a bit on the individuals perspective on UML vs ER Design (and how much you value the features of DB Design/generation tools such as Case Studio).</p><p>Cheers, Rob.</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+21 May&nbsp;22:12
+</div>
+<span>by johan</span>
+<div class="body">
+<p>Especially for rapid application prototyping automatic schema generation would be extremely helpful (e.g. look at Grails). Before creating a production release you still can create a new schema or optimize the generated one.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+21 Oct&nbsp;10:46
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Seems that this is asked for typically from a "Agile" / "Prototyping" perspective. I wonder if "Agile" / "Prototyping" type people use any modeling tools? </p><p>That is, if there did exists a UML modeling tool that was capable of generating DDL would that satisfy those types of approaches? I guess it depends on how good the tool is?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+24 Nov&nbsp;18:36
+</div>
+<span>by florin</span>
+<div class="body">
+<p>I second that with a PLUS.</p><p>It looks like finally the java world has decided that speed and ease of use IS important for developers not just for ruby and php guys.</p><p>I don't do agile per se but I am keen to get started and see results. Many times, small projects don't even require complex ddl yet projects need to get done. </p><p>I'd say, yes, have generation to start with. It is convincing enough to get the project sold and even used. Later, of course, you drop generated ddl as *no tool* can catch up. By this time however, the project is rolling and backed by the interested parties.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+22 Feb&nbsp;09:42
+</div>
+<span>by Manuel</span>
+<div class="body">
+<p>I third that! Simple DDL generation for RAD or prototyping works well. Yes larger databases need more control, but for simple MySql based applications its a must have.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+22 Feb&nbsp;20:55
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Thanks - votes noted... Eddie is also keen so really now its a question of when (rather than if) ...</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="5">
+<input type="hidden" name="f_topicid" value="27">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

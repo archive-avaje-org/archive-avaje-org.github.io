@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: make @SequenceGenerator annotation work</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="imario">
+<meta name="description" content="you can annotate your entity with SequenceGenerator at class or property level to tell the system the database sequence name to use e g Entity SequenceGenerator name AD SEQ NAME sequenceName AD SEQ public class AuditLog Id GeneratedValue strategy GenerationType SEQUENCE generator AD SEQ NAME private Long id means the id should be set using the database sequence with name AD SEQ I ve created a patch which 1 fixes a bug when inserting the sql for the db sequence get the resulting sql looked like something like insert into id desc values the seq sql you see the and in the the seq sql part 2 honors the SequenceGenerator configuration With this the namingconvention for creating the sequence name in avaje is no longer used Patch Index ebean src com avaje ebean server persist dml InsertMeta java ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-68.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 68 : make @SequenceGenerator annotation work
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 68 : make @SequenceGenerator annotation work </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">imario</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">1.0.3</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">15/02/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">15/02/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>you can annotate your entity with @SequenceGenerator at class or property level to tell the system the database sequence name to use.</p><p>e.g.</p><p>@Entity<br/>@SequenceGenerator(name="AD_SEQ_NAME", sequenceName="AD_SEQ")<br/>public class AuditLog<br/>{<br/>    @Id<br/>    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AD_SEQ_NAME")<br/>    private Long id;</p><p><br/>means the id should be set using the database sequence with name AD_SEQ.</p><p>I've created a patch which<br/>1) fixes a bug when inserting the sql for the db-sequence get, the resulting sql looked like something like:<br/>insert into (id, desc) values (, the-seq-sql?, ?) you see the "," and "?" in the the-seq-sql part.<br/>2) honors the @SequenceGenerator configuration. With this the namingconvention for creating the sequence name in avaje is no longer used.</p><p><br/>Patch:</p><p>Index: ../ebean/src/com/avaje/ebean/server/persist/dml/InsertMeta.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/persist/dml/InsertMeta.java	(revision 127)<br/>+++ ../ebean/src/com/avaje/ebean/server/persist/dml/InsertMeta.java	Sun Feb 15 10:14:48 CET 2009<br/>@@ -207,6 +207,9 @@<br/> <br/> 		request.append(") values (");<br/> <br/>+        // ensure prefixes are reset for the value list<br/>+        request.setInsertSetMode();<br/>+<br/> 		// the number of scalar properties being bound<br/> 		int bindCount = request.getBindCount();<br/> <br/>@@ -214,7 +217,8 @@<br/> 			addNullUidValue(request);<br/> 		}<br/> <br/>-		for (int i = 0; i < bindCount; i++) {<br/>+        int bindStart = sequenceNextVal==null?0:1;<br/>+		for (int i = bindStart; i < bindCount; i++) {<br/> 			if (i > 0) {<br/> 				request.append(", ");<br/> 			}<br/>Index: ../ebean/src/com/avaje/ebean/server/naming/SequenceNaming.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/naming/SequenceNaming.java	(revision 127)<br/>+++ ../ebean/src/com/avaje/ebean/server/naming/SequenceNaming.java	Sun Feb 15 10:06:47 CET 2009<br/>@@ -88,6 +88,11 @@<br/> 	public String getName(DeployBeanDescriptor desc) {<br/> <br/> 		String baseTable = desc.getBaseTable();<br/>+        if (desc.getIdGeneratorName() != null)<br/>+        {<br/>+            // user provided generator name is correct for the db already, no need to do further processing<br/>+            return desc.getIdGeneratorName();<br/>+        }<br/> 		String uidColumn = null;<br/> <br/> 		boolean includeColumn = properties.getPropertyBoolean("namingconvention.sequence.includecolumn", false);<br/>Index: ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationParser.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationParser.java	(revision 127)<br/>+++ ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationParser.java	Sun Feb 15 10:03:42 CET 2009<br/>@@ -81,4 +81,22 @@<br/>         }<br/>         return a;<br/>     }<br/>+<br/>+    /**<br/>+     * Return the annotation for the property.<br/>+     * <p><br/>+     * Looks<br/>+     * first at the field and<br/>+     * then at the getter method.<br/>+     * then at class level<br/>+     * </p><br/>+     */<br/>+    @SuppressWarnings("unchecked")<br/>+	protected Annotation find(DeployBeanProperty prop, Class annClass) {<br/>+        Annotation a = get(prop, annClass);<br/>+        if (a == null) {<br/>+            a = prop.getOwningType().getAnnotation(annClass);<br/>-}<br/>+        }<br/>+        return a;<br/>+    }<br/>+}<br/>Index: ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationFields.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationFields.java	(revision 127)<br/>+++ ../ebean/src/com/avaje/ebean/server/deploy/parse/AnnotationFields.java	Sun Feb 15 10:03:42 CET 2009<br/>@@ -37,6 +37,7 @@<br/> import javax.persistence.TemporalType;<br/> import javax.persistence.Transient;<br/> import javax.persistence.Version;<br/>+import javax.persistence.SequenceGenerator;<br/> <br/> import com.avaje.ebean.annotation.Formula;<br/> import com.avaje.ebean.server.deploy.IdentityGeneration;<br/>@@ -168,6 +169,13 @@<br/> 	private void readGenValue(GeneratedValue gen, DeployBeanProperty prop) {<br/> <br/> 		String genName = gen.generator();<br/>+        SequenceGenerator sequenceGenerator = (SequenceGenerator) find(prop, SequenceGenerator.class);<br/>+        if (sequenceGenerator != null) {<br/>+            if (sequenceGenerator.name().equals(genName)) {<br/>+                genName = sequenceGenerator.sequenceName();<br/>+            }<br/>+        }<br/>+<br/> 		GenerationType strategy = gen.strategy();<br/> <br/> 		if (strategy == GenerationType.IDENTITY) {<br/>@@ -175,6 +183,9 @@<br/> <br/> 		} else if (strategy == GenerationType.SEQUENCE) {<br/> 			descriptor.setIdentityGeneration(IdentityGeneration.DB_SEQUENCE);<br/>+            if (genName != null && genName.length() > 0) {<br/>+                descriptor.setIdGeneratorName(genName);<br/>+            }<br/> <br/> 		} else if (strategy == GenerationType.AUTO) {<br/> 			if (prop.getPropertyType().equals(UUID.class)){</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+imario 
+16 Feb&nbsp;07:01
+</div>
+fixed bug with non-null id not working with the patch above
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Index: ../ebean/src/com/avaje/ebean/server/persist/dml/InsertMeta.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/persist/dml/InsertMeta.java	(revision 127)<br/>+++ ../ebean/src/com/avaje/ebean/server/persist/dml/InsertMeta.java	Mon Feb 16 07:58:30 CET 2009<br/>@@ -19,9 +19,6 @@<br/>  */<br/> package com.avaje.ebean.server.persist.dml;<br/> <br/>-import java.sql.SQLException;<br/>-import java.util.Set;<br/>-<br/> import com.avaje.ebean.server.core.PersistRequest;<br/> import com.avaje.ebean.server.deploy.BeanDescriptor;<br/> import com.avaje.ebean.server.deploy.InheritInfo;<br/>@@ -30,6 +27,9 @@<br/> import com.avaje.ebean.server.persist.dmlbind.BindableId;<br/> import com.avaje.ebean.server.plugin.PluginDbConfig;<br/> <br/>+import java.sql.SQLException;<br/>+import java.util.Set;<br/>+<br/> /**<br/>  * Meta data for insert handler. The meta data is for a particular bean type. It<br/>  * is considered immutable and is thread safe.<br/>@@ -207,6 +207,9 @@<br/> <br/> 		request.append(") values (");<br/> <br/>+        // ensure prefixes are reset for the value list<br/>+        request.setInsertSetMode();<br/>+<br/> 		// the number of scalar properties being bound<br/> 		int bindCount = request.getBindCount();<br/> <br/>@@ -214,7 +217,8 @@<br/> 			addNullUidValue(request);<br/> 		}<br/> <br/>-		for (int i = 0; i < bindCount; i++) {<br/>+        int bindStart = (!nullId || sequenceNextVal==null)?0:1;<br/>+		for (int i = bindStart; i < bindCount; i++) {<br/> 			if (i > 0) {<br/> 				request.append(", ");<br/> 			}</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+17 Feb&nbsp;11:09
+</div>
+Convert from ENH to BUG
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>I'll convert this over from an ENH to a BUG.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+18 Feb&nbsp;10:34
+</div>
+Fixed in v1.0.3
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in v1.0.3.</p><p>Thanks Mario - excellent work.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="68">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-68.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="68">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

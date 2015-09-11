@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Configure avaje.properties</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Configure Install Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/configure_editproperties.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="configure.html">Configure</a>
+&raquo; <span>Edit avaje.properties</span>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+
+<h3>Edit avaje.properties</h3>
+<ul>
+<li><a href="#ds">DataSource</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds-default">Built In</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds-jndi">JNDI</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#ds-custom">Custom</a></li>
+<li><a href="#log">Logs</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp<a href="#logdir">log.directory</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp<a href="#log4j">Log4J</a></li>
+</ul>
+
+
+<h4><a id="ds"></a>DataSource</h4>
+<p>
+With Ebean you can use more than one DataSource. This means that you
+need to configure each DataSource and also tell Ebean which one is the 
+'default' DataSource (via the datasource.default property).
+</p>
+
+<h5><a id="ds-default"></a>Built in DataSource:</h5>
+<p>
+To use the built in DataSource set properties similar to the following.
+Note that in the examples (part of download) the avaje.properties includes settings for an
+Oracle, MySql and MSSQLServer 2005 DataSources.
+</p>
+<pre><code>
+# use default 
+ebean.datasource.factory=default
+
+# The name of the Default DataSource 
+# (as you can have more than one)
+datasource.default=TestDB
+
+# connection properties
+datasource.TestDB.username=test
+datasource.TestDB.password=test
+datasource.TestDB.databaseUrl=jdbc:mysql://127.0.0.1:3306/zsite?dynamicCalendars=false
+datasource.TestDB.databaseDriver=com.mysql.jdbc.Driver
+datasource.TestDB.minConnections=1
+datasource.TestDB.maxConnections=25
+#datasource.TestDB.heartbeatsql=select count(*) from dual
+datasource.TestDB.isolationlevel=read_committed
+</code></pre>
+
+<h5><a id="ds-jndi"></a>JNDI DataSource: (Since 0.9.2)</h5>
+<p>
+To use a JNDI DataSource you need to set ebean.datasource.factory to jndi, and 
+datasource.default as the JNDI DataSource name.  You can additionally override 
+ebean.datasource.jndi.prefix which defaults to java:comp/env/jdbc/.
+</p>
+<pre><code>
+# use JNDI 
+ebean.datasource.factory=jndi
+
+# The name of the JNDI DataSource
+datasource.default=TestDB
+
+# Override the JNDI prefix if required
+#ebean.datasource.jndi.prefix=java:comp/env/jdbc/
+</code></pre>
+<p>
+Note that when running in Standalone mode you often will not have a JNDI DataSource
+(usually provided by the Servlet Container).  You may wish to also specify a DataSource
+using the Ebean default mechanism.
+</p>
+
+<h5><a id="ds-custom"></a>Custom DataSource Factory:</h5>
+<p>
+You can implement your own DataSourceFactory. Its job is to provide the
+DataSource given the name.
+</p>
+<p>
+Create a class that implements com.avaje.ebean.server.core.DataSourceFactory.
+Specify its use with the ebean.datasource.factory property.
+</p>
+<pre><code>
+# use custom 
+ebean.datasource.factory=mypackage.MyDataSourceFactory
+</code></pre>
+
+<h3><a id="log"></a>Log Configuration</h3>
+<p>
+There are 2 types of log files. The transaction logs and the 'main' log.
+</p>
+
+<h4><a id="logdir"></a>Location of log files</h4>
+<pre><code> 
+log.directory=${catalina.base}/logs
+</code></pre>
+<p>
+The log.directory property needs to be set. It determines where the 'main' log
+and transaction logs are put.
+</p>
+<p>
+In general I think its good to put these with the other server logs but that is my preference.
+In the example above catalina.base is a Java System property set by Tomcat.
+</p>
+
+<h4><a id="log4j"></a>Use Log4j</h4>
+<p>
+If you want to use Log4j then you can set these settings. Note that this is
+only for the 'main' log and not the transaction logs.
+[If you are using this and are unsatisfied then let me know - thanks]
+</p>
+<pre><code>
+# use Log4j
+log.writer=com.avaje.lib.Log4jLogger
+log4j.properties=point to the log4j properties file
+</code></pre>
+
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li>Configure</li>
+<li><a href="getstarted.html">Getting Started</a></li>
+<li><a href="plugin.html">Database Plugin Configuration</a></li>
+<li><a href="servletcontainer.html">Configure to run in a Servlet Container</a></li>
+<li><a href="codegen.html">Code Generator</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<td class="main">
+
+
+
+
+
+
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

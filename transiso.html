@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Transaction Isolation - Effects on Java ORM Persistence and JPA</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="Transaction Isolation in Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/transiso.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Transaction Isolation</span>
+</div>
+
+
+
+
+
+<table>
+<tr>
+<td class="main">
+<h3>Transaction Isolation</h3>
+
+<ul>
+<li><a href="#readcommitted">READ_COMMITTED is the expected default</a></li>
+<li><a href="#ansi">ANSI Isolation Levels - DBMS Vendors don't 100% agree</a></li>
+<li><a href="#lazy">Effects on Lazy Loading</a></li>
+<li><a href="#when">When do you want a higher Isolation Level</a></li>
+<li><a href="#using">Using Transaction Isolation Level</a></li>
+</ul>
+<p>
+&nbsp;
+</p>
+
+
+<h4><a id="readcommitted"></a>READ_COMMITTED is the expected default</h4>
+<p>
+READ_COMMITTED is the expected default Transaction Isolation level for using Ebean as well 
+as EJB3 JPA. The reason for this is that <a href="occ.html">Optimistic Concurrency Checking</a> does not work at
+higher Isolation Levels (more specifically there are windows of time where it will not
+work and "Lost Updates" will silently occur and noone will probably notice).
+</p>
+
+</td>
+<td class="rhslinks">
+<div>
+<h5>Related Links</h5>
+<ul>
+<li><a href="occ.html" title="Explanation of Optimistic Concurrency Checking">Optimistic Concurrency Checking</a></li>
+<li><a href="transiso.html">Transaction Isolation</a></li>
+<li><a href="design.html" title="How Lazy Loading works">Lazy Loading</a></li>
+<li><a href="equals.html" >equals and hashcode</a></li>
+</ul>
+</div>
+</td>
+</tr>
+
+<tr>
+<td class="main">
+
+<h4><a id="ansi"></a>ANSI Isolation Levels - DBMS Vendors don't 100% agree</h4>
+<p>
+Before we get into this we need to note there is some debate over relating
+ANSI isolation levels with databases that support multi-level concurrency control (MCC).
+</p>
+<p>
+<p> Quoting from wikipedia:
+<a href="http://en.wikipedia.org/wiki/Snapshot_isolation">http://en.wikipedia.org/wiki/Snapshot_isolation</a>
+</p>
+<p>
+"Unfortunately, the ANSI SQL-92 standard was written with a lock-based
+database in mind, and hence is rather vague when applied to MCC systems.
+Berenson et al. wrote a paper in 1995 [3] critiquing the SQL standard, and
+cited snapshot isolation as an example of an isolation level that did not
+exhibit the standard anomalies described in the ANSI SQL-92 standard, yet
+still had anomalous behaviour when compared with serializable transactions."
+</p>
+<p>
+Basically ANSI Isolation levels are not the be all and end all for some DBMS Vendors.
+ANSI SQL 1999 doesn't mention Lost Updates, Read Consistency or Snapshot Isolation for example.
+</p>
+
+
+<h4><a id="lazy"></a>Effects on Lazy Loading</h4>
+<p>
+You should be aware of the effects of the Transaction Isolation levels on all statements
+but it is worth looking specifically at 
+<a href="lazy.html" title="How Lazy loading works and Transaction Isolation effects it">Lazy loading here</a>.
+</p>
+<p>
+I think this issue has been clouded by some other vendor documentation and it is worth 
+being a bit more explicit about how lazy loading is effected by the transaction isolation
+level.
+</p>
+
+
+<h4><a id="when"></a>When do you want a higher Isolation Level</h4>
+<p>
+So if the default is READ_COMMITTED when would you want a higher Isolation level such as
+SERIALIZABLE?
+</p>
+<p>
+I think there are two cases and I'm only going to answer one of them. Specifically those 
+cases are where you want a "read only/query only" transaction and when you want a "updatable"
+transaction.
+</p>
+<em>Read Only/Query Only SERIALIZABLE</em>
+<p>
+There is an Oracle term called "Transaction level Read Consistency" and that is essentially
+what you get when you get a transaction at SERIALIZABLE. It is probably worth researching this
+term but the guts is that every statement in the transaction <em>"sees the database as at the
+transaction start time"</em>. For me this is a good explanation of why we would want a 
+"Read Only SERIALIZABLE Transaction".
+</p>
+<p>
+For an example of when you want "Transaction level Read Consistency" lets take an accounting
+trial balance report and say that 2 queries are used to build the report. The first queries
+for the Debits and the second for the Credits. What we explicitly do not want is for a transaction
+to occur during our report and have the new data included in the second query but not the first.
+If this occured then our Total Debits would not match our Total Credits.
+</p>
+<p>
+In summary we want both queries to see the database as at the same time (transaction start time).
+</p>
+<p>
+Another approach to achieve the same goal but without using a SERIALIZABLE Transaction is
+to use predicates on the queries to make sure they both see "consistent" data and exclude newly
+commited data. What this means is that with some knowledge of the the application Developers can
+use Date or Timestamp type predicates to make sure the queries are consistent with respect to 
+each other.
+</p>
+<p>
+Another approach available in some environments is to ensure that updates do not occur during the
+reporting. This can happen if you have a job system and serialise the updating and reporting so that
+they don't occur concurrently.
+</p>
+<em>Updatable SERIALIZABLE</em>
+<p>
+Unfortunately I am not going to explain why you want to do this. What I can say is that you should 
+be aware that you will now have to use pessimistic locking and that you may be leaving the
+"sweet spot" of your database implementation with higher chances of facing deadlocks etc. 
+Good luck :)
+</p>
+
+<h4><a id="using"></a>Using Transaction Isolation Level</h4>
+<pre>
+<code>
+  // use the default Isolation level. 
+  // Likely to be READ_COMMITTED
+  //Ebean.beginTransaction();
+
+  // start a transaction at SERIALIZABLE
+  Ebean.beginTransaction(Transaction.SERIALIZABLE);
+  ...
+</code>
+</pre>
+<p>
+To start a transaction at SERIALIZABLE you just need to specify it in
+the beginTransaction. Otherwise it will default to your default setting
+which is likely to be READ_COMMITTED.
+</p>
+<p>
+You do not need to set the Isolation level back if you are using Ebeans
+connection pool. That will reset the Isolation level back automatically.
+</p>
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

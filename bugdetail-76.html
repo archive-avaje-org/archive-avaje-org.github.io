@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: .equals() enhancement ... not right for primitive id types (int and long)</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="Tests package main import app data PrimEntity import com avaje ebean bean EntityBean public class TestPrimEquals public static void main String args PrimEntity t0 new PrimEntity if t0 instanceof EntityBean only interesting in testing enhanced bean with primitive id testOne else throw new RuntimeException Not enhanced private static void testOne PrimEntity a0 new PrimEntity PrimEntity a1 new PrimEntity assert a0 equals a1 PrimEntity b0 new PrimEntity b0 setId 5 PrimEntity b1 new PrimEntity b1 setId 5 assert b1 equals b0 PrimEntity dummy new PrimEntity PrimEntity c0 new PrimEntity c0 equals dummy c0 setId 4 PrimEntity c1 new PrimEntity c1 setId 4 assert c0 equals c1 PrimEntity e0 new PrimEntity e0 equals dummy e0 setId 4 PrimEntity e1 new PrimEntity e1 equals dummy e1 setId 4 assert e0 equal">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-76.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 76 : .equals() enhancement ... not right for primitive id types (int and long)
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 76 : .equals() enhancement ... not right for primitive id types (int and long) </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Rob</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">1.1.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">24/02/2009</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">24/02/2009</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>Tests:</p><p>package main;</p><p>import app.data.PrimEntity;</p><p>import com.avaje.ebean.bean.EntityBean;</p><p>public class TestPrimEquals {<br/>	<br/>	public static void main(String[] args) {<br/>		<br/>		PrimEntity t0 = new PrimEntity();<br/>		<br/>		if (t0 instanceof EntityBean){<br/>			// only interesting in testing<br/>			// enhanced bean (with primitive id)<br/>			testOne();<br/>			<br/>			<br/>			<br/>		} else {<br/>			throw new RuntimeException("Not enhanced");<br/>		}<br/>	}<br/>	<br/>	private static void testOne() {<br/>		<br/>		<br/>		PrimEntity a0 = new PrimEntity();	<br/>		PrimEntity a1 = new PrimEntity();<br/>		assert !a0.equals(a1);<br/>		<br/>		PrimEntity b0 = new PrimEntity();<br/>		b0.setId(5);<br/>		PrimEntity b1 = new PrimEntity();<br/>		b1.setId(5);<br/>		assert b1.equals(b0);<br/>		<br/>		PrimEntity dummy = new PrimEntity();<br/>		<br/>		PrimEntity c0 = new PrimEntity();<br/>		c0.equals(dummy);<br/>		c0.setId(4);<br/>		<br/>		PrimEntity c1 = new PrimEntity();<br/>		c1.setId(4);<br/>		<br/>		assert !c0.equals(c1);<br/>		<br/>		PrimEntity e0 = new PrimEntity();<br/>		e0.equals(dummy);<br/>		e0.setId(4);<br/>		<br/>		PrimEntity e1 = new PrimEntity();<br/>		e1.equals(dummy);<br/>		e1.setId(4);<br/>		<br/>		assert !e0.equals(e1);</p><p>		<br/>		System.out.println("done");<br/>	}<br/>	<br/>}</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+24 Feb&nbsp;09:54
+</div>
+The problem...
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>The problem was in the _ebean_getIdentity() generated method. It was checking for null to test if the id property had been set. For primitives it instead needs to test for id != 0 (0 being the default value for int and long).</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+24 Feb&nbsp;09:54
+</div>
+I have fixed this.
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>... just need to commit it up.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+24 Feb&nbsp;10:23
+</div>
+Mods for future reference
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>--- ebean/trunk/src/com/avaje/ebean/enhance/agent/FieldMeta.java    2009-02-23 22:24:19 UTC (rev 142)<br/>+++ ebean/trunk/src/com/avaje/ebean/enhance/agent/FieldMeta.java    2009-02-24 10:01:43 UTC (rev 143)<br/>@@ -243,6 +243,22 @@<br/>                || annotations.contains("Lcom/avaje/ebean/annotation/EmbeddedColumns;");<br/>    }</p><p>+    public void appendGetField(MethodVisitor mv, ClassMeta classMeta) {<br/>+        mv.visitFieldInsn(GETFIELD, classMeta.getClassName(), fieldName , fieldDesc);<br/>+    }<br/>+<br/>+    public void appendValueOf(MethodVisitor mv, ClassMeta classMeta) {<br/>+        if (primativeType) {<br/>+            // use valueOf methods to return primitives as objects<br/>+            Type objectWrapperType = PrimitiveHelper.getObjectWrapper(asmType);<br/>+<br/>+            String objDesc = objectWrapperType.getInternalName();<br/>+            String primDesc = asmType.getDescriptor();<br/>+<br/>+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, objDesc, "valueOf", "(" + primDesc + ")L" + objDesc + ";");<br/>+        }<br/>+    }<br/>+   <br/>    /**<br/>    * As part of the switch statement to read the fields generate the get code.<br/>    */</p><p>Modified: ebean/trunk/src/com/avaje/ebean/enhance/agent/IndexFieldWeaver.java<br/>===================================================================<br/>--- ebean/trunk/src/com/avaje/ebean/enhance/agent/IndexFieldWeaver.java    2009-02-23 22:24:19 UTC (rev 142)<br/>+++ ebean/trunk/src/com/avaje/ebean/enhance/agent/IndexFieldWeaver.java    2009-02-24 10:01:43 UTC (rev 143)<br/>@@ -102,7 +102,7 @@</p><p>        } else {<br/>            // add the _ebean_getIdentity(), equals() and hashCode() methods<br/>-            MethodEquals.addMethods(cv, classMeta, idIndex, idFieldMeta.getName());<br/>+            MethodEquals.addMethods(cv, classMeta, idIndex, idFieldMeta);<br/>        }<br/>    }</p><p><br/>Modified: ebean/trunk/src/com/avaje/ebean/enhance/agent/MethodEquals.java<br/>===================================================================<br/>--- ebean/trunk/src/com/avaje/ebean/enhance/agent/MethodEquals.java    2009-02-23 22:24:19 UTC (rev 142)<br/>+++ ebean/trunk/src/com/avaje/ebean/enhance/agent/MethodEquals.java    2009-02-24 10:01:43 UTC (rev 143)<br/>@@ -46,7 +46,7 @@<br/>    * @param idFieldIndex<br/>    *            the index of the id field<br/>    */<br/>-    public static void addMethods(ClassVisitor cv, ClassMeta meta, int idFieldIndex, String fieldName) {<br/>+    public static void addMethods(ClassVisitor cv, ClassMeta meta, int idFieldIndex, FieldMeta idFieldMeta) {</p><p>        if (meta.hasEqualsOrHashCode()) {<br/>            // already has a equals or hashcode method...<br/>@@ -57,9 +57,13 @@<br/>        } else {<br/>            if (meta.isLog(2)) {<br/>                meta.log("adding equals() hashCode() and _ebean_getIdentity() with Id field "<br/>-                    + fieldName+ " index:" + idFieldIndex);<br/>+                    + idFieldMeta.getName()+ " index:" + idFieldIndex+" primative:"+idFieldMeta.primativeType);<br/>            }<br/>-            addGetIdentity(cv, meta, idFieldIndex);<br/>+            if (idFieldMeta.primativeType){<br/>+                addGetIdentityPrimitive(cv, meta, idFieldIndex, idFieldMeta);<br/>+            } else {<br/>+                addGetIdentityObject(cv, meta, idFieldIndex);   <br/>+            }<br/>            addEquals(cv, meta);<br/>            addHashCode(cv, meta);<br/>        }<br/>@@ -77,7 +81,13 @@<br/>    }</p><p>    /**<br/>-    * Generate the _ebean_getIdentity method for used with equals().<br/>+    * Generate the _ebean_getIdentity method for primitive id types.<br/>+    * <p><br/>+    * For primitives we need to check for == 0 rather than null.<br/>+    * <p><br/>+    * <p><br/>+    * This is used for implementing equals().<br/>+    * <p><br/>    *<br/>    *</p><pre>* private Object _ebean_getIdentity() {
+@@ -85,27 +95,27 @@
+    *         if (_ebean_identity != null) {
+    *             return _ebean_identity;
+    *         }
+-    *         Object id = getId();
+-    *         if (id != null) {
+-    *             return id;
++    *        
++    *         if (id != 0) {
++    *             _ebean_identity = Integer.valueOf(id);
++    *         } else {
++    *             _ebean_identity = new Object();
+    *         }
+    *
+-    *         if (_ebean_identity == null) {
+-    *             _ebean_identity = new Object();
+-    *         }
+    *         return _ebean_identity;
+    *     }
+    * }
+    *</pre><p>*/<br/>-    private static void addGetIdentity(ClassVisitor cv, ClassMeta classMeta, int idFieldIndex) {<br/>-<br/>+    private static void addGetIdentityPrimitive(ClassVisitor cv, ClassMeta classMeta, int idFieldIndex, FieldMeta idFieldMeta) {<br/>+       <br/>        String className = classMeta.getClassName();</p><p>        MethodVisitor mv;</p><p>        mv = cv.visitMethod(ACC_PRIVATE, _EBEAN_GET_IDENTITY, "()Ljava/lang/Object;", null, null);<br/>        mv.visitCode();<br/>+       <br/>        Label l0 = new Label();<br/>        Label l1 = new Label();<br/>        Label l2 = new Label();<br/>@@ -114,15 +124,117 @@<br/>        Label l4 = new Label();<br/>        mv.visitTryCatchBlock(l3, l4, l2, null);<br/>        Label l5 = new Label();<br/>+        mv.visitTryCatchBlock(l2, l5, l2, null);<br/>        Label l6 = new Label();<br/>-        mv.visitTryCatchBlock(l5, l6, l2, null);<br/>+        mv.visitLabel(l6);<br/>+        mv.visitLineNumber(1, l6);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>+        mv.visitInsn(DUP);<br/>+        mv.visitVarInsn(ASTORE, 1);<br/>+        mv.visitInsn(MONITORENTER);<br/>+        mv.visitLabel(l0);<br/>+        mv.visitLineNumber(1, l0);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>+        mv.visitFieldInsn(GETFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>+        mv.visitJumpInsn(IFNULL, l3);<br/>        Label l7 = new Label();<br/>-        mv.visitTryCatchBlock(l2, l7, l2, null);<br/>+        mv.visitLabel(l7);<br/>+        mv.visitLineNumber(1, l7);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>+        mv.visitFieldInsn(GETFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>+        mv.visitVarInsn(ALOAD, 1);<br/>+        mv.visitInsn(MONITOREXIT);<br/>+        mv.visitLabel(l1);<br/>+        mv.visitInsn(ARETURN);<br/>+        mv.visitLabel(l3);<br/>+        mv.visitLineNumber(1, l3);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>+        idFieldMeta.appendGetField(mv, classMeta);<br/>        Label l8 = new Label();<br/>+        mv.visitJumpInsn(IFEQ, l8);<br/>+        Label l9 = new Label();<br/>+        mv.visitLabel(l9);<br/>+        mv.visitLineNumber(1, l9);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>+        idFieldMeta.appendGetField(mv, classMeta);<br/>+        idFieldMeta.appendValueOf(mv, classMeta);<br/>+        mv.visitFieldInsn(PUTFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>+        Label l10 = new Label();<br/>+        mv.visitJumpInsn(GOTO, l10);<br/>        mv.visitLabel(l8);<br/>        mv.visitLineNumber(1, l8);<br/>        mv.visitVarInsn(ALOAD, 0);<br/>+        mv.visitTypeInsn(NEW, "java/lang/Object");<br/>        mv.visitInsn(DUP);<br/>+        mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V");<br/>+        mv.visitFieldInsn(PUTFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>+        mv.visitLabel(l10);<br/>+        mv.visitLineNumber(1, l10);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>+        mv.visitFieldInsn(GETFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>+        mv.visitVarInsn(ALOAD, 1);<br/>+        mv.visitInsn(MONITOREXIT);<br/>+        mv.visitLabel(l4);<br/>+        mv.visitInsn(ARETURN);<br/>+        mv.visitLabel(l2);<br/>+        mv.visitLineNumber(1, l2);<br/>+        mv.visitVarInsn(ALOAD, 1);<br/>+        mv.visitInsn(MONITOREXIT);<br/>+        mv.visitLabel(l5);<br/>+        mv.visitInsn(ATHROW);<br/>+        Label l11 = new Label();<br/>+        mv.visitLabel(l11);<br/>+        mv.visitLocalVariable("this", "L"+className+";", null, l6, l11, 0);<br/>+        mv.visitMaxs(3, 2);<br/>+        mv.visitEnd();<br/>+    }<br/>+   <br/>+    /**<br/>+    * Generate the _ebean_getIdentity method for used with equals().<br/>+    *<br/>+    *</p><pre>+    * private Object _ebean_getIdentity() {
++    *     synchronized (this) {
++    *         if (_ebean_identity != null) {
++    *             return _ebean_identity;
++    *         }
++    *
++    *         Object id = getId();
++    *         if (id != null) {
++    *             _ebean_identity = id;
++    *         } else {
++    *             _ebean_identity = new Object();
++    *         }
++    *
++    *         return _ebean_identity;
++    *     }
++    * }
++    *</pre><p>+    */<br/>+    private static void addGetIdentityObject(ClassVisitor cv, ClassMeta classMeta, int idFieldIndex) {<br/>+<br/>+        String className = classMeta.getClassName();<br/>+<br/>+        MethodVisitor mv;<br/>+<br/>+        mv = cv.visitMethod(ACC_PRIVATE, _EBEAN_GET_IDENTITY, "()Ljava/lang/Object;", null, null);<br/>+        mv.visitCode();<br/>+       <br/>+        Label l0 = new Label();<br/>+        Label l1 = new Label();<br/>+        Label l2 = new Label();<br/>+        mv.visitTryCatchBlock(l0, l1, l2, null);<br/>+        Label l3 = new Label();<br/>+        Label l4 = new Label();<br/>+        mv.visitTryCatchBlock(l3, l4, l2, null);<br/>+        Label l5 = new Label();<br/>+        mv.visitTryCatchBlock(l2, l5, l2, null);<br/>+        Label l6 = new Label();<br/>+        mv.visitLabel(l6);<br/>+        mv.visitLineNumber(1, l6);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>+        mv.visitInsn(DUP);<br/>        mv.visitVarInsn(ASTORE, 1);<br/>        mv.visitInsn(MONITORENTER);<br/>        mv.visitLabel(l0);<br/>@@ -130,16 +242,16 @@<br/>        mv.visitVarInsn(ALOAD, 0);<br/>        mv.visitFieldInsn(GETFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>        mv.visitJumpInsn(IFNULL, l3);<br/>-        Label l9 = new Label();<br/>-        mv.visitLabel(l9);<br/>-        mv.visitLineNumber(1, l9);<br/>+        Label l7 = new Label();<br/>+        mv.visitLabel(l7);<br/>+        mv.visitLineNumber(1, l7);<br/>        mv.visitVarInsn(ALOAD, 0);<br/>        mv.visitFieldInsn(GETFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>        mv.visitVarInsn(ALOAD, 1);<br/>        mv.visitInsn(MONITOREXIT);<br/>        mv.visitLabel(l1);<br/>        mv.visitInsn(ARETURN);<br/>-<br/>+       <br/>        mv.visitLabel(l3);<br/>        mv.visitLineNumber(1, l3);<br/>        mv.visitVarInsn(ALOAD, 0);<br/>@@ -147,54 +259,49 @@<br/>        mv.visitVarInsn(ALOAD, 0);<br/>        mv.visitMethodInsn(INVOKESPECIAL, className, "_ebean_getField", "(ILjava/lang/Object;)Ljava/lang/Object;");<br/>        mv.visitVarInsn(ASTORE, 2);<br/>-<br/>+       <br/>+        Label l8 = new Label();<br/>+        mv.visitLabel(l8);<br/>+        mv.visitLineNumber(1, l8);<br/>+        mv.visitVarInsn(ALOAD, 2);<br/>+        Label l9 = new Label();<br/>+        mv.visitJumpInsn(IFNULL, l9);<br/>        Label l10 = new Label();<br/>        mv.visitLabel(l10);<br/>        mv.visitLineNumber(1, l10);<br/>+        mv.visitVarInsn(ALOAD, 0);<br/>        mv.visitVarInsn(ALOAD, 2);<br/>-        mv.visitJumpInsn(IFNULL, l5);<br/>+        mv.visitFieldInsn(PUTFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>        Label l11 = new Label();<br/>-        mv.visitLabel(l11);<br/>-        mv.visitLineNumber(1, l11);<br/>-        mv.visitVarInsn(ALOAD, 2);<br/>-        mv.visitVarInsn(ALOAD, 1);<br/>-        mv.visitInsn(MONITOREXIT);<br/>-        mv.visitLabel(l4);<br/>-        mv.visitInsn(ARETURN);<br/>-        mv.visitLabel(l5);<br/>-        mv.visitLineNumber(1, l5);<br/>+        mv.visitJumpInsn(GOTO, l11);<br/>+        mv.visitLabel(l9);<br/>+        mv.visitLineNumber(1, l9);<br/>        mv.visitVarInsn(ALOAD, 0);<br/>-        mv.visitFieldInsn(GETFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>-        Label l12 = new Label();<br/>-        mv.visitJumpInsn(IFNONNULL, l12);<br/>-        Label l13 = new Label();<br/>-        mv.visitLabel(l13);<br/>-        mv.visitLineNumber(1, l13);<br/>-        mv.visitVarInsn(ALOAD, 0);<br/>        mv.visitTypeInsn(NEW, "java/lang/Object");<br/>        mv.visitInsn(DUP);<br/>        mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V");<br/>        mv.visitFieldInsn(PUTFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>-        mv.visitLabel(l12);<br/>-        mv.visitLineNumber(1, l12);<br/>+        mv.visitLabel(l11);<br/>+        mv.visitLineNumber(1, l11);<br/>        mv.visitVarInsn(ALOAD, 0);<br/>        mv.visitFieldInsn(GETFIELD, className, IDENTITY_FIELD, "Ljava/lang/Object;");<br/>        mv.visitVarInsn(ALOAD, 1);<br/>        mv.visitInsn(MONITOREXIT);<br/>-        mv.visitLabel(l6);<br/>+        mv.visitLabel(l4);<br/>        mv.visitInsn(ARETURN);<br/>        mv.visitLabel(l2);<br/>        mv.visitLineNumber(1, l2);<br/>        mv.visitVarInsn(ALOAD, 1);<br/>        mv.visitInsn(MONITOREXIT);<br/>-        mv.visitLabel(l7);<br/>+        mv.visitLabel(l5);<br/>        mv.visitInsn(ATHROW);<br/>-        Label l14 = new Label();<br/>-        mv.visitLabel(l14);<br/>-        mv.visitLocalVariable("this", "L" + className + ";", null, l8, l14, 0);<br/>-        mv.visitLocalVariable("tmpId", "Ljava/lang/Object;", null, l10, l2, 2);<br/>+        Label l12 = new Label();<br/>+        mv.visitLabel(l12);<br/>+        mv.visitLocalVariable("this", "L"+className+";", null, l6, l12, 0);<br/>+        mv.visitLocalVariable("tmpId", "Ljava/lang/Object;", null, l8, l2, 2);<br/>        mv.visitMaxs(3, 3);<br/>        mv.visitEnd();<br/>+       <br/>    }</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+24 Feb&nbsp;22:03
+</div>
+Need to review this
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Refer to Bug 80 ... use of long.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+25 Feb&nbsp;09:47
+</div>
+issue for long, double and float
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>This was an issue for long, double and float primitive types.</p><p>Extra bytecodes needed to compare those to the matching 0 value in _ebean_getIdentity() ... method used by the generated equals().</p><p>Fixed in HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="76">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-76.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="76">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

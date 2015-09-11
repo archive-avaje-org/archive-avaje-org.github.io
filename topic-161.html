@@ -1,0 +1,307 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: DDL generation</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="vannevar">
+<meta name="description" content="You say about DDL generation that Ebean does not support DDL generation from annotations and I personally have no interest in this idea There are good tools to design and document a database and generate the DDL I chose Ebean instead of Hibernate for my application because it uses separated detached client databases and I wanted to ease my database access with an ORM tool but didn t need the complexity of Hibernate I hesitated between ActiveObjects and Ebean but at the end I chose Ebean because it avoids using separate duplicated Entity beans so it seemed more comfortable to use But then a requirement for my application would be to have transparent updates as bugs are constantly fixed and slight changes are made At updates the client database structure may slightly change Of course the cli">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-161.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by vannevar </span>
+16 Dec&nbsp;08:00
+</div>
+DDL generation
+<div class="body">
+<p>You say about DDL generation that "Ebean does not support DDL generation from annotations and I personally have no interest in this idea. There are good tools to design and document a database and generate the DDL."</p><p>I chose Ebean instead of Hibernate for my application because it uses separated, detached client databases, and I wanted to ease my database access with an ORM tool but didn't need the complexity of Hibernate. I hesitated between ActiveObjects and Ebean but at the end I chose Ebean because it avoids using separate (duplicated) Entity beans, so it seemed more comfortable to use.</p><p>But then, a requirement for my application would be to have transparent updates as bugs are constantly fixed and slight changes are made. At updates, the client database structure may slightly change. Of course, the client who updates its application should not lose his own data so I need a solution that automatically updates the underlying database structure reflecting the applications needs without modifying existing data. It would be very nice if that would be possible to make with minimal extra effort needed.</p><p>I don't know how this task could be done with the tools you mention, and it seems a commonly needed task. Is there an external tool that is able to do it in a JPA compatible mode?</p><p>At the moment, it seems to me that I have two choices: Either I make this DDL generation tool myself, or I rewrite the application using ActiveObjects which - if I understood it correctly - supports this very task. I'm not quite sure yet which is the quicker approach (unfortunately I have no choice but using the quickest solution). But it would be a pity if I had to choose the latter as Ebean is great otherwise.</p><p>And then, if the first approach is the quicker, would you be interested in the result?</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+16 Dec&nbsp;09:30
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ok, wrt "Ebean does not support DDL generation "... a number of people eventually convinced me to change and since v2 Ebean does generate DDL from the annotated entity beans.</p><p>That said, it seems to me you are wanting a tool to generate the alter table statements required when the model changes?  Say, add a property... and you want the alter table add column DDL.  Is that the case?</p><p>If so, Ebean is not currently capable of generating that DDL (identifying the added column and generating the alter table add column DDL).</p><p>I'd guess it depends on how big your model is, how drastically your model changes, and how frequently those changes are.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+17 Dec&nbsp;17:21
+</div>
+<span>by vannevar</span>
+<div class="body">
+<p>"since v2 Ebean does generate DDL from the annotated entity beans."</p><p>Ah, yes, in fact, I've used the DDL generation already (though, because I was not able to change the foreign key delete/update rule, I had to change a bit on the resulting SQL file).</p><p>"Say, add a property... and you want the alter table add column DDL. Is that the case?"</p><p>Yes, that would be perfect. ActiveObjects reaches the goal similarly.</p><p>"I'd guess it depends on how big your model is, how drastically your model changes, and how frequently those changes are."</p><p>It's quite large, with more than 40 tables, and I expect it to change quite a lot, as the application will evolve much after the first release, but these changes primarily mean adding tables, fields and constraints, and perhaps changing field types.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+20 Dec&nbsp;09:42
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Thinking about a way to do this... I suggest generating an XML document from the model (aka like DDL generation but generate as XML representing the tables/entitis columns/properties).</p><p>Then when the model changes you generate the XML again and now have 2 XML documents representing the model. Then use some XML processing to find changes in the model and generate appropriate DDL (alter table statements etc).</p><p>In the best world there would be a modelling tool that would the same XML document.</p><p>That is probably what I'd suggest we could do with Ebean to support this requirement.</p><p>How does that sound?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+04 Jan&nbsp;13:26
+</div>
+<span>by vannevar</span>
+<div class="body">
+<p>Sorry for the late answer.</p><p>At first glance, it seems easier to manage the differences between two object hierarchies than those between two XML files, but if it's easier to produce the XML files (rather than an object hierarchy) then this solution is also fine. :)</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+06 Jan&nbsp;21:49
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Hmmm, I don't really understand how to 'manage the differences between the two object hierarchies'... in that the 2 object hierarchies don't exist at the same time (same JVM execution) ... so my thinking was you need to persist the object hierarchy information between JVM executions... hence saving that information in the form of XML.</p><p>Perhaps I am missing your point altogether?</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+12 Jan&nbsp;22:51
+</div>
+<span>by vannevar</span>
+<div class="body">
+<p>Sorry, I should have been clearer.<br/>We have now 3 different solutions:</p><p>1) To generate an object hierarchy from the database schema and compare that to a similar object hierarchy generated from the current entity bean classes. This was my original idea as this is how ActiveObjects solves the problem. An advantage of this approach that it can work even with a broken database, so in this regard this seems the stablest solution of the 3.<br/>2) An EbeanServer.createSchemaXml(filename) function that generates an XML file from the current entity schema. After two calls, a built-in or a manually written function can compare them. This was your solution as far as I see.<br/>3) An EbeanServer.generateSchema() function generates an object hierarchy from the entity bean classes similar to that of solution 1. Then it can be saved into an XML file, with the help of a built-in function or an outer library. Next time, the result of the generateSchema() call can be compared to the result of the parsed version of the previously saved XML file. It's almost the same as solution 2, but there is no need to build an object hierarchy manually from an XML, as the comparison can be made at a middle level representation.</p><p>What I was trying to say that from solution 2) and 3) the latter would be preferable (at least for me), as the comparison is easier to implement on that level. But if, for some reason, it is much easier to produce an XML file in a "serial" matter without representing the whole as an object hierarchy of database, tables and fields, then the 2nd solution is also fine. :)</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+13 Jan&nbsp;10:39
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>>> 1) To generate an object hierarchy from the database schema ...</p><p>So "object hierarchy" means some sort of in memory representation of the meta data.</p><p>Assuming everything in the DB is represented in the application... you want to compare the java side to the DB dictionary effectively. Hmmm.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+13 Jan&nbsp;10:49
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Maybe getting ahead too far ... but basically I think of the "object hierarchy" as a dictionary.  In ORM terms this is meta data about the DB schema and the Java Object mapping.</p><p>Via 1) or 2) Ebean builds this 'meta data dictionary' and can optionally store/load it as an XML file. </p><p>You can then have Forward and Reverse generation tools to generate java from DB and DB from Java (as incremental diffs between versions of the meta data dictionary).</p><p>You can also build a modelling tool to represent and edit the tables/java entities.</p><p>Anyways... that may not help but those are the thoughts in the back of my head.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+13 Jan&nbsp;10:57
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>... and you can use the dictionary to generate other things like DB trigger code for auditing etc... and extend the DDL generation to support tablespaces and the like.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="161">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

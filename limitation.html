@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Design Philosophy</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="description" content="The Limitations and potential objections with Ebean">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/limitation.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="/">Home</a>
+&raquo; <a href="whitepaper.html" title="Whitepapers">Whitepapers</a>
+&raquo; <span>Limitations and Objections</span>
+</div>
+
+
+
+
+
+<table>
+
+<tr>
+<td class="main">
+<h3>Limitations and Objections</h3>
+
+<ul>
+<li><a href="#jdk5">JDK5 Only</a></li>
+<li><a href="#ql">No EJB QL Support</a></li>
+<li><a href="#inheritance">Only Single Table Inheritance</a></li>
+<li><a href="#reflect">Performance of Reflection</a></li>
+<li><a href="#bytecode">Byte Code Generation</a></li>
+<li><a href="#serial">Serialization</a></li>
+<li><a href="#deploy">JPA Deployment</a></li>
+</ul>
+<p>
+&nbsp;
+</p>
+<h4><a id="jdk5"></a>JDK5 Only</h4>
+<p>
+Ebean is currently only available for JDK5+.  It would be nice to port back to JDK1.4 when time permits.
+</p>
+
+<h4><a id="ql"></a>No EJB QL Support</h4>
+<p>
+There is no current support for EJB QL Query Language and its not an immediate priority.
+</p>
+<p>
+Part of the reason for this is that personally I think many report orientated queries 
+are better expressed in SQL and returned as Lists of Maps rather than artifically 
+being forced into Objects.
+</p>
+<p>
+A full discussion of why there is no EJB QL is covered here.
+</p>
+
+<h4><a id="inheritance"></a>Only Single Table Inheritance</h4>
+<p>
+Current there is only support for single table inheritance. The other two inheritance 
+strategies are considered Enhancement requests and will be introduced in a feature release.
+</p>
+
+
+<h4><a id="reflect"></a>Performance of Reflection</h4>
+<p>
+People may be worried about the potential for a large amount of Reflection being used and
+its performance cost.
+</p>
+<p>
+The use of reflection has been replaced with code generation (via ASM). So the 
+performance cost of using beans and getters and setters etc is pretty good.
+I would not expect this to be a noticable issue for people relative to JDBC/database costs.
+</p>
+<p>
+For people investigating the raw performance cost of ORM queries versus direct JDBC with
+'flat' objects I would suggest the ball park of 15%. 
+Suggesting a ball park figure is a little crazy as there is a very large number 
+of factors that effect the ORM overhead 
+including JVM settings, jdbc performance, the nature of the query, the number of scalar values 
+relative to ManyToOne, OneToMany etc type associations.... However a ball park maybe useful and
+I'd be interested if the relative cost for you was much higher than that.
+</p>
+
+<h4><a id="bytecode"></a>Byte Code Generation</h4>
+<p>
+<a href="http://asm.objectweb.org/" title="http://asm.objectweb.org">ASM</a> is used for all the Byte code generation in Ebean. ASM is a stonkingly great product
+and I have no hesitation in recommending it. It gives the Developer complete control over
+the byte code generated and is fast and light. 
+</p>
+<p>
+In general byte code generation brings a level of the 'unknown'. As you step through the
+Ebean code in a Debugger and goto generated code you will goto line 1 of the source. 
+This is done to indicate that you are currently on generated code (which you can not see).
+</p>
+<p>
+There is no special requirement to modify ClassLoading or use Java Instrumentation with Ebean.
+You just need to have it in your classpath and enable the system.properties file to be found.
+</p>
+<p>
+Also note ASM code generation is used to replace reflection.
+</p>
+
+<h4><a id="serial"></a>Serialization</h4>
+<p>
+Ebean has the ability to Serialize an Object graph to be 'Plain Vanilla'.
+That is you can use this mechanism to replace Byte code generated beans with 'plain vanilla'
+beans and also replace Ebean Collections (BeanList, BeanSet etc) with the underlying List Set
+and Map implementations.
+</p>
+<p>
+This will be useful for people who want to send an Object Graph to a JVM without any Ebean
+dependancy. No Ebean jars need to be deployed to the other JVM.
+</p>
+
+<h4><a id="deploy"></a>JPA Deployment</h4>
+<p>
+There is no current support for XML deployment and this is an Enhancement request.
+</p>
+<p>
+Ebean is designed to be compatible with JPA deployment in terms of annotations and XML.
+However, there are some details of the JPA deployment which do not ring true and have
+been ignored.
+</p>
+<p>
+<em>Database Meta data Driven</em>
+</p>
+<p>
+Deployment information in Ebean is mostly derived from Database Meta data. That means that
+generally you do not need to specify Joins, targetTypes or Relationship ownership (mappedBy).
+This information is determined from the schema. You only need to specify a Join if there is
+more than one Join between the two tables in question (and it can not be guess based on 
+the foreign key column name).
+</p>
+
+<p>
+<em>Naming Convention</em>
+</p>
+<p>
+Ebean has a pluggable NamingConvention rather than using the JPA defined one.  
+</p>
+<p>
+<em>TableGenerator, SequenceGenerator</em>
+</p>
+<p>
+For a given Database Ebean will know whether to use AutoIncrement/Identity or Sequences
+with only DB2 known to support both. It is not expected that you would need to use the 
+SequenceGenerator annotation with Ebean except potentially with DB2 and this is 
+currently unsupported.
+</p>
+<p>
+With Ebean you can use the GeneratedValue annotation to plugin any external Id generator.
+This includes UUID or anything you care to build. 
+TableGenerator annotation is currently unsupported and I'd always suggest using a native 
+database sequence/identity feature first.
+</p>
+<p>
+<em>DDL Generation</em>
+</p>
+<p>
+Ebean does not support DDL generation from annotations and I personally have no interest in this idea.
+There are good tools to design and document a database and generate the DDL. 
+Whats more it makes the Java code look like a Dogs breakfast - not for me I'm afraid.
+</p>
+
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+
+<tr>
+<td class="main">
+</td>
+<td class="rhs">
+</td>
+</tr>
+
+</table>
+
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

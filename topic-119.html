@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: exclude specific properties from weaving</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="imario">
+<meta name="description" content="Hi I ve starte to use AspectJ to enhance some classes also entities with PropertyChangeSupport Everything works so far except that I did not manage to have a field I need woven into the class in a way that Avaje will ignore it e g by weaving it transient The only workaround I do have at the moment is the same Avaje uses for its own added properties I simply ignore fields with a specific prefix Do you think it is possible to apply this patch Or would you like to see a more configurable approach Index ebean src com avaje ebean server deploy parse CreateProperties java ebean src com avaje ebean server deploy parse CreateProperties java revision 151 ebean src com avaje ebean server deploy parse CreateProperties java Fri Feb 27 09 33 39 CET 2009 93 7 92 7 for int i 0 i Field field fields i if f">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-119.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-1.html">General Issues</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-1.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by imario </span>
+27 Feb&nbsp;09:55
+</div>
+exclude specific properties from weaving
+<div class="body">
+<p>Hi!</p><p>I've starte to use AspectJ to enhance some classes (also entities) with PropertyChangeSupport.<br/>Everything works so far, except that I did not manage to have a field I need woven into the class in a way that Avaje will ignore it, e.g. by weaving it transient.<br/>The only workaround I do have at the moment is the same Avaje uses for its own added properties. I simply ignore fields with a specific prefix.</p><p>Do you think it is possible to apply this patch? Or would you like to see a more configurable approach?</p><p>Index: ../ebean/src/com/avaje/ebean/server/deploy/parse/CreateProperties.java<br/>===================================================================<br/>--- ../ebean/src/com/avaje/ebean/server/deploy/parse/CreateProperties.java	(revision 151)<br/>+++ ../ebean/src/com/avaje/ebean/server/deploy/parse/CreateProperties.java	Fri Feb 27 09:33:39 CET 2009<br/>@@ -93,7 +92,7 @@<br/>             for (int i = 0; i < fields.length; i++) {<br/>             	<br/>             	Field field = fields[i];<br/>-            	if (field.getName().startsWith("_ebean_")){<br/>+            	if (field.getName().startsWith("_ebean_") || field.getName().startsWith("ajc$instance$")){<br/>             		// not interested in ebean added fields<br/>             		<br/>             	} else if (Modifier.isStatic(field.getModifiers())) {</p><p><br/>Thanks!<br/>Ciao,<br/>Mario</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+27 Feb&nbsp;10:38
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>I'm fine with "ajc$instance$" ...  probably there should be some configuration to allow for the next unpredicted enhancement. Allowing people to specify a list of field name prefixes that should be ignored (over and above "_ebean_" and "ajc$instance$".</p><p>Interesting ... I was just the other day looking at "ClassBuilder" ... adding PropertyChangeSupport via enhancement. Perhaps it would be a good thing for Ebean enhancement to be able to support as well?</p><p>This was it: <a href="http://code.google.com/p/javabuilders/wiki/ClassBuilder">http://code.google.com/p/javabuilders/wiki/ClassBuilder</a></p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+27 Feb&nbsp;12:53
+</div>
+<span>by imario</span>
+<div class="body">
+<p>When doing the AspectJ stuff I thought about creating a EntityBean Aspect to not require to use the ebean weaver, which is fine, but I want to lower the used "weavers".</p><p>I'd suggest to use AspectJ as there is already IDE support and I think if one is doing AOP it will be done with AspectJ.<br/>I think there is also a maven task for compile-time weaving.</p><p>If you would like to, I can donate the created aspect for PropertyChangeSupport to Avaje.<br/>At least, I planned to donate any EntityBean aspect if I manage to create on.</p><p>Ciao,<br/>Mario</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+28 Feb&nbsp;03:12
+</div>
+<span>by Rob</span>
+<div class="body">
+<p><b><i> > I thought about creating a EntityBean Aspect to not require to use the ebean weaver</i></b><br/>Thats interesting...</p><p><b><i> > I'd suggest to use AspectJ as there is already IDE support ...</i></b><br/>To be honest I'm very happy using ASM... yes its a low level ("bare metal") approach ... but it means I have full control over the final byte code. </p><p><b><i> > also a maven task for compile-time weaving.</i></b><br/>I think of ant/maven enhancement tasks as "build" time weaving... and I'd put the Eclipse Ebean plugin (that adds enhancement on save in eclipse... as "compile-time" weaving.</p><p>The Ant/Maven tasks really are relatively easy - yes I should have a maven enhancement task... I actually think someone already has done that.</p><p><b><i>If you would like to, I can donate the created aspect for PropertyChangeSupport to Avaje.</i></b><br/>Yes, that could be interesting... but note the current Ebean entity enhancement already gets close due to "dirty" checking on setters etc. That is, there is already EntityBeanIntercept.preSetter(propName, newValue, oldValue) called ... so I'd probably be better off just hooking that into PropertyChangeSupport.</p><p>... but I would be very interested to see what exactly you are doing there ... and whether it is a good idea to support that with Ebean's current ASM based enhancement.</p><p><b><i>> I think if one is doing AOP it will be done with AspectJ</i></b><br/>IMO it depends on who the "one" is... I think using ASM directly (as I do with Ebean and as Toplink/Eclipselink do) is great for framework type development because of the level of control you get... and because the AOP/Enhancement is well defined.</p><p>... with AOP for application development (rather than framework development)... I could imagine you want to use something higher level than ASM.</p><p>... but yes, I'm very happy using ASM - I think it is fantastic.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+01 Mar&nbsp;08:48
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Logged and fixed as <a href="http://www.avaje.org/bugdetail-82.html">http://www.avaje.org/bugdetail-82.html</a></p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="1">
+<input type="hidden" name="f_topicid" value="119">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

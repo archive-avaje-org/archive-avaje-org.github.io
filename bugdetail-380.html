@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: Failed TestManyToManySaveTwice - Unique index or primary key violation</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="javax persistence PersistenceException org h2 jdbc JdbcSQLException Unique index or primary key violation PRIMARY KEY 75 ON PUBLIC SP CAR CAR WHEELS CAR WHEEL SQL statement insert into sp car car wheels car wheel values 23001 153 at com avaje ebeaninternal server persist ExeUpdateSql execute ExeUpdateSql java 95 at com avaje ebeaninternal server persist DefaultPersistExecute executeSqlUpdate DefaultPersistExecute java 144 at com avaje ebeaninternal server core PersistRequestUpdateSql executeNow PersistRequestUpdateSql java 63 at com avaje ebeaninternal server core PersistRequest executeStatement PersistRequest java 93 at com avaje ebeaninternal server core PersistRequestUpdateSql executeOrQueue PersistRequestUpdateSql java 68 at com avaje ebeaninternal server persist DefaultPersister execu">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-380.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 380 : Failed TestManyToManySaveTwice - Unique index or primary key violation
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 380 : Failed TestManyToManySaveTwice - Unique index or primary key violation </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Rob</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.7.5</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">02/03/2012</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">02/03/2012</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>javax.persistence.PersistenceException: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: "PRIMARY_KEY_75 ON PUBLIC.SP_CAR_CAR_WHEELS(CAR, WHEEL)"; SQL statement:<br/>insert into sp_car_car_wheels (car, wheel) values (?, ?) [23001-153]<br/>	at com.avaje.ebeaninternal.server.persist.ExeUpdateSql.execute(ExeUpdateSql.java:95)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersistExecute.executeSqlUpdate(DefaultPersistExecute.java:144)<br/>	at com.avaje.ebeaninternal.server.core.PersistRequestUpdateSql.executeNow(PersistRequestUpdateSql.java:63)<br/>	at com.avaje.ebeaninternal.server.core.PersistRequest.executeStatement(PersistRequest.java:93)<br/>	at com.avaje.ebeaninternal.server.core.PersistRequestUpdateSql.executeOrQueue(PersistRequestUpdateSql.java:68)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.executeSqlUpdate(DefaultPersister.java:166)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.saveAssocManyIntersection(DefaultPersister.java:1071)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.saveMany(DefaultPersister.java:801)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.saveAssocMany(DefaultPersister.java:711)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.update(DefaultPersister.java:447)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.saveEnhanced(DefaultPersister.java:343)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.saveRecurse(DefaultPersister.java:315)<br/>	at com.avaje.ebeaninternal.server.persist.DefaultPersister.save(DefaultPersister.java:282)<br/>	at com.avaje.ebeaninternal.server.core.DefaultServer.save(DefaultServer.java:1653)<br/>	at com.avaje.ebeaninternal.server.core.DefaultServer.save(DefaultServer.java:1643)<br/>	at com.avaje.ebean.Ebean.save(Ebean.java:536)<br/>	at com.avaje.tests.sp.TestManyToManySaveTwice.testInsertCarTwice(TestManyToManySaveTwice.java:33)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at java.lang.reflect.Method.invoke(Method.java:597)<br/>	at junit.framework.TestCase.runTest(TestCase.java:168)<br/>	at junit.framework.TestCase.runBare(TestCase.java:134)<br/>	at junit.framework.TestResult$1.protect(TestResult.java:110)<br/>	at junit.framework.TestResult.runProtected(TestResult.java:128)<br/>	at junit.framework.TestResult.run(TestResult.java:113)<br/>	at junit.framework.TestCase.run(TestCase.java:124)<br/>	at junit.framework.TestSuite.runTest(TestSuite.java:232)<br/>	at junit.framework.TestSuite.run(TestSuite.java:227)<br/>	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:81)<br/>	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)<br/>	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)<br/>	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)<br/>	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)<br/>	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)<br/>	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)<br/>Caused by: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: "PRIMARY_KEY_75 ON PUBLIC.SP_CAR_CAR_WHEELS(CAR, WHEEL)"; SQL statement:<br/>insert into sp_car_car_wheels (car, wheel) values (?, ?) [23001-153]<br/>	at org.h2.message.DbException.getJdbcSQLException(DbException.java:327)<br/>	at org.h2.message.DbException.get(DbException.java:167)<br/>	at org.h2.message.DbException.get(DbException.java:144)<br/>	at org.h2.index.BaseIndex.getDuplicateKeyException(BaseIndex.java:80)<br/>	at org.h2.index.TreeIndex.add(TreeIndex.java:57)<br/>	at org.h2.table.RegularTable.addRow(RegularTable.java:127)<br/>	at org.h2.command.dml.Insert.insertRows(Insert.java:126)<br/>	at org.h2.command.dml.Insert.update(Insert.java:86)<br/>	at org.h2.command.CommandContainer.update(CommandContainer.java:69)<br/>	at org.h2.command.Command.executeUpdate(Command.java:212)<br/>	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:143)<br/>	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:129)<br/>	at com.avaje.ebeaninternal.server.lib.sql.ExtendedPreparedStatement.executeUpdate(ExtendedPreparedStatement.java:164)<br/>	at com.avaje.ebeaninternal.server.persist.ExeUpdateSql.execute(ExeUpdateSql.java:87)<br/>	... 35 more</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+02 Mar&nbsp;07:53
+</div>
+The issue
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>So the issue here is that the Many collection was a plain LinkedHashSet so when we save it the second time we should delete all the matching intersection rows first because we can't detect the 'additions' and 'deletions'.</p>
+</div>
+<p></p>
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+02 Mar&nbsp;07:54
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Fixed in HEAD.</p><p>Default Persister line 1022.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="380">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-380.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="380">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Bug: Various Bug fixes for Embedded Id's ... (patches from Rien)</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Rob">
+<meta name="description" content="Index src main java com avaje ebeaninternal server persist dml InsertHandler java src main java com avaje ebeaninternal server persist dml InsertHandler java revision 915 src main java com avaje ebeaninternal server persist dml InsertHandler java working copy 32 6 32 7 import com avaje ebeaninternal server core Message import com avaje ebeaninternal server core PersistRequestBean import com avaje ebeaninternal server deploy BeanDescriptor import com avaje ebeaninternal server deploy BeanProperty import com avaje ebeaninternal server persist DmlUtil import com avaje ebeaninternal server type DataBind 226 4 227 9 Override public boolean isIncluded BeanProperty prop return prop isDbInsertable super isIncluded prop Index src main java com avaje ebeaninternal server persist dml UpdateHandler ja">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+</head>
+
+<body>
+<form action='/bugdetail-266.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="bug.html">Bugs</a> &raquo; BUG 266 : Various Bug fixes for Embedded Id's ... (patches from Rien)
+</div>
+
+
+<!-- bug header info -->
+
+
+
+
+<div id="app.comp.BugDetailComp">
+
+<div class="pageactions">
+<!--
+<input type="button" style="width:12em;" class="btn requser" value="Add Comment" onclick="j('#bugDetailForm').show();j('#f_title').focus();">
+<input type="button" style="width:12em;" class="btn requser" value="Create a new Bug" onclick="gotoURL('bugnew.html');">
+-->
+</div>
+
+<table class="formlayout">
+<tr>
+<td colspan="6" class="heading">&nbsp;<span class="xheading">Bug 266 : Various Bug fixes for Embedded Id's ... (patches from Rien) </span></td>
+</tr>
+<tr>
+<td width="15%" class="label">Priority&nbsp;</td><td><div class="fieldmargin"><span class="field">High</span></div></td>
+<td class="label">Reported Version&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Logged By&nbsp;</td><td><div class="fieldmargin"><span class="field">Rob</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Status&nbsp;</td><td><div class="fieldmargin"><span class="field">Fixed</span></div></td>
+<td class="label">Fixed Version&nbsp;</td><td><div class="fieldmargin"><span class="field">2.6.0</span></div></td>
+<td class="label">Assigned To&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Product&nbsp;</td><td><div class="fieldmargin"><span class="field">Ebean - core</span></div></td>
+<td class="label">Duplicate Of&nbsp;</td><td><div class="fieldmargin"><span class="field">&nbsp;</span></div></td>
+<td class="label">Created&nbsp;</td><td><div class="fieldmargin"><span class="field">06/04/2010</span></div></td>
+</tr>
+
+<tr>
+<td class="label">Updated&nbsp;</td><td><div class="fieldmargin"><span class="field">06/04/2010</span></div></td>
+<td class="label">Type&nbsp;</td><td><div class="fieldmargin"><span class="field">Bug</span></div></td>
+<td class="label">&nbsp;</td><td></td>
+</tr>
+
+<tr>
+<td class="label">Attachments&nbsp;</td>
+<td colspan="5">
+<div class="attachments">
+<div class="fieldmargin">
+<span class="field" style="width:100%;">
+No attachments</span>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+<td colspan="6"><div class="fieldmargin"><span class="field"><p>Index: src/main/java/com/avaje/ebeaninternal/server/persist/dml/InsertHandler.java<br/>===================================================================<br/>--- src/main/java/com/avaje/ebeaninternal/server/persist/dml/InsertHandler.java	(revision 915)<br/>+++ src/main/java/com/avaje/ebeaninternal/server/persist/dml/InsertHandler.java	(working copy)<br/>@@ -32,6 +32,7 @@<br/> import com.avaje.ebeaninternal.server.core.Message;<br/> import com.avaje.ebeaninternal.server.core.PersistRequestBean;<br/> import com.avaje.ebeaninternal.server.deploy.BeanDescriptor;<br/>+import com.avaje.ebeaninternal.server.deploy.BeanProperty;<br/> import com.avaje.ebeaninternal.server.persist.DmlUtil;<br/> import com.avaje.ebeaninternal.server.type.DataBind;<br/> <br/>@@ -226,4 +227,9 @@<br/> 			}<br/> 		}<br/> 	}<br/>+<br/>+	@Override<br/>+	public boolean isIncluded(BeanProperty prop) {<br/>+		return prop.isDbInsertable() && (super.isIncluded(prop));<br/>+	}<br/> }<br/>Index: src/main/java/com/avaje/ebeaninternal/server/persist/dml/UpdateHandler.java<br/>===================================================================<br/>--- src/main/java/com/avaje/ebeaninternal/server/persist/dml/UpdateHandler.java	(revision 915)<br/>+++ src/main/java/com/avaje/ebeaninternal/server/persist/dml/UpdateHandler.java	(working copy)<br/>@@ -94,7 +94,7 @@<br/> 	@Override<br/> 	public boolean isIncluded(BeanProperty prop) {<br/> <br/>-		return updatedProperties == null || updatedProperties.contains(prop.getName());<br/>+		return prop.isDbUpdatable() && (updatedProperties == null || updatedProperties.contains(prop.getName()));<br/> 	}<br/> <br/> }<br/>Index: src/main/java/com/avaje/ebeaninternal/server/deploy/id/IdBinderEmbedded.java<br/>===================================================================<br/>--- src/main/java/com/avaje/ebeaninternal/server/deploy/id/IdBinderEmbedded.java	(revision 915)<br/>+++ src/main/java/com/avaje/ebeaninternal/server/deploy/id/IdBinderEmbedded.java	(working copy)<br/>@@ -122,10 +122,13 @@<br/>     }<br/> <br/>     public Object[] getIdValues(Object bean) {<br/>+        bean = embIdProperty.getValue(bean);<br/>+<br/>         Object[] bindvalues = new Object[props.length];<br/>         for (int i = 0; i < props.length; i++) {<br/>             bindvalues[i] = props[i].getValue(bean);<br/>         }<br/>+        <br/>         return bindvalues;<br/>     }<br/> <br/>@@ -162,12 +165,12 @@<br/>     public Object read(DbReadContext ctx) throws SQLException {<br/> <br/>         Object embId = idDesc.createVanillaBean();<br/>-        boolean notNull = false;<br/>+        boolean notNull = true;<br/> <br/>         for (int i = 0; i < props.length; i++) {<br/>             Object value = props[i].readSet(ctx, embId, null);<br/>-            if (value != null) {<br/>-                notNull = true;<br/>+            if (value == null) {<br/>+                notNull = false;<br/>             }<br/>         }<br/> <br/>@@ -228,6 +231,10 @@<br/>                 sb.append(prefix);<br/>                 sb.append(".");<br/>             }<br/>+<br/>+            sb.append(embIdProperty.getName());<br/>+            sb.append(".");<br/>+<br/>             sb.append(props[i].getName());<br/>             sb.append(" ").append(operator);<br/>             sb.append(" ? ");<br/>Index: src/main/java/com/avaje/ebeaninternal/server/deploy/id/ImportedIdEmbedded.java<br/>===================================================================<br/>--- src/main/java/com/avaje/ebeaninternal/server/deploy/id/ImportedIdEmbedded.java	(revision 915)<br/>+++ src/main/java/com/avaje/ebeaninternal/server/deploy/id/ImportedIdEmbedded.java	(working copy)<br/>@@ -64,7 +64,7 @@<br/> 	public void dmlAppend(GenerateDmlRequest request) {<br/> 		<br/> 		for (int i = 0; i < imported.length; i++) {<br/>-			request.appendColumn(imported[i].localDbColumn);	<br/>+			request.appendColumn(imported[i].localDbColumn);<br/> 		}<br/> 	}<br/> <br/>@@ -77,17 +77,21 @@<br/> 		<br/> 		if (embeddedId == null){<br/> 			for (int i = 0; i < imported.length; i++) {<br/>-				request.appendColumnIsNull(imported[i].localDbColumn);	<br/>+                            if (imported[i].owner.isDbUpdatable()) {<br/>+				request.appendColumnIsNull(imported[i].localDbColumn);<br/>+                            }<br/> 			}<br/> 		} else {<br/> 		<br/> 			for (int i = 0; i < imported.length; i++) {<br/>+                            if (imported[i].owner.isDbUpdatable()) {<br/> 				Object value = imported[i].foreignProperty.getValue(embeddedId);<br/> 				if (value == null){<br/> 					request.appendColumnIsNull(imported[i].localDbColumn);	<br/> 				} else {<br/> 					request.appendColumn(imported[i].localDbColumn);	<br/> 				}<br/>+                            }<br/> 			}<br/> 		}<br/> 	}<br/>@@ -101,10 +105,14 @@<br/> 	<br/> 	public void bind(BindableRequest request, Object bean, boolean bindNull) throws SQLException {<br/> <br/>-		Object embeddedId = foreignAssocOne.getValue(bean);<br/>+            Object embeddedId = null;<br/>+<br/>+            if (bean != null) {<br/>+                embeddedId = foreignAssocOne.getValue(bean);<br/>+            }<br/> 		<br/> 		if (embeddedId == null){<br/>-			for (int i = 0; i < imported.length; i++) {<br/>+                    	for (int i = 0; i < imported.length; i++) {<br/> 				request.bind(null, imported[i].foreignProperty, imported[i].localDbColumn, true);<br/> 			}</p></span></div></td>
+</tr>
+
+<tr>
+<td colspan="6">&nbsp;</td>
+</tr>
+</table>
+
+<div class="bugdetail-head">
+<div style="float:right">
+Rob 
+06 Apr&nbsp;09:38
+</div>
+Fixed in HEAD
+</div>
+<div class="bugdetail-foot" style="clear:both;">
+<p>Thanks Rien.</p><p>I reviewed these changes and they are all good. Fixed in HEAD.</p>
+</div>
+<p></p>
+
+<input type="hidden" name="f_bugid" value="266">
+
+
+</div>
+
+
+
+
+
+
+<div id="bugDetailForm" style="display:none;">
+
+<div id="app.comp.BugDetailAddComp">
+
+<h4>Add detail to this bug</h4>
+<table>
+<tr>
+<td class="label" style="width:8em;"><span class="mandatory">*</span>Summary:</td>
+<td><input class="txt wide90" type="text" id="f_title" name="f_title" value=""></td>
+</tr>
+<tr>
+<td class="label" valign="top"><span class="mandatory">*</span>Details:</td>
+<td><textarea class="wide90" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woPost('app.comp.BugDetailAddComp','doPost');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="j('#bugDetailForm').hide();">
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="attachmentUpload" class="popdialog">
+<form action='/bugdetail-266.html' method="post" id="UPLOAD" enctype="multipart/form-data">
+<input type="hidden" name="f_bugid" value="266">
+<input type="hidden" name="WO_HANDLER" value="app.comp.BugAttachmentUploadHandler">
+<h4>Upload a file</h4>
+<p><input type='file' name='f_file' ></p>
+<div class="buttons">
+<input type='submit' name='_upload' value="Upload" > <input type='button' value='Cancel' onclick="popdialog.hide();">
+</div>
+</form>
+</div>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>

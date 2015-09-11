@@ -1,0 +1,342 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict //EN">
+<html>
+<head>
+<title>Topic: Override ClassWriter.getCommonSuperClass()</title>
+<link rel="shortcut icon" href="/image/favicon.ico" >
+<link rel="stylesheet" type="text/css" href="/static/v2style.css" >
+<!--
+<link rel="stylesheet" type="text/css" href="/css/100/basestyle|syntaxhighlighter" >
+-->
+
+<!--[if lt IE 7]>
+<link rel="stylesheet" type="text/css" href="/doc/ie.css" media="screen">
+<![endif]-->
+
+
+<meta name="Author" content="Lyubo">
+<meta name="description" content="Hi As part of an effort to integrate Ebean with a web development framework with dynamic compilation and enhancement I need to change implementation of the above mentioned method The problem is that the class loader used in Class forName is not the one which loads dynamically compiled classes Any suggestion is welcome Thanks ">
+
+<script type="text/javascript" src="/doc/jslib.js" ></script>
+<!--
+<script type="text/javascript" src="/jsl/jquery|jquery.corner|mygoo|app|shCore|shBrushJava|shBrushProperty|shBrushSql" ></script>
+-->
+
+<script type="text/javascript">
+ $(document).ready(function(){
+	$(".topic").corner("12px");
+	$("a.action").corner("8px hover");
+	$("div.example").corner("5px");
+	$(".reqrlogin").hide();
+
+	//dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+
+ });
+</script>
+
+<!-- component('cn=app.comp.LoginEnable') -->
+
+
+
+
+
+</head>
+
+<body>
+<form action='/topic-180.html' method="post" id="GLOBAL_ACTION">
+<input type='hidden' name='_WOGA_CONTROLLER' >
+<input type='hidden' name='_WOGA_METHOD' >
+<input type='hidden' name='_WOGA_PARAM' >
+<input type='hidden' name='_WOGA_RENDER' >
+<a id="top"></a>
+<div id="headwrap">
+<div id="headmax">
+<div id="menuuser">
+<!-- component('cn=app.comp.UserStatus') -->
+</div>
+<img id="logo" src="/image/logo-avaje.gif" width="127" height="50" alt="avaje logo">
+<div style="clear:both;"></div>
+</div>
+</div><!-- end of headwrap -->
+
+<div id="head2wrap">
+<div id="head2max">
+<table summary="layout">
+<tr>
+<td align="center">
+<div id="menutab" style="">
+<a id="m0" href="/" class="popmenu"><span>home</span></a>
+<a id="m1" href="/ebean/documentation.html" class="popmenu"><span>documentation</span></a>
+<a id="m4" href="/download.html" class="popmenu"><span>downloads</span></a>
+<a id="m6" href="http://groups.google.com/group/ebean" class="popmenu"><span>google group</span></a>
+<a id="m2" href="/forum.html" class="popmenu"><span>forums<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m3" href="/bug.html" class="popmenu"><span>bugs<img src="/image/menuDownH6_3.gif" width="11" height="11" alt=""></span></a>
+<a id="m5" href="/feedback.html" class="popmenu"><span>feedback</span></a>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="bodywrap">
+<div id="bodymax">
+<div id="content">
+<div id="pageBody">
+<div id="breadcrumb">
+&nbsp;
+</div>
+
+
+
+
+
+
+<div class="breadcrumb">
+<img src="/image/smallhome.gif"> <a href="index.html">Home</a> &raquo; <a href="forum.html">Forum</a> &raquo; <a href="forumdetail-3.html">Byte code enhancement</a>
+</div>
+
+<h1>
+Please use the google group to ask questions - thanks.
+</h1>
+
+<div id="app.comp.Topic">
+
+<div class="pageactions">
+<!-- 
+<input type="button" class="btn requser"  value="Reply" onclick="topicReply();">
+<input type="button" class="btn requser"  value="New Topic" onclick="gotoURL('topicnew-3.html');">
+-->
+</div>
+
+
+<div class="topiccontent">
+
+<div class="topic">
+<div class="rhs" style="float:right">
+<span>by Lyubo </span>
+15 Apr&nbsp;14:33
+</div>
+Override ClassWriter.getCommonSuperClass()
+<div class="body">
+<p>Hi,<br/>As part of an effort to integrate Ebean with a web development framework with dynamic compilation and enhancement I need to change implementation of the above mentioned method. The problem is that the class loader used in Class.forName() is not the one which loads dynamically compiled classes. Any suggestion is welcome.</p><p>Thanks</p>
+</div>
+</div>
+
+<div class="post">
+<div class="rhs" style="float:right">
+19 Apr&nbsp;02:40
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>I wonder if you need the "context classLoader" instead?</p><p>Would something like this work in your case?</p><pre class="java">public static Class&lt;?&gt; classForName(String name, Class&lt;?&gt; caller) throws ClassNotFoundException {
+    try {
+      ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+      if ( contextClassLoader != null ) {
+        return contextClassLoader.loadClass( name );
+      }
+    }
+    catch ( Throwable e ) {
+      // ignore
+    }
+    return Class.forName( name, true, caller.getClassLoader() );
+  }</pre>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Apr&nbsp;02:43
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>PS: Others are now interested in SQLLite ... do you have a DatabasePlatform to share?</p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Apr&nbsp;10:43
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>It seems that there might be a case for overriding the getCommonSuperClass() method.</p><p>Can you provide more information as to what the error is. Can you confirm this is when using dynamically generated subclasses (and not when using enhancement).</p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Apr&nbsp;10:45
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Note: it is class SubClassFactory extends ClassLoader that constructs the plain ClassWriter in question.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Apr&nbsp;17:13
+</div>
+<span>by Lyubo</span>
+<div class="body">
+<p>The problem is that the class in question is still not created in JVM by the time this function is called. There is a separate data structure which holds information for dynamic classes.</p><p>However, I found a temporary and ugly workaround for this : I copied the whole Transformer.java code and created a subclass of ClassWriter.java which overrides the getCommonSuperClass method.</p><p>Note: In Transformer.class ClassWriter is created by its constructor not by a factory.</p><p>This error occurs when enhancing a class which is entity and has a field of type SomeObject which is not an entity. </p><p>You can see entire integration effort (it's pretty simple) code here: <a href="http://bazaar.launchpad.net/">http://bazaar.launchpad.net/</a>~lyubo.ivanov/play-ebean/1.0/files</p><p>Look at the play.modules.ebean.EbeanPlugin.enhance() where the actual call to ebean enhancement is made</p><p>Here is the stacktrace:</p><p>java.lang.RuntimeException: java.lang.ClassNotFoundException: XXXX<br/>	at com.avaje.ebean.enhance.asm.ClassWriter.getCommonSuperClass(ClassWriter.java:1272)<br/>	at com.avaje.ebean.enhance.asm.ClassWriter.getMergedType(ClassWriter.java:1244)<br/>	at com.avaje.ebean.enhance.asm.Frame.merge(Frame.java:1373)<br/>	at com.avaje.ebean.enhance.asm.Frame.merge(Frame.java:1280)<br/>	at com.avaje.ebean.enhance.asm.MethodWriter.visitMaxs(MethodWriter.java:1270)<br/>	at com.avaje.ebean.enhance.asm.MethodAdapter.visitMaxs(MethodAdapter.java:189)<br/>	at com.avaje.ebean.enhance.asm.ClassReader.accept(ClassReader.java:1447)<br/>	at com.avaje.ebean.enhance.asm.ClassReader.accept(ClassReader.java:420)<br/>	at play.modules.ebean.HackedTransformer.entityEnhancement(HackedTransformer.java:146)<br/>	at play.modules.ebean.HackedTransformer.transform(HackedTransformer.java:106)<br/>	at play.modules.ebean.EbeanPlugin.enhance(EbeanPlugin.java:83)</p><p><br/>PS: I've sent a mail with SQLite platform file a long time ago. Maybe it'd been deleted by some spam filter? I can send it again of course.</p><p>Thanks,<br/>Lyubo</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Apr&nbsp;21:29
+</div>
+<span>by Rob</span>
+<div class="body">
+<pre class="java">private Class findClass(String name) throws ClassNotFoundException {
+
+    ApplicationClass ac = Play.classes.getApplicationClass(name);
+    if (ac == null) return Class.forName(name);
+
+    return ac.javaClass;
+}</pre><p>The way I see it Ebean needs to provide a way of plugging in a ClassWriter or perhaps just a "Class Finder" for use with the SubClassFactory.</p><p>Possibly, the SubClassFactory should probably provide a "Class Finder" with a class loader (itself or it's parent classLoader) so that we can use Class.forName(name, true, parentClassLoader) rather than just Class.forName(name).</p><p>ok, I'll have a look at how to do that.</p><p>Cheers, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+19 Apr&nbsp;23:23
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Hmmm, actually there must be something else I don't know. That is, I expect you are not using plain entity beans?  Are you generating the entity beans themselves perhaps?</p><p>What classes are coming to the getCommonSuperClass() method, what is their ClassLoader, and how does that classLoader relate to Ebean's SubClassFactory ClassLoader.</p><p>It is not clear to me why getCommonSuperClass() is called at all ... and there might be an issue here with enhancement (rather than the dynamic subclassing Ebean can use).</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+20 Apr&nbsp;00:53
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ok, I went over it again and I can see you are using in EbeanPlugin:</p><p>byte[] buffer = transformer.transform(Play.classloader, applicationClass.name, null, null, applicationClass.enhancedByteCode);</p><p>So I'll add a LoaderAwareClassWriter ... that will use the ClassLoader passed in with the Class.forName(...) resolution.  So this means it will use the Play.classLoader in this case.</p><p>That might do the trick.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+20 Apr&nbsp;03:43
+</div>
+<span>by Rob</span>
+<div class="body">
+<p>Ok, I have added the appropriate code into HEAD (for BUG 280 : ENHANCEMENT - Enable Context ClassLoader aware ... add LoadAwareClassWriter).</p><p>This means Ebean will use a LoadAwareClassVisitor ... and in the case of Play's EbeanPlugin it should use the Play.classLoader to resolve the classes in the getCommonSuperClass() calls.</p><p>Let me know if that helps.</p><p>Thanks, Rob.</p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+20 Apr&nbsp;09:20
+</div>
+<span>by Lyubo</span>
+<div class="body">
+<p>Is there HEAD binary download or I should build it from source. I suppose the source is at <a href="https://ebeanorm.svn.sourceforge.net/svnroot/ebeanorm/ebean/trunk/">https://ebeanorm.svn.sourceforge.net/svnroot/ebeanorm/ebean/trunk/</a></p>
+</div>
+</div>
+<div class="post">
+<div class="rhs" style="float:right">
+10 May&nbsp;12:32
+</div>
+<span>by Lyubo</span>
+<div class="body">
+<p>as of release 2.6.0 this is issue had been resolved. <br/>Thanks Rob.</p>
+</div>
+</div>
+
+</div>
+
+<div class="pageactions">
+</div>
+
+<input type="hidden" name="f_forumid" value="3">
+<input type="hidden" name="f_topicid" value="180">
+<input type="hidden" name="f_postid" value="">
+
+<div id="commentForm" style="display:none;">
+<h4>Add Comment</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Comment:</td>
+<td><textarea class="wide80" id="f_body" name="f_body" rows="10" cols="30"></textarea></td>
+</tr>
+</table>
+<div class="buttons">
+</div>
+</div>
+
+</div>
+
+<div id="newTopicForm" class="popdialog wideDialogForm">
+
+<div id="app.comp.TopicNew">
+
+<div id="newTopicFormMarker" style="display:none;"></div>
+<h4>Create a New Topic</h4>
+<table>
+<tr>
+<td class="label" valign="top" style="width:8em;">Title:</td>
+<td><input class="txt wide90" name="nt_title" value="$paramtool.getParamIfNull('nt_title','')"></td>
+</tr>
+<tr>
+<td class="label" valign="top">Body:</td>
+<td><textarea class="wide90" name="nt_body" rows="10" cols="30">$paramtool.getParamIfNull('nt_body','')</textarea></td>
+</tr>
+
+<tr>
+<td class="label"></td>
+<td>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<div class="buttons">
+<input type="button" class="btn" value="Save" accesskey="s" onclick="woAction('app.comp.TopicNew','doNewTopic');" >
+<input type="button" class="btn" value="Cancel" accesskey="c" onclick="popdialog.hide();">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- end of bodywrap -->
+
+<div id="footwrap">
+<div id="footmax">
+<div id="foot">
+<a href="/">home</a> | <a href="#top">back to top</a>
+</div>
+</div>
+</div><!-- end of footwrap -->
+
+<!-- layers -->
+<div id="m1popxxx" class="popmenuchild">
+<a href="/ebean/introduction.html">Introduction</a>
+<a href="/doc/ebean-userguide.pdf">User Guide (pdf)</a>
+<a href="/configure.html">Install/Configure</a>
+<a href="/static/javadoc/pub/index.html">Public JavaDoc</a>
+<a href="/whitepaper.html">Whitepapers</a>
+</div>
+
+<div id="m2pop" class="popmenuchild">
+<a href="/forumdetail-1.html">General</a>
+<a href="/forumdetail-2.html">Database Specific</a>
+<a href="/forumdetail-3.html">Byte Code</a>
+<a href="/forumdetail-4.html">Deployment Annotations</a>
+<a href="/forumdetail-5.html">Features</a>
+</div>
+
+<div id="m3pop" class="popmenuchild">
+<a href="/bug.html">Top Bugs</a>
+<a href="/enh.html">Top Enhancements</a>
+</div>
+
+
+<div id="woResponse">woResponse</div>
+
+</form>
+
+<div id="woFocusDelay"></div>
+</body>
+</html>
